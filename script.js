@@ -93,6 +93,20 @@ interactiveElements.forEach(element => {
 });
 
 // ==========================================
+// EMAIL REVEAL TOGGLE
+// ==========================================
+const contactFormTrigger = document.querySelector('.contact-form-trigger');
+const emailReveal = document.getElementById('email-reveal');
+
+if (contactFormTrigger && emailReveal) {
+    contactFormTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        emailReveal.classList.toggle('hidden');
+        playHoverSound(); // reuse existing sound
+    });
+}
+
+// ==========================================
 // THEME TOGGLE
 // ==========================================
 const themeToggle = document.getElementById('theme-toggle');

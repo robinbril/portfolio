@@ -19,17 +19,17 @@ body.dark-theme {
     --btn-primary-text: #0a0a0a;
 }
 
-/* Light Theme */
+/* Light Theme - Premium Ivory & Red */
 body.light-theme {
-    --bg-color: #f5f5f7;
+    --bg-color: #faf8f3;
     --card-bg: #ffffff;
-    --text-primary: #1d1d1f;
-    --text-secondary: #6e6e73;
-    --accent-primary: #00d084;
-    --accent-secondary: #5a00d6;
-    --border-color: #d2d2d7;
-    --nav-bg: rgba(255, 255, 255, 0.9);
-    --btn-primary-bg: #1d1d1f;
+    --text-primary: #1c1917;
+    --text-secondary: #57534e;
+    --accent-primary: #dc2626;
+    --accent-secondary: #b91c1c;
+    --border-color: #e7e5e1;
+    --nav-bg: rgba(250, 248, 243, 0.95);
+    --btn-primary-bg: #dc2626;
     --btn-primary-text: #ffffff;
 }
 
@@ -55,7 +55,7 @@ body.light-theme {
 }
 
 body.light-theme .cursor-glow {
-    background: radial-gradient(circle, rgba(0, 208, 132, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.06) 0%, rgba(0, 0, 0, 0) 70%);
 }
 
 html {
@@ -123,15 +123,13 @@ em {
 /* ==========================================
    UTILITIES
    ========================================== */
-.gradient-text {
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.accent-text {
+    color: var(--accent-primary);
+    font-weight: 800;
 }
 
 .section {
-    padding: 6rem 2rem;
+    padding: 4rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -147,7 +145,8 @@ em {
     height: 1px;
     background: var(--border-color);
     flex-grow: 1;
-    max-width: 200px;
+    max-width: 120px;
+    opacity: 0.3;
 }
 
 /* ==========================================
@@ -220,7 +219,7 @@ em {
 }
 
 body.light-theme .nav-links .btn-primary:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.25);
 }
 
 .nav-actions {
@@ -294,7 +293,7 @@ body.light-theme .theme-toggle-btn .light-icon {
 }
 
 body.light-theme .btn-primary:hover {
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 25px rgba(220, 38, 38, 0.25);
 }
 
 .btn-secondary {
@@ -462,7 +461,7 @@ body.light-theme .btn-primary:hover {
     display: flex;
     gap: 1rem;
     justify-content: center;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 
@@ -492,39 +491,67 @@ body.light-theme .btn-primary:hover {
 }
 
 body.light-theme .stat-pill {
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(220, 38, 38, 0.03);
 }
 
 .hero-actions {
     display: flex;
     gap: 1rem;
     justify-content: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 
-.tech-stack-hero {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
+/* Hero Tagline */
+.hero-tagline {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    opacity: 0.6;
+}
+
+.hero-tagline::before {
+    content: '→ ';
+    color: var(--accent-primary);
+}
+
+/* Tech Stack Badges */
+.tech-stack-hero {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
-.tech-stack-hero span {
-    position: relative;
-    padding: 0 0.5rem;
+.tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 255, 157, 0.08);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
 }
 
-.tech-stack-hero span:not(:last-child)::after {
-    content: '•';
-    position: absolute;
-    right: -0.9rem;
-    color: var(--accent-primary);
-    opacity: 0.5;
+.tech-badge:hover {
+    background: rgba(0, 255, 157, 0.12);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+body.light-theme .tech-badge {
+    background: rgba(220, 38, 38, 0.05);
+    border-color: rgba(220, 38, 38, 0.2);
+}
+
+body.light-theme .tech-badge:hover {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: var(--accent-primary);
 }
 
 /* ==========================================
@@ -803,6 +830,16 @@ body.light-theme .stat-pill {
     border-color: var(--accent-primary);
 }
 
+body.light-theme .tags span {
+    background: rgba(220, 38, 38, 0.08);
+    border: 1px solid rgba(220, 38, 38, 0.25);
+}
+
+body.light-theme .tags span:hover {
+    background: rgba(220, 38, 38, 0.15);
+    border-color: var(--accent-primary);
+}
+
 /* ==========================================
    SKILLS SECTION
    ========================================== */
@@ -966,6 +1003,48 @@ body.light-theme .stat-pill {
 
 body.light-theme .whatsapp-cta:hover {
     box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+}
+
+/* Email Reveal Section */
+.email-reveal {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 255, 157, 0.05);
+    border: 1px solid var(--accent-primary);
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.email-reveal.hidden {
+    display: none;
+}
+
+.email-reveal p {
+    margin: 0.5rem 0;
+    color: var(--text-primary);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.email-reveal .text-small {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.light-theme .email-reveal {
+    background: rgba(220, 38, 38, 0.05);
 }
 
 /* ==========================================
