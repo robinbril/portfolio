@@ -6,13 +6,23 @@ window.addEventListener('load', () => {
     const progressBar = document.getElementById('progress-bar');
     const progressPercentage = document.querySelector('.progress-percentage');
 
+    if (!preloader) return;
+
     let progress = 0;
-    const duration = 1000; // 1 second total (was 3 seconds)
-    const incrementTime = 20; // Update every 20ms for smoother animation
+    const duration = 2000; // 2 seconds total
+    const incrementTime = 20; // Update every 20ms
     const totalIncrements = duration / incrementTime;
     const incrementValue = 100 / totalIncrements;
 
-    // Animate progress bar from 0 to 100%
+    // Function to remove preloader
+    const removePreloader = () => {
+        preloader.classList.add('fade-out');
+        setTimeout(() => {
+            preloader.remove();
+        }, 600);
+    };
+
+    // Animate progress bar
     const progressInterval = setInterval(() => {
         progress += incrementValue;
 
@@ -20,21 +30,25 @@ window.addEventListener('load', () => {
             progress = 100;
             clearInterval(progressInterval);
 
-            // Wait a bit at 100%, then fade out
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
+            // Update UI one last time
+            if (progressBar) progressBar.style.width = '100%';
+            if (progressPercentage) progressPercentage.textContent = '100%';
 
-                // Remove from DOM after fade  
-                setTimeout(() => {
-                    preloader.remove();
-                }, 500);
-            }, 200); // Reduced from 400ms to 200ms
+            // Wait a bit then fade out
+            setTimeout(removePreloader, 200);
+        } else {
+            if (progressBar) progressBar.style.width = progress + '%';
+            if (progressPercentage) progressPercentage.textContent = Math.floor(progress) + '%';
         }
-
-        // Update progress bar and percentage
-        progressBar.style.width = progress + '%';
-        progressPercentage.textContent = Math.floor(progress) + '%';
     }, incrementTime);
+
+    // Safety fallback: ensure preloader is removed after duration + buffer
+    setTimeout(() => {
+        if (document.body.contains(preloader)) {
+            clearInterval(progressInterval);
+            removePreloader();
+        }
+    }, duration + 1000);
 });
 
 // ==========================================
