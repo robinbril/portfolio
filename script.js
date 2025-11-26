@@ -7,8 +7,8 @@ window.addEventListener('load', () => {
     const progressPercentage = document.querySelector('.progress-percentage');
 
     let progress = 0;
-    const duration = 3000; // 3 seconds total
-    const incrementTime = 30; // Update every 30ms
+    const duration = 1000; // 1 second total (was 3 seconds)
+    const incrementTime = 20; // Update every 20ms for smoother animation
     const totalIncrements = duration / incrementTime;
     const incrementValue = 100 / totalIncrements;
 
@@ -27,8 +27,8 @@ window.addEventListener('load', () => {
                 // Remove from DOM after fade  
                 setTimeout(() => {
                     preloader.remove();
-                }, 600);
-            }, 400);
+                }, 500);
+            }, 200); // Reduced from 400ms to 200ms
         }
 
         // Update progress bar and percentage
