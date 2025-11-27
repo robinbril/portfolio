@@ -1,20 +1,22 @@
 // ==========================================
 // PRELOADER ANIMATION
 // ==========================================
-window.addEventListener('load', () => {
+function startPreloader() {
     const preloader = document.getElementById('preloader');
     const progressBar = document.getElementById('progress-bar');
     const progressPercentage = document.querySelector('.progress-percentage');
 
     if (!preloader) return;
 
+    // If already faded out, don't restart
+    if (preloader.classList.contains('fade-out')) return;
+
     let progress = 0;
     const duration = 2000; // 2 seconds total
-    const incrementTime = 20; // Update every 20ms
-    const totalIncrements = duration / incrementTime;
-    const incrementValue = 100 / totalIncrements;
+    const intervalTime = 20; // Update every 20ms
+    const steps = duration / intervalTime;
+    const increment = 100 / steps;
 
-    // Function to remove preloader
     const removePreloader = () => {
         preloader.classList.add('fade-out');
         setTimeout(() => {
@@ -22,34 +24,38 @@ window.addEventListener('load', () => {
         }, 600);
     };
 
-    // Animate progress bar
-    const progressInterval = setInterval(() => {
-        progress += incrementValue;
+    const interval = setInterval(() => {
+        progress += increment;
 
         if (progress >= 100) {
             progress = 100;
-            clearInterval(progressInterval);
+            clearInterval(interval);
 
-            // Update UI one last time
             if (progressBar) progressBar.style.width = '100%';
             if (progressPercentage) progressPercentage.textContent = '100%';
 
-            // Wait a bit then fade out
             setTimeout(removePreloader, 200);
         } else {
-            if (progressBar) progressBar.style.width = progress + '%';
-            if (progressPercentage) progressPercentage.textContent = Math.floor(progress) + '%';
+            if (progressBar) progressBar.style.width = `${progress}%`;
+            if (progressPercentage) progressPercentage.textContent = `${Math.floor(progress)}%`;
         }
-    }, incrementTime);
+    }, intervalTime);
 
-    // Safety fallback: ensure preloader is removed after duration + buffer
+    // Safety fallback
     setTimeout(() => {
         if (document.body.contains(preloader)) {
-            clearInterval(progressInterval);
+            clearInterval(interval);
             removePreloader();
         }
     }, duration + 1000);
-});
+}
+
+// Start immediately if DOM is ready, otherwise wait for DOMContentLoaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startPreloader);
+} else {
+    startPreloader();
+}
 
 // ==========================================
 // CURSOR GLOW EFFECT
@@ -253,7 +259,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 navLinks.style.display = 'none';
                 mobileMenuBtn.setAttribute('aria-expanded', 'false');
             }
-        });
+        }
+    });
 });
 
 // ==========================================
