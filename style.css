@@ -1420,6 +1420,42 @@ body.light-theme .whatsapp-cta:hover {
     box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
 }
 
+/* Light Theme Overrides for Skills & Contact */
+body.light-theme .skill-tags span {
+    background: rgba(220, 38, 38, 0.05);
+    border-color: rgba(220, 38, 38, 0.2);
+}
+
+body.light-theme .skill-tags span:hover {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: var(--accent-primary);
+}
+
+body.light-theme .contact-item {
+    background: rgba(220, 38, 38, 0.05);
+    border-color: rgba(220, 38, 38, 0.2);
+}
+
+body.light-theme .contact-item:hover {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: var(--accent-primary);
+}
+
+body.light-theme .whatsapp-cta {
+    background: rgba(220, 38, 38, 0.05);
+    border-color: rgba(220, 38, 38, 0.2);
+}
+
+body.light-theme .whatsapp-cta i {
+    color: var(--accent-primary);
+}
+
+body.light-theme .whatsapp-cta:hover {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.2);
+}
+
 /* Email Reveal Section */
 .email-reveal {
     margin-top: 2rem;
