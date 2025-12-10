@@ -2656,8 +2656,16 @@ ul.role-description li::before {
     }
 
     .code-line {
-        font-size: 0.65rem;
-        margin-bottom: 0.5rem;
+        font-size: 0.55rem;
+        margin-bottom: 0.4rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .line-number {
+        min-width: 1rem;
+        margin-right: 0.5rem;
     }
 
     .loading-bar-container {
