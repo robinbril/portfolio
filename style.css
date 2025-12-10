@@ -2768,3 +2768,48 @@ ul.role-description li::before {
         display: none;
     }
 }
+
+/* ==========================================
+   COLLAPSIBLE PROJECT GRID
+   ========================================== */
+.show-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem auto 0;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.show-more-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+.show-more-btn i {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+.show-more-btn.expanded i {
+    transform: rotate(180deg);
+}
+
+/* Collapsed state - show only first 3 cards */
+.ai-projects-grid:not(.expanded) .ai-project-card:nth-child(n+4) {
+    display: none;
+}
+
+/* When expanded, show all */
+.ai-projects-grid.expanded .ai-project-card {
+    display: flex;
+}

@@ -535,6 +535,30 @@ function initNeuralNetwork() {
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
     initContactModal();
-    // Neural network replaced with CSS mesh gradient
-    // initNeuralNetwork();
+    initShowMoreToggle();
 });
+
+// ==========================================
+// SHOW MORE TOGGLE FOR PROJECTS
+// ==========================================
+function initShowMoreToggle() {
+    const showMoreBtn = document.getElementById('showMoreProjects');
+    const projectsGrid = document.querySelector('.ai-projects-grid');
+
+    if (!showMoreBtn || !projectsGrid) return;
+
+    showMoreBtn.addEventListener('click', () => {
+        const isExpanded = projectsGrid.classList.toggle('expanded');
+        showMoreBtn.classList.toggle('expanded');
+
+        const btnText = showMoreBtn.querySelector('span');
+        if (btnText) {
+            btnText.textContent = isExpanded ? 'Toon minder' : 'Toon alle projecten';
+        }
+
+        // Re-initialize Lucide icons for newly visible cards
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+}
