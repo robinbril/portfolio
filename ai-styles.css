@@ -216,9 +216,9 @@ body.light-theme .form-group textarea {
 
 body.light-theme .form-group input:focus,
 body.light-theme .form-group textarea:focus {
-    background: rgba(220, 38, 38, 0.05);
+    background: rgba(124, 58, 237, 0.08);
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
 }
 
 .form-group textarea {
@@ -483,7 +483,7 @@ body.light-theme .form-group textarea:focus {
 }
 
 body.light-theme .calendar-cta-section {
-    background: linear-gradient(135deg, rgba(220, 38, 38, 0.03), rgba(185, 28, 28, 0.03));
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(99, 102, 241, 0.05));
 }
 
 .calendar-cta-container {
@@ -519,7 +519,7 @@ body.light-theme .calendar-cta-section {
 }
 
 body.light-theme .cta-badge {
-    background: rgba(220, 38, 38, 0.1);
+    background: rgba(124, 58, 237, 0.12);
     border-color: var(--accent-primary);
 }
 
@@ -609,7 +609,7 @@ body.light-theme .cta-badge {
 }
 
 body.light-theme .calendar-btn:hover {
-    box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3);
+    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
 }
 
 .calendar-btn i {

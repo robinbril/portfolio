@@ -278,18 +278,13 @@ if (filterButtons.length > 0 && projectCards.length > 0) {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
 
-            // Filter cards with animation
-            projectCards.forEach((card, index) => {
+            // Filter cards
+            projectCards.forEach((card) => {
                 const categories = card.getAttribute('data-category').split(' ');
 
                 if (filter === 'all' || categories.includes(filter)) {
-                    // Show card with stagger animation
-                    setTimeout(() => {
-                        card.classList.remove('hidden');
-                        card.style.animation = 'fadeInUp 0.4s ease-out';
-                    }, index * 30);
+                    card.classList.remove('hidden');
                 } else {
-                    // Hide card
                     card.classList.add('hidden');
                 }
             });
