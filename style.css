@@ -2622,17 +2622,42 @@ ul.role-description li::before {
 
 /* Responsive */
 @media (max-width: 768px) {
+
+    /* Preloader Mobile Fix */
     .preloader-content {
-        padding: 1.5rem;
+        width: 95%;
+        max-width: 340px;
+        border-radius: 12px;
     }
 
-    .bios-header {
-        flex-direction: column;
-        gap: 0.5rem;
+    .code-header {
+        padding: 0.75rem 1rem;
     }
 
-    .boot-line {
+    .code-header .filename {
+        font-size: 0.75rem;
+    }
+
+    .code-body {
+        padding: 1rem;
+        min-height: 120px;
+    }
+
+    .code-line {
+        font-size: 0.65rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .loading-bar-container {
+        padding: 0.75rem 1rem;
+    }
+
+    .loading-text {
         font-size: 0.7rem;
+    }
+
+    .progress-percentage {
+        font-size: 0.8rem;
     }
 
     /* Hero Mobile */
@@ -2692,6 +2717,21 @@ ul.role-description li::before {
     }
 
     /* Project Cards Mobile */
+    .project-filters {
+        overflow-x: auto;
+        justify-content: flex-start;
+        gap: 0.5rem;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-btn {
+        padding: 0.5rem 0.875rem;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
     .ai-projects-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
