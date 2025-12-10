@@ -191,10 +191,14 @@ em {
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 800;
     font-family: 'JetBrains Mono', monospace;
-    color: var(--text-primary);
+    color: var(--accent-primary);
+    background: white;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(124, 58, 237, 0.2);
 }
 
 .logo .dot {
