@@ -2254,7 +2254,7 @@ footer {
 
 /* Primary CTA */
 .primary-cta {
-    max-width: 420px;
+    text-align: center;
     margin: 0 auto 2rem;
 }
 
