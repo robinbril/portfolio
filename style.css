@@ -143,13 +143,13 @@ em {
 /* Section Styling */
 .section {
     padding: 6rem 2rem;
-    text-align: center;
 }
 
 .section-header {
     margin-bottom: 3rem;
     text-align: center;
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 1rem;
 }
@@ -2210,11 +2210,12 @@ footer {
 /* ==========================================
    CONTACT SECTION
    ========================================== */
-.contact-subtitle {
+.contact-value-prop {
     text-align: center;
     font-size: 1.125rem;
     color: var(--text-secondary);
     margin-bottom: 3rem;
+    font-weight: 500;
 }
 
 /* Primary CTA */
@@ -2316,24 +2317,40 @@ footer {
 /* Contact Testimonial - Compact Quote Boxes */
 .testimonials-compact {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
     margin-top: 3rem;
 }
 
 .quote-box {
-    padding: 1.5rem;
-    background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(99, 102, 241, 0.08));
-    border-left: 4px solid var(--accent-primary);
-    border-radius: 12px;
+    padding: 2rem;
+    background: var(--card-bg);
+    border: 2px solid rgba(124, 58, 237, 0.2);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.quote-box:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.12);
+}
+
+.quote-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--accent-primary);
 }
 
 .quote-text {
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1.0625rem;
+    line-height: 1.7;
     color: var(--text-secondary);
     font-style: italic;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .quote-author {
@@ -2343,12 +2360,13 @@ footer {
 }
 
 .quote-author strong {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     color: var(--text-primary);
+    font-weight: 600;
 }
 
 .quote-author span {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
     color: var(--text-secondary);
 }
 
