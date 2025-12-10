@@ -688,43 +688,6 @@
             </div>
         </section>
 
-        <!-- Testimonials Section -->
-        <section id="testimonials" class="section">
-            <div class="section-header">
-                <h2>Wat collega's zeggen</h2>
-                <div class="line"></div>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-quote">"Very driven and motivated colleague who knows how to inspire others
-                        about GenAI. Robin worked extremely hard to deliver all the slideware and demos for our internal
-                        presentations. He is an indispensable AI support pillar both within and outside our project."
-                    </p>
-                    <div class="testimonial-author">
-                        <img src="mark-vervuurt.png" alt="Mark Vervuurt" class="author-photo">
-                        <div class="author-info">
-                            <strong>Mark Vervuurt</strong>
-                            <span>Lead AI Engineer & Data Architect, Capgemini</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-quote">"Robin is an exceptionally skilled professional with a strong command
-                        of Excel, SQL, and Looker. His analytical capabilities are top-notch, consistently delivering
-                        insights that drive informed business decisions. Any organization would be fortunate to have
-                        Robin on their team."</p>
-                    <div class="testimonial-author">
-                        <img src="giulio-piccolo.png" alt="Giulio Piccolo" class="author-photo">
-                        <div class="author-info">
-                            <strong>Giulio Piccolo</strong>
-                            <span>Lead Data Engineer, Capgemini</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Contact Section -->
         <section id="contact" class="section">
             <div class="container">
@@ -760,113 +723,126 @@
                     </a>
                 </div>
 
-                <!-- Testimonial -->
-                <div class="contact-testimonial">
-                    <p class="testimonial-text">"Very driven and motivated colleague who knows how to inspire others
-                        about AI. Robin is an indispensable AI support pillar both within and outside our project."</p>
-                    <div class="testimonial-author">
-                        <strong>Mark Vervuurt</strong>
-                        <span>Lead AI Engineer, Capgemini</span>
-    </main>
+                <!-- Testimonial Quotes -->
+                <div class="testimonials-compact">
+                    <div class="quote-box">
+                        <p class="quote-text">"Very driven and motivated colleague who knows how to inspire others about
+                            AI. Robin is an indispensable AI support pillar both within and outside our project."</p>
+                        <div class="quote-author">
+                            <strong>Mark Vervuurt</strong>
+                            <span>Lead AI Engineer, Capgemini</span>
+                        </div>
+                    </div>
 
-    <footer>
-        <p>&copy; 2025 Robin Bril. All rights reserved.</p>
-    </footer>
-
-    <!-- AI Contact Form Modal -->
-    <div id="contact-modal" class="contact-modal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <button class="modal-close" aria-label="Close modal">
-                <i data-lucide="x"></i>
-            </button>
-
-            <div class="modal-header">
-                <div class="ai-badge">
-                    <span class="ai-pulse"></span>
-                    <span>AI-Powered Response</span>
+                    <div class="quote-box">
+                        <p class="quote-text">"Robin is an exceptionally skilled professional. His analytical
+                            capabilities are top-notch, consistently delivering insights that drive informed business
+                            decisions."</p>
+                        <div class="quote-author">
+                            <strong>Giulio Piccolo</strong>
+                            <span>Lead Data Engineer, Capgemini</span>
+                        </div>
+                    </div>
                 </div>
-                <h2>Laat je nummer achter</h2>
-                <p>Robin neemt binnen 24 uur contact op via WhatsApp of telefoon</p>
             </div>
+        </section>
 
-            <form id="ai-contact-form" class="ai-form">
-                <div class="form-group">
-                    <label for="contact-name">
-                        <i data-lucide="user"></i>
-                        Naam
-                    </label>
-                    <input type="text" id="contact-name" name="name" placeholder="Jouw naam" required
-                        autocomplete="name">
-                    <span class="input-glow"></span>
+        <!-- Footer -->
+
+        <!-- AI Contact Form Modal -->
+        <div id="contact-modal" class="contact-modal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close modal">
+                    <i data-lucide="x"></i>
+                </button>
+
+                <div class="modal-header">
+                    <div class="ai-badge">
+                        <span class="ai-pulse"></span>
+                        <span>AI-Powered Response</span>
+                    </div>
+                    <h2>Laat je nummer achter</h2>
+                    <p>Robin neemt binnen 24 uur contact op via WhatsApp of telefoon</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="contact-phone">
-                        <i data-lucide="phone"></i>
-                        Telefoonnummer
-                    </label>
-                    <input type="tel" id="contact-phone" name="phone" placeholder="+31 6 1234 5678" required
-                        autocomplete="tel">
-                    <span class="input-glow"></span>
+                <form id="ai-contact-form" class="ai-form">
+                    <div class="form-group">
+                        <label for="contact-name">
+                            <i data-lucide="user"></i>
+                            Naam
+                        </label>
+                        <input type="text" id="contact-name" name="name" placeholder="Jouw naam" required
+                            autocomplete="name">
+                        <span class="input-glow"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-phone">
+                            <i data-lucide="phone"></i>
+                            Telefoonnummer
+                        </label>
+                        <input type="tel" id="contact-phone" name="phone" placeholder="+31 6 1234 5678" required
+                            autocomplete="tel">
+                        <span class="input-glow"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact-message">
+                            <i data-lucide="message-square"></i>
+                            Bericht (optioneel)
+                        </label>
+                        <textarea id="contact-message" name="message" placeholder="Waar kan Robin je mee helpen?"
+                            rows="4"></textarea>
+                        <span class="input-glow"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">Verstuur Aanvraag</span>
+                            <span class="btn-loader"></span>
+                            <i data-lucide="send"></i>
+                        </button>
+                    </div>
+
+                    <div class="form-footer">
+                        <i data-lucide="shield-check"></i>
+                        <span>Jouw gegevens worden veilig verwerkt en niet gedeeld</span>
+                    </div>
+                </form>
+
+                <div class="form-success hidden">
+                    <div class="success-icon">
+                        <i data-lucide="check-circle"></i>
+                    </div>
+                    <h3>Bedankt voor je aanvraag!</h3>
+                    <p>Robin neemt zo snel mogelijk contact met je op.</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="contact-message">
-                        <i data-lucide="message-square"></i>
-                        Bericht (optioneel)
-                    </label>
-                    <textarea id="contact-message" name="message" placeholder="Waar kan Robin je mee helpen?"
-                        rows="4"></textarea>
-                    <span class="input-glow"></span>
+                <!-- AI Background Animation -->
+                <div class="modal-bg-animation">
+                    <div class="ai-orb ai-orb-1"></div>
+                    <div class="ai-orb ai-orb-2"></div>
+                    <div class="ai-orb ai-orb-3"></div>
                 </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="submit-btn">
-                        <span class="btn-text">Verstuur Aanvraag</span>
-                        <span class="btn-loader"></span>
-                        <i data-lucide="send"></i>
-                    </button>
-                </div>
-
-                <div class="form-footer">
-                    <i data-lucide="shield-check"></i>
-                    <span>Jouw gegevens worden veilig verwerkt en niet gedeeld</span>
-                </div>
-            </form>
-
-            <div class="form-success hidden">
-                <div class="success-icon">
-                    <i data-lucide="check-circle"></i>
-                </div>
-                <h3>Bedankt voor je aanvraag!</h3>
-                <p>Robin neemt zo snel mogelijk contact met je op.</p>
-            </div>
-
-            <!-- AI Background Animation -->
-            <div class="modal-bg-animation">
-                <div class="ai-orb ai-orb-1"></div>
-                <div class="ai-orb ai-orb-2"></div>
-                <div class="ai-orb ai-orb-3"></div>
             </div>
         </div>
-    </div>
 
-    <!-- WhatsApp Widget -->
-    <div class="whatsapp-widget">
-        <div class="whatsapp-status">
-            <span class="status-dot"></span>
-            <span class="status-text">Robin is online!</span>
+        <!-- WhatsApp Widget -->
+        <div class="whatsapp-widget">
+            <div class="whatsapp-status">
+                <span class="status-dot"></span>
+                <span class="status-text">Robin is online!</span>
+            </div>
+            <a href="https://wa.me/31640446732" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">
+                <i data-lucide="message-circle"></i>
+            </a>
         </div>
-        <a href="https://wa.me/31640446732" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">
-            <i data-lucide="message-circle"></i>
-        </a>
-    </div>
 
-    <script src="script.js"></script>
-    <script>
-        lucide.createIcons();
-    </script>
+        <script src="script.js"></script>
+        <script>
+            lucide.createIcons();
+        </script>
 </body>
 
 </html>
