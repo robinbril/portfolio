@@ -420,7 +420,8 @@ body.dark-theme .hero::after {
 .hero-content {
     max-width: 900px;
     text-align: center;
-    z-index: 1;
+    z-index: 10;
+    position: relative;
 }
 
 .badge {
