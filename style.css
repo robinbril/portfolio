@@ -2270,6 +2270,7 @@ footer {
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+    white-space: nowrap;
 }
 
 .cta-primary-btn:hover {
