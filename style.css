@@ -1705,11 +1705,48 @@ body.light-theme .email-reveal {
     bottom: 24px;
     right: 24px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
 }
 
-/* Hide the status bubble */
+/* Status bubble */
 .whatsapp-status {
-    display: none;
+    background: var(--card-bg);
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--border-color);
+    font-size: 0.8rem;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: pulse-purple 2s infinite;
+}
+
+.status-text {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+@keyframes pulse-purple {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
 }
 
 .whatsapp-btn {
