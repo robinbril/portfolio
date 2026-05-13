@@ -1294,7 +1294,6 @@ body.light-theme .icon-green {
     line-height: 1.6;
     color: var(--text-secondary);
     margin-bottom: 1rem;
-    flex-grow: 1;
 }
 
 .ai-project-card p strong {
@@ -1314,9 +1313,10 @@ body.light-theme .ai-project-card p strong {
     flex-wrap: wrap;
     gap: 0.4rem;
     justify-content: center;
-    margin-top: 0.5rem;
+    margin-top: auto;
     padding-top: 0.75rem;
     border-top: 1px solid var(--border-color);
+    width: 100%;
 }
 
 .project-tags span {
