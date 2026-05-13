@@ -3036,11 +3036,11 @@ footer {
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #38bdf8 0%, #c084fc 50%, #f43f5e 100%);
+    background: linear-gradient(90deg, #047857 0%, #10b981 55%, #00ff9d 100%);
     transition: width 0.1s linear;
     position: relative;
     border-radius: 3px;
-    box-shadow: 0 0 12px rgba(192, 132, 252, 0.5);
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.45);
 }
 
 .progress-info {
