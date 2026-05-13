@@ -618,18 +618,16 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // ==========================================
-// TERMINAL AI INTERFACE
+// TERMINAL AI INTERFACE (embedded in contact)
 // ==========================================
 (() => {
-    const overlay = document.getElementById('terminal-overlay');
-    const toggleBtn = document.getElementById('terminal-toggle');
-    const closeBtn = document.getElementById('terminal-close');
+    const embed = document.getElementById('terminal-embed');
     const body = document.getElementById('terminal-body');
     const form = document.getElementById('terminal-form');
     const input = document.getElementById('terminal-input');
     const chips = document.querySelectorAll('.terminal-chip');
 
-    if (!overlay || !toggleBtn || !body || !form || !input) return;
+    if (!embed || !body || !form || !input) return;
 
     const escape = (s) => s.replace(/[&<>"']/g, (c) => ({
         '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -664,26 +662,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 12);
     };
 
-    const open = () => {
-        overlay.classList.add('open');
-        overlay.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        setTimeout(() => input.focus(), 50);
-    };
-
-    const close = () => {
-        overlay.classList.remove('open');
-        overlay.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    };
-
     const commands = {
         help: () => {
             print('system', 'Available commands:');
             print('muted', '  linkedin  →  open LinkedIn profiel');
             print('muted', '  whatsapp  →  open WhatsApp chat');
             print('muted', '  email     →  toon email-adres');
-            print('muted', '  github    →  open GitHub profiel');
             print('muted', '  call      →  plan een call (WhatsApp)');
             print('muted', '  about     →  korte bio');
             print('muted', '  stack     →  tech stack');
@@ -710,12 +694,6 @@ document.addEventListener('DOMContentLoaded', () => {
         email: () => {
             print('system', 'Email: robin.bril@gmail.com');
             print('link', '→ mailto:robin.bril@gmail.com', 'mailto:robin.bril@gmail.com');
-        },
-        github: () => {
-            print('system', 'Opening GitHub...');
-            const url = 'https://github.com/robinbril';
-            print('link', '→ ' + url, url);
-            window.open(url, '_blank', 'noopener,noreferrer');
         },
         about: () => {
             print('system', 'Robin Bril — AI Engineer, Amsterdam.');
@@ -751,25 +729,25 @@ document.addEventListener('DOMContentLoaded', () => {
         booted = true;
         typePrint('system', 'Robin Bril AI Protocol initialized...', () => {
             typePrint('system', 'Ready for inquiries. Available: AI engineering, agentic systems, enterprise AI.', () => {
-                typePrint('system', 'Type "help" voor commando\'s, of klik een chip hieronder.');
+                typePrint('system', 'Klik een chip hieronder of typ "help" voor alle commando\'s.');
             });
         });
     };
 
-    toggleBtn.addEventListener('click', () => {
-        const isOpen = overlay.classList.contains('open');
-        if (isOpen) close(); else { open(); boot(); }
-    });
-
-    closeBtn?.addEventListener('click', close);
-
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) close();
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && overlay.classList.contains('open')) close();
-    });
+    // Boot when terminal scrolls into view
+    if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    boot();
+                    io.disconnect();
+                }
+            });
+        }, { threshold: 0.2 });
+        io.observe(embed);
+    } else {
+        boot();
+    }
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -778,11 +756,17 @@ document.addEventListener('DOMContentLoaded', () => {
         run(v);
     });
 
+    // Chip click: fill the input, do NOT execute (user presses Enter)
     chips.forEach((chip) => {
         chip.addEventListener('click', () => {
             const cmd = chip.getAttribute('data-cmd');
-            if (cmd) run(cmd);
+            if (!cmd) return;
+            input.value = cmd;
             input.focus();
+            // Tiny pulse to hint at "press Enter"
+            input.classList.remove('terminal-input--pulse');
+            void input.offsetWidth;
+            input.classList.add('terminal-input--pulse');
         });
     });
 })();

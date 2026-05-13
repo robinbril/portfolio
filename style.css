@@ -7,7 +7,7 @@
 
 /* Dark Theme */
 body.dark-theme {
-    --bg-color: #0a0a0a;
+    --bg-color: #0b0d11;
     --card-bg: #111111;
     --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
@@ -106,10 +106,9 @@ body.dark-theme::before {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(0, 255, 157, 0.14), transparent 55%),
-        radial-gradient(ellipse 80% 60% at 95% 30%, rgba(112, 0, 255, 0.12), transparent 55%),
-        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(0, 255, 157, 0.10), transparent 60%),
-        radial-gradient(ellipse 50% 40% at 25% 75%, rgba(112, 0, 255, 0.08), transparent 65%);
+        radial-gradient(ellipse 60% 45% at 8% 5%, rgba(0, 255, 157, 0.05), transparent 60%),
+        radial-gradient(ellipse 70% 55% at 95% 25%, rgba(112, 0, 255, 0.045), transparent 60%),
+        radial-gradient(ellipse 50% 45% at 50% 105%, rgba(0, 255, 157, 0.035), transparent 65%);
 }
 
 body.dark-theme::after {
@@ -119,11 +118,11 @@ body.dark-theme::after {
     z-index: -1;
     pointer-events: none;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 40%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 40%, transparent 85%);
 }
 
 body.light-theme::before {
@@ -3888,45 +3887,22 @@ textarea:focus-visible,
 }
 
 /* ==========================================
-   TERMINAL TOGGLE BUTTON (nav)
+   TERMINAL — EMBEDDED IN CONTACT SECTION
    ========================================== */
-.terminal-toggle-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.3rem;
-    width: auto;
-    height: 38px;
-    padding: 0 0.75rem;
-    background: rgba(var(--accent-rgb), 0.08);
-    border: 1px solid rgba(var(--accent-rgb), 0.35);
-    border-radius: 8px;
-    color: var(--accent-primary);
+.contact-terminal-wrap {
+    max-width: 720px;
+    margin: 3rem auto 0;
+}
+
+.contact-terminal-intro {
+    text-align: center;
+    color: var(--text-secondary);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.85rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-body.light-theme .terminal-toggle-btn {
-    color: var(--accent-strong);
-    border-color: rgba(var(--accent-strong-rgb), 0.4);
-    background: rgba(var(--accent-strong-rgb), 0.06);
-}
-
-.terminal-toggle-btn:hover {
-    background: rgba(var(--accent-rgb), 0.15);
-    border-color: rgba(var(--accent-rgb), 0.6);
-}
-
-.terminal-toggle-btn i {
-    width: 16px;
-    height: 16px;
-}
-
-.terminal-toggle-label {
-    animation: blink-cursor 1s step-end infinite;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    opacity: 0.7;
 }
 
 @keyframes blink-cursor {
@@ -3934,36 +3910,9 @@ body.light-theme .terminal-toggle-btn {
     51%, 100% { opacity: 0; }
 }
 
-/* ==========================================
-   TERMINAL OVERLAY + WINDOW
-   ========================================== */
-.terminal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9998;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    animation: term-fade 0.2s ease;
-}
-
-.terminal-overlay.open {
-    display: flex;
-}
-
-@keyframes term-fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
 .terminal-window {
     width: 100%;
-    max-width: 720px;
-    height: min(640px, 88vh);
+    height: min(520px, 75vh);
     background: #0a0e0a;
     border: 1px solid rgba(0, 255, 157, 0.2);
     border-radius: 14px;
@@ -3971,10 +3920,23 @@ body.light-theme .terminal-toggle-btn {
     display: flex;
     flex-direction: column;
     box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.7),
+        0 20px 60px rgba(0, 0, 0, 0.5),
         0 0 0 1px rgba(0, 255, 157, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
     font-family: 'JetBrains Mono', monospace;
+}
+
+.terminal-titlebar-spacer {
+    width: 16px;
+}
+
+.terminal-input--pulse {
+    animation: term-input-pulse 0.55s ease;
+}
+
+@keyframes term-input-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.5); }
+    100% { box-shadow: 0 0 0 8px rgba(0, 255, 157, 0); }
 }
 
 .terminal-titlebar {
@@ -4133,6 +4095,9 @@ body.light-theme .terminal-toggle-btn {
     color: #ffffff;
     font-family: inherit;
     font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: box-shadow 0.2s ease;
 }
 
 .terminal-input::placeholder {

@@ -97,11 +97,6 @@
                 <a href="#contact" class="btn-primary">Contact</a>
             </div>
             <div class="nav-actions">
-                <button id="terminal-toggle" class="terminal-toggle-btn"
-                    aria-label="Open terminal interface">
-                    <i data-lucide="terminal"></i>
-                    <span class="terminal-toggle-label">_</span>
-                </button>
                 <button id="theme-toggle" class="theme-toggle-btn"
                     aria-label="Wissel tussen licht en donker thema">
                     <i data-lucide="sun" class="light-icon"></i>
@@ -763,11 +758,11 @@
             <div class="timeline">
                 <!-- Fellowmind freelance opdracht -->
                 <div class="timeline-item">
-                    <div class="timeline-date">2025 – 2026</div>
+                    <div class="timeline-date">2025 – heden</div>
                     <div class="timeline-content glow-card">
                         <div class="role-header">
                             <h3>Senior AI Engineer (Freelance)</h3>
-                            <span class="company">Reforge Recruitment, opdracht bij Fellowmind</span>
+                            <span class="company">Reforge Consultancy, opdracht bij Fellowmind</span>
                         </div>
                         <ul class="role-description">
                             <li>Werkte aan <strong>Hive AI</strong>, Fellowmind's enterprise
@@ -800,7 +795,7 @@
 
                 <!-- Virelio (freelance) -->
                 <div class="timeline-item">
-                    <div class="timeline-date">2024 – heden</div>
+                    <div class="timeline-date">2024 – 2026</div>
                     <div class="timeline-content glow-card">
                         <div class="role-header">
                             <h3>Artificial Intelligence Developer (Freelance)</h3>
@@ -1126,6 +1121,41 @@
                     </div>
                 </div>
 
+                <!-- Terminal AI Interface (embedded) -->
+                <div class="contact-terminal-wrap">
+                    <p class="contact-terminal-intro">Of probeer mijn AI interface ↓</p>
+                    <div class="terminal-window" id="terminal-embed" role="region"
+                        aria-label="Robin AI interface">
+                        <div class="terminal-titlebar">
+                            <div class="terminal-dots">
+                                <span class="terminal-dot terminal-dot--red"></span>
+                                <span class="terminal-dot terminal-dot--yellow"></span>
+                                <span class="terminal-dot terminal-dot--green"></span>
+                            </div>
+                            <div class="terminal-title">robin_ai_interface &mdash; -zsh</div>
+                            <span class="terminal-titlebar-spacer"></span>
+                        </div>
+                        <div class="terminal-body" id="terminal-body"></div>
+                        <div class="terminal-chips">
+                            <button type="button" class="terminal-chip" data-cmd="linkedin">[LINKEDIN]</button>
+                            <button type="button" class="terminal-chip" data-cmd="whatsapp">[WHATSAPP]</button>
+                            <button type="button" class="terminal-chip" data-cmd="email">[EMAIL]</button>
+                            <button type="button" class="terminal-chip" data-cmd="call">[BOOK CALL]</button>
+                            <button type="button" class="terminal-chip" data-cmd="help">[HELP]</button>
+                        </div>
+                        <form class="terminal-input-row" id="terminal-form" autocomplete="off">
+                            <span class="terminal-input-prompt">$</span>
+                            <input type="text" id="terminal-input" class="terminal-input"
+                                placeholder="Enter command..." spellcheck="false"
+                                autocapitalize="none" />
+                            <button type="submit" class="terminal-submit"
+                                aria-label="Verstuur commando">
+                                <i data-lucide="send"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
                 <!-- Testimonial Quotes -->
                 <div class="testimonials-compact">
                     <div class="quote-box">
@@ -1269,39 +1299,6 @@
             </div>
         </div>
 
-
-        <!-- Terminal AI Interface -->
-        <div class="terminal-overlay" id="terminal-overlay" aria-hidden="true">
-            <div class="terminal-window" role="dialog" aria-label="Terminal interface">
-                <div class="terminal-titlebar">
-                    <div class="terminal-dots">
-                        <span class="terminal-dot terminal-dot--red"></span>
-                        <span class="terminal-dot terminal-dot--yellow"></span>
-                        <span class="terminal-dot terminal-dot--green"></span>
-                    </div>
-                    <div class="terminal-title">robin_ai_interface &mdash; -zsh</div>
-                    <button class="terminal-close" id="terminal-close" aria-label="Sluit terminal">
-                        <i data-lucide="x"></i>
-                    </button>
-                </div>
-                <div class="terminal-body" id="terminal-body"></div>
-                <div class="terminal-chips">
-                    <button class="terminal-chip" data-cmd="linkedin">[LINKEDIN]</button>
-                    <button class="terminal-chip" data-cmd="whatsapp">[WHATSAPP]</button>
-                    <button class="terminal-chip" data-cmd="email">[EMAIL]</button>
-                    <button class="terminal-chip" data-cmd="github">[GITHUB]</button>
-                    <button class="terminal-chip" data-cmd="help">[HELP]</button>
-                </div>
-                <form class="terminal-input-row" id="terminal-form" autocomplete="off">
-                    <span class="terminal-input-prompt">$</span>
-                    <input type="text" id="terminal-input" class="terminal-input"
-                        placeholder="Enter command..." spellcheck="false" autocapitalize="none" />
-                    <button type="submit" class="terminal-submit" aria-label="Verstuur commando">
-                        <i data-lucide="send"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
 
         <script src="script.js"></script>
         <script>
