@@ -4647,9 +4647,24 @@ body.light-theme ::-webkit-scrollbar-thumb {
         padding: 1.25rem 1rem;
         max-width: 100%;
     }
+    .contact-card .primary-cta {
+        margin: 0 0 1rem;
+    }
     .contact-card .primary-cta a {
-        width: 100%;
-        justify-content: center;
+        width: auto;
+        max-width: 100%;
+    }
+    .cta-primary-btn {
+        padding: 0.65rem 1.25rem;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+    }
+    .cta-title {
+        font-size: 0.9rem;
+    }
+    .cta-primary-btn i {
+        width: 14px;
+        height: 14px;
     }
     .secondary-options {
         flex-direction: column;
