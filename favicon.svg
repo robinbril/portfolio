@@ -1,19 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Robin Bril">
   <defs>
-    <linearGradient id="rb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="rb-bg-light" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#dbeafe"/>
       <stop offset="100%" stop-color="#93c5fd"/>
     </linearGradient>
-    <linearGradient id="rb-sheen" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
-      <stop offset="55%" stop-color="#ffffff" stop-opacity="0"/>
+    <linearGradient id="rb-bg-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
     </linearGradient>
+    <style>
+      .rb-bg-light { display: block; }
+      .rb-bg-dark { display: none; }
+      .rb-text { fill: #0f172a; }
+      @media (prefers-color-scheme: dark) {
+        .rb-bg-light { display: none; }
+        .rb-bg-dark { display: block; }
+        .rb-text { fill: #00ff9d; }
+      }
+    </style>
   </defs>
-  <rect width="64" height="64" rx="14" ry="14" fill="url(#rb-bg)"/>
-  <rect width="64" height="64" rx="14" ry="14" fill="url(#rb-sheen)"/>
-  <text x="32" y="34"
+  <rect class="rb-bg-light" width="64" height="64" rx="14" ry="14" fill="url(#rb-bg-light)"/>
+  <rect class="rb-bg-dark" width="64" height="64" rx="14" ry="14" fill="url(#rb-bg-dark)"/>
+  <text class="rb-text" x="32" y="34"
         text-anchor="middle" dominant-baseline="central"
         font-family="Georgia, 'Times New Roman', serif"
         font-style="italic" font-weight="700" font-size="36"
-        fill="#0f172a" letter-spacing="-1.5">rb</text>
+        letter-spacing="-1.5">rb</text>
 </svg>

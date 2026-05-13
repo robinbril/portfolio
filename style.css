@@ -2621,16 +2621,16 @@ footer {
 }
 
 .keyword {
-    color: var(--accent-strong, var(--accent-primary));
+    color: #1e293b;
     font-weight: 600;
 }
 
 .variable {
-    color: #0284c7;
+    color: #1e293b;
 }
 
 .string {
-    color: #059669;
+    color: #64748b;
 }
 
 .comment {
@@ -2643,12 +2643,12 @@ footer {
 }
 
 .class {
-    color: #d97706;
+    color: #1e293b;
     font-weight: 600;
 }
 
 .method {
-    color: var(--accent-strong, var(--accent-primary));
+    color: #475569;
 }
 
 .bracket {
@@ -2675,8 +2675,7 @@ footer {
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3);
+    background: #1e293b;
     transition: width 0.1s linear;
     position: relative;
     border-radius: 3px;
@@ -2696,8 +2695,9 @@ footer {
 
 .progress-percentage {
     font-size: 0.75rem;
-    color: var(--accent-primary);
+    color: #1e293b;
     font-weight: 700;
+    font-variant-numeric: tabular-nums;
 }
 
 
