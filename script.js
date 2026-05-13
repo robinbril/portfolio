@@ -581,3 +581,39 @@ function initShowMoreToggle() {
         }
     });
 }
+
+// ==========================================
+// X-RAY MODE — hold SPACE to reveal layout
+// ==========================================
+(() => {
+    let xrayActive = false;
+
+    const isTypingTarget = (el) => {
+        if (!el) return false;
+        const tag = el.tagName;
+        return tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable;
+    };
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code !== 'Space') return;
+        if (isTypingTarget(e.target)) return;
+        if (e.repeat || xrayActive) return;
+        xrayActive = true;
+        document.body.classList.add('xray');
+        e.preventDefault();
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.code !== 'Space') return;
+        if (!xrayActive) return;
+        xrayActive = false;
+        document.body.classList.remove('xray');
+    });
+
+    window.addEventListener('blur', () => {
+        if (xrayActive) {
+            xrayActive = false;
+            document.body.classList.remove('xray');
+        }
+    });
+})();

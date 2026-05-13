@@ -1143,6 +1143,276 @@ body.light-theme .tags span:hover {
     z-index: 2;
 }
 
+/* ==========================================
+   THICK CARD STYLING — terminal aesthetic
+   ========================================== */
+
+.featured-project {
+    padding: 1.5rem 1.5rem 1.25rem;
+}
+
+/* Corner brackets */
+.card-corner {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid rgba(var(--case-accent-rgb), 0.55);
+    pointer-events: none;
+    z-index: 3;
+}
+
+.card-corner--tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+.card-corner--tr { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+.card-corner--bl { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+.card-corner--br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+body.light-theme .card-corner {
+    border-color: rgba(var(--accent-strong-rgb), 0.55);
+}
+
+/* Card top row: icon box + status badge */
+.card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 2;
+}
+
+.card-icon-box {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(var(--case-accent-rgb), 0.4);
+    border-radius: 10px;
+    background: rgba(var(--case-accent-rgb), 0.08);
+    color: var(--case-accent);
+}
+
+.card-icon-box i {
+    width: 22px;
+    height: 22px;
+}
+
+.card-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.32rem 0.65rem;
+    border: 1px solid rgba(var(--case-accent-rgb), 0.4);
+    border-radius: 4px;
+    background: rgba(var(--case-accent-rgb), 0.06);
+    color: var(--case-accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.card-status .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--case-accent);
+    box-shadow: 0 0 10px rgba(var(--case-accent-rgb), 0.8);
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* ID label */
+.card-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--case-accent);
+    margin-bottom: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.card-id-dot {
+    font-size: 0.55rem;
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Description: left-accent border */
+.featured-project .featured-content p {
+    border-left: 2px solid rgba(var(--case-accent-rgb), 0.35);
+    padding-left: 0.85rem;
+    margin-top: 0.6rem;
+}
+
+/* Inset metric boxes */
+.card-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin-top: 1.1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.card-metric {
+    padding: 0.65rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+body.light-theme .card-metric {
+    background: rgba(15, 23, 42, 0.04);
+    border-color: rgba(15, 23, 42, 0.08);
+}
+
+.card-metric-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.card-metric-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--case-accent);
+}
+
+/* Terminal path strip */
+.card-terminal {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px dashed rgba(var(--case-accent-rgb), 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 2;
+}
+
+.terminal-prompt {
+    color: var(--case-accent);
+    font-weight: 700;
+}
+
+.terminal-path {
+    color: rgba(255, 255, 255, 0.55);
+    transition: color 0.2s ease;
+}
+
+body.light-theme .terminal-path {
+    color: rgba(15, 23, 42, 0.55);
+}
+
+.featured-project:hover .terminal-path {
+    color: var(--case-accent);
+}
+
+/* Scan sweep animation */
+.featured-project::before {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 38px 38px;
+    opacity: 0.55;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3) 70%, transparent);
+}
+
+.featured-project:hover {
+    border-color: rgba(var(--case-accent-rgb), 0.45);
+    transform: translateY(-2px);
+}
+
+.featured-project::after {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 55%),
+        linear-gradient(120deg,
+            transparent 30%,
+            rgba(var(--case-accent-rgb), 0) 45%,
+            rgba(var(--case-accent-rgb), 0.08) 50%,
+            rgba(var(--case-accent-rgb), 0) 55%,
+            transparent 70%);
+    background-size: 100% 100%, 220% 220%;
+    background-position: 0 0, -50% -50%;
+    transition: background-position 1.2s ease;
+}
+
+.featured-project:hover::after {
+    background-position: 0 0, 50% 50%;
+}
+
+/* ==========================================
+   X-RAY MODE (hold SPACE to activate)
+   ========================================== */
+body.xray * {
+    outline: 1px solid rgba(var(--accent-rgb), 0.35) !important;
+    outline-offset: -1px;
+    background-image: none !important;
+}
+
+body.xray {
+    background: #050505 !important;
+}
+
+body.xray::after {
+    content: "XRAY MODE — release SPACE to exit";
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    z-index: 99999;
+    padding: 0.5rem 0.85rem;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid var(--accent-primary);
+    color: var(--accent-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+body.xray img,
+body.xray video {
+    opacity: 0.15;
+}
+
+@media (max-width: 768px) {
+    .card-metrics {
+        gap: 0.4rem;
+    }
+    .card-metric {
+        padding: 0.5rem;
+    }
+    .card-metric-value {
+        font-size: 0.9rem;
+    }
+    .card-terminal {
+        font-size: 0.65rem;
+        gap: 0.4rem;
+    }
+}
+
 .project-kicker {
     display: block;
     color: rgba(226, 232, 240, 0.64);
