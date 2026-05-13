@@ -656,7 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
             print('muted', '  linkedin  →  open LinkedIn profiel');
             print('muted', '  whatsapp  →  open WhatsApp chat');
             print('muted', '  email     →  toon email-adres');
-            print('muted', '  call      →  plan een call (WhatsApp)');
+            print('muted', '  call      →  plan een call (email)');
             print('muted', '  about     →  korte bio');
             print('muted', '  stack     →  tech stack');
             print('muted', '  clear     →  wis terminal');
@@ -674,10 +674,10 @@ document.addEventListener('DOMContentLoaded', () => {
             window.open(url, '_blank', 'noopener,noreferrer');
         },
         call: () => {
-            print('system', 'Best route: stuur een WhatsApp, dan plannen we direct.');
-            const url = 'https://wa.me/31640446732?text=Hi%20Robin%2C%20ik%20wil%20een%20call%20plannen';
-            print('link', '→ Plan call via WhatsApp', url);
-            window.open(url, '_blank', 'noopener,noreferrer');
+            print('system', 'Stuur een mail dan plannen we een call in.');
+            const url = 'mailto:robin.bril@gmail.com?subject=Call%20plannen&body=Hi%20Robin%2C%0A%0AIk%20wil%20graag%20een%20call%20plannen.%0A%0AGroet%2C';
+            print('link', '→ Plan call via robin.bril@gmail.com', url);
+            window.location.href = url;
         },
         email: () => {
             print('system', 'Email: robin.bril@gmail.com');
@@ -764,8 +764,8 @@ document.addEventListener('DOMContentLoaded', () => {
             body.appendChild(line);
             body.scrollTop = body.scrollHeight;
 
-            const totalMs = 500;
-            const stepMs = Math.max(20, Math.floor(totalMs / cmd.length));
+            const totalMs = 1000;
+            const stepMs = Math.max(40, Math.floor(totalMs / cmd.length));
             let i = 0;
             const typer = setInterval(() => {
                 line.textContent = cmd.slice(0, ++i);
@@ -773,13 +773,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (i >= cmd.length) {
                     clearInterval(typer);
                     line.classList.remove('terminal-line--typing');
-                    // Execute after a tiny beat
+                    // Hold a beat so the typed word is readable, then execute
                     setTimeout(() => {
                         const fn = commands[cmd];
                         if (fn) fn();
                         else print('error', `command not found: ${cmd}`);
                         chipBusy = false;
-                    }, 120);
+                    }, 250);
                 }
             }, stepMs);
         });
