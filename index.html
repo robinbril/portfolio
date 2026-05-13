@@ -97,6 +97,11 @@
                 <a href="#contact" class="btn-primary">Contact</a>
             </div>
             <div class="nav-actions">
+                <button id="terminal-toggle" class="terminal-toggle-btn"
+                    aria-label="Open terminal interface">
+                    <i data-lucide="terminal"></i>
+                    <span class="terminal-toggle-label">_</span>
+                </button>
                 <button id="theme-toggle" class="theme-toggle-btn"
                     aria-label="Wissel tussen licht en donker thema">
                     <i data-lucide="sun" class="light-icon"></i>
@@ -316,9 +321,9 @@
                         <i data-lucide="terminal"></i>
                     </div>
                     <h3>claude-harness <span style="font-weight:400;opacity:0.7;">· Open Source</span></h3>
-                    <p>Mijn persoonlijke AI engineer-werkomgeving. Maakt van Claude Code een complete
-                        ontwikkeltool die taken onthoudt over sessies heen, gespecialiseerde rollen
-                        aanstuurt en mijn werkpatronen automatiseert. <strong>Live op GitHub.</strong></p>
+                    <p>Een zelf-verbeterende AI-engineer die zelfstandig productie-ready code schrijft.
+                        Onthoudt taken over sessies heen, leert van eigen fouten en stuurt gespecialiseerde
+                        sub-agents aan voor planning, implementatie en review. <strong>Live op GitHub.</strong></p>
                     <div class="project-tags">
                         <span class="tag-violet">Claude Code</span>
                         <span class="tag-blue">Agentic Swarm</span>
@@ -1264,6 +1269,39 @@
             </div>
         </div>
 
+
+        <!-- Terminal AI Interface -->
+        <div class="terminal-overlay" id="terminal-overlay" aria-hidden="true">
+            <div class="terminal-window" role="dialog" aria-label="Terminal interface">
+                <div class="terminal-titlebar">
+                    <div class="terminal-dots">
+                        <span class="terminal-dot terminal-dot--red"></span>
+                        <span class="terminal-dot terminal-dot--yellow"></span>
+                        <span class="terminal-dot terminal-dot--green"></span>
+                    </div>
+                    <div class="terminal-title">robin_ai_interface &mdash; -zsh</div>
+                    <button class="terminal-close" id="terminal-close" aria-label="Sluit terminal">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <div class="terminal-body" id="terminal-body"></div>
+                <div class="terminal-chips">
+                    <button class="terminal-chip" data-cmd="linkedin">[LINKEDIN]</button>
+                    <button class="terminal-chip" data-cmd="whatsapp">[WHATSAPP]</button>
+                    <button class="terminal-chip" data-cmd="email">[EMAIL]</button>
+                    <button class="terminal-chip" data-cmd="github">[GITHUB]</button>
+                    <button class="terminal-chip" data-cmd="help">[HELP]</button>
+                </div>
+                <form class="terminal-input-row" id="terminal-form" autocomplete="off">
+                    <span class="terminal-input-prompt">$</span>
+                    <input type="text" id="terminal-input" class="terminal-input"
+                        placeholder="Enter command..." spellcheck="false" autocapitalize="none" />
+                    <button type="submit" class="terminal-submit" aria-label="Verstuur commando">
+                        <i data-lucide="send"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
 
         <script src="script.js"></script>
         <script>
