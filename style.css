@@ -1523,22 +1523,14 @@ body.xray {
     background: #020405 !important;
 }
 
-body.xray section,
 body.xray .ai-project-card,
 body.xray .featured-project,
 body.xray .cert-item,
 body.xray .timeline-item,
 body.xray .stat-item,
 body.xray .glow-card,
-body.xray nav,
-body.xray header,
-body.xray footer,
 body.xray .contact-card,
-body.xray .terminal-window,
-body.xray .featured-projects-grid,
-body.xray .ai-projects-grid,
-body.xray .certifications-grid,
-body.xray .timeline {
+body.xray .terminal-window {
     outline: 1px solid rgba(0, 255, 157, 0.45) !important;
     outline-offset: -1px;
     background-image: none !important;
@@ -3370,6 +3362,47 @@ body.light-theme .contact-card {
     margin: 1.25rem 0 0;
     padding-top: 1.25rem;
     border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.cv-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0.25rem auto 0;
+    padding: 0.65rem 1.25rem;
+    border: 1px solid rgba(var(--accent-rgb), 0.4);
+    border-radius: 999px;
+    background: rgba(var(--accent-rgb), 0.06);
+    color: var(--accent-primary);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.cv-download-btn:hover {
+    background: rgba(var(--accent-rgb), 0.15);
+    border-color: rgba(var(--accent-rgb), 0.7);
+    transform: translateY(-1px);
+}
+
+.cv-download-btn i {
+    width: 15px;
+    height: 15px;
+}
+
+body.light-theme .cv-download-btn {
+    color: var(--accent-strong);
+    border-color: rgba(var(--accent-strong-rgb), 0.45);
+    background: rgba(var(--accent-strong-rgb), 0.06);
+}
+
+body.light-theme .cv-download-btn:hover {
+    background: rgba(var(--accent-strong-rgb), 0.14);
+    border-color: rgba(var(--accent-strong-rgb), 0.75);
 }
 
 body.light-theme .contact-card .secondary-options {
