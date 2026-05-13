@@ -196,13 +196,11 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id');
             navItems.forEach(item => {
-                // Reset all nav items
-                if (!item.classList.contains('btn-primary')) {
-                    item.style.color = 'var(--text-secondary)';
-                }
-                // Highlight active section
-                if (item.getAttribute('href') === `#${id}` && !item.classList.contains('btn-primary')) {
-                    item.style.color = 'var(--text-primary)';
+                if (item.classList.contains('btn-primary')) return;
+                item.style.color = '';
+                item.classList.remove('is-active');
+                if (item.getAttribute('href') === `#${id}`) {
+                    item.classList.add('is-active');
                 }
             });
         }
@@ -1054,3 +1052,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     stats.forEach((el) => observer.observe(el));
 })();
+

@@ -1304,7 +1304,7 @@ body.light-theme .card-corner {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.6rem;
-    margin-top: auto;
+    margin-top: 1.25rem;
     padding-top: 1.1rem;
     position: relative;
     z-index: 2;
@@ -1346,10 +1346,10 @@ body.light-theme .card-metric {
     line-height: 1.12;
 }
 
-/* Terminal path strip */
+/* Terminal path strip - sticks to bottom of card */
 .card-terminal {
-    margin-top: 1rem;
-    padding-top: 0.85rem;
+    margin-top: auto;
+    padding-top: 1rem;
     border-top: 1px dashed rgba(var(--case-accent-rgb), 0.2);
     display: flex;
     flex-wrap: wrap;
@@ -5470,4 +5470,34 @@ body.xray .rocket-pov .cockpit-frame {
 
 @media (prefers-reduced-motion: reduce) {
     body.xray::before { animation: none !important; }
+}
+
+/* ==========================================
+   ACTIVE NAV LINK
+   ========================================== */
+.nav-links a.is-active:not(.btn-primary) {
+    color: var(--accent-primary);
+    position: relative;
+}
+
+.nav-links a.is-active:not(.btn-primary)::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 2px;
+    background: var(--accent-primary);
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.55);
+}
+
+body.light-theme .nav-links a.is-active:not(.btn-primary) {
+    color: var(--accent-strong);
+}
+
+body.light-theme .nav-links a.is-active:not(.btn-primary)::after {
+    background: var(--accent-strong);
+    box-shadow: 0 0 8px rgba(var(--accent-strong-rgb, 0, 112, 173), 0.4);
 }
