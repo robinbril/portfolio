@@ -2056,20 +2056,15 @@ body.light-theme .filter-btn.active {
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-left: 3px solid var(--accent-primary);
     border-radius: 16px;
-    padding: 1.75rem 1.5rem;
-    /* Three-zone flex column:
-       1. icon (fixed top)
-       2. h3 (fixed Y via min-height 2 lines)
-       3. p (flex-grow — its OWN flex centering keeps text in middle)
-       4. tags (fixed bottom)
-       Short descriptions visually float in the middle of their block;
-       long descriptions fill it. Title baseline aligns across all cards. */
+    padding: 1.75rem;
+    /* New layout: left-aligned vertical flow with proper hierarchy.
+       Header row (icon + kicker), then title, then description,
+       then tags. No more centering, no more wrap surprises. */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: stretch;
+    text-align: left;
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -2077,44 +2072,51 @@ body.light-theme .filter-btn.active {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* Header row: icon left, kicker right */
 .ai-project-card .project-icon-wrapper {
-    width: 56px;
-    height: 56px;
+    width: 44px;
+    height: 44px;
     flex: 0 0 auto;
-    margin: 0 0 1.5rem;
-    align-self: center;
+    margin: 0 0 1.25rem;
+    align-self: flex-start;
+}
+
+.ai-project-card .project-kicker {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent-primary);
+    opacity: 0.75;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.18);
+    border-radius: 4px;
+    align-self: flex-start;
 }
 
 .ai-project-card h3 {
     flex: 0 0 auto;
     width: 100%;
-    margin: 0 0 1rem;
-    padding: 0 0.5rem;
-    text-align: center;
-    line-height: 1.3;
-    /* min-height = 2 lines so 1-line and 2-line titles all reserve
-       the same vertical block; titles align across cards regardless. */
-    min-height: 2.6em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.ai-project-card h3 span {
-    display: inline;
+    margin: 0 0 0.85rem;
+    padding: 0;
+    text-align: left;
+    line-height: 1.25;
+    display: block;
+    min-height: 0;
 }
 
 .ai-project-card p {
-    /* Block paragraph with text-align center so inline <strong> elements
-       flow naturally inside the line. Margin auto vertically centers
-       the paragraph block between h3 and tags. */
     flex: 1 1 auto;
     width: 100%;
-    margin: auto 0;
+    margin: 0 0 1.25rem;
     padding: 0;
-    text-align: center;
-    line-height: 1.55;
-    font-size: 0.95rem;
+    text-align: left;
+    line-height: 1.6;
+    font-size: 0.92rem;
     display: block;
 }
 
@@ -2122,7 +2124,7 @@ body.light-theme .filter-btn.active {
     flex: 0 0 auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 0.4rem;
     width: 100%;
@@ -2307,22 +2309,13 @@ body.light-theme .icon-green {
 
 /* Card Text Content */
 .ai-project-card h3 {
-    font-size: 1.15rem;
-    margin-bottom: 1rem;
+    font-size: 1.3rem;
     color: var(--text-primary);
     font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: -0.005em;
-    text-wrap: balance;
+    letter-spacing: -0.01em;
     word-break: normal;
     overflow-wrap: break-word;
     hyphens: manual;
-    background: linear-gradient(135deg,
-            var(--text-primary),
-            var(--accent-primary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 .ai-project-card p {
