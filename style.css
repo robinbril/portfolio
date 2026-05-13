@@ -106,9 +106,10 @@ body.dark-theme::before {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(ellipse 80% 60% at 15% 25%, rgba(0, 255, 157, 0.06), transparent 60%),
-        radial-gradient(ellipse 70% 50% at 85% 70%, rgba(112, 0, 255, 0.05), transparent 60%),
-        radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0, 255, 157, 0.04), transparent 70%);
+        radial-gradient(ellipse 70% 50% at 10% 0%, rgba(0, 255, 157, 0.14), transparent 55%),
+        radial-gradient(ellipse 80% 60% at 95% 30%, rgba(112, 0, 255, 0.12), transparent 55%),
+        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(0, 255, 157, 0.10), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 25% 75%, rgba(112, 0, 255, 0.08), transparent 65%);
 }
 
 body.dark-theme::after {
@@ -117,8 +118,12 @@ body.dark-theme::after {
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.4;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
 }
 
 body.light-theme::before {
@@ -128,8 +133,23 @@ body.light-theme::before {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(ellipse 80% 60% at 15% 25%, rgba(191, 219, 254, 0.35), transparent 60%),
-        radial-gradient(ellipse 70% 50% at 85% 70%, rgba(147, 197, 253, 0.25), transparent 60%);
+        radial-gradient(ellipse 80% 60% at 10% 0%, rgba(191, 219, 254, 0.55), transparent 60%),
+        radial-gradient(ellipse 70% 50% at 95% 30%, rgba(147, 197, 253, 0.40), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(191, 219, 254, 0.35), transparent 60%);
+}
+
+body.light-theme::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
 }
 
 /* Typography */
