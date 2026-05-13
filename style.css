@@ -118,8 +118,8 @@ body.dark-theme::after {
     z-index: -1;
     pointer-events: none;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.064) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.064) 1px, transparent 1px);
     background-size: 64px 64px;
     mask-image: radial-gradient(ellipse 100% 90% at 50% 40%, black 50%, transparent 95%);
     -webkit-mask-image: radial-gradient(ellipse 100% 90% at 50% 40%, black 50%, transparent 95%);
@@ -1391,13 +1391,7 @@ body.xray .glow-card,
 body.xray nav,
 body.xray header,
 body.xray footer,
-body.xray h1,
-body.xray h2,
-body.xray h3,
-body.xray h4,
-body.xray p,
-body.xray button,
-body.xray a {
+body.xray .container {
     outline: 1px solid rgba(var(--accent-rgb), 0.35) !important;
     outline-offset: -1px;
 }
@@ -3877,20 +3871,22 @@ ul.role-description li::before {
    ACCESSIBILITY
    ========================================== */
 
-/* Keyboard focus rings — visible across themes */
-:focus-visible {
-    outline: 2px solid var(--accent-strong, var(--accent-primary));
-    outline-offset: 3px;
-    border-radius: 4px;
-}
-
+/* Keyboard focus rings — only on interactive elements */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
+select:focus-visible,
 [tabindex]:focus-visible {
     outline: 2px solid var(--accent-strong, var(--accent-primary));
-    outline-offset: 3px;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Never persist focus rings on cards after click */
+.ai-project-card:focus:not(:focus-visible),
+.featured-project:focus:not(:focus-visible) {
+    outline: none;
 }
 
 /* Respect prefers-reduced-motion */
