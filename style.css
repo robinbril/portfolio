@@ -1577,6 +1577,39 @@ body.xray {
     background: #000 !important;
 }
 
+/* Rocket cockpit POV overlay */
+.rocket-pov {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.rocket-pov .cockpit-frame {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 0 18px rgba(0, 255, 157, 0.18));
+}
+
+body.xray .rocket-pov {
+    opacity: 1;
+}
+
+@keyframes cockpit-shake {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-1px, 1px); }
+    40% { transform: translate(1px, -1px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(1px, 1px); }
+}
+
+body.xray .rocket-pov .cockpit-frame {
+    animation: cockpit-shake 0.16s linear infinite;
+}
+
 @media (max-width: 768px) {
     .card-metrics {
         gap: 0.4rem;
@@ -2003,7 +2036,7 @@ body.light-theme .filter-btn.active {
     border-radius: 16px;
     padding: 1.5rem;
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: 80px 4.5rem 1fr auto;
     justify-items: center;
     text-align: center;
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
@@ -2013,9 +2046,20 @@ body.light-theme .filter-btn.active {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+.ai-project-card .project-icon-wrapper {
+    align-self: start;
+    justify-self: center;
+}
+
 .ai-project-card h3 {
     text-align: center;
     width: 100%;
+    margin: 0;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.25;
 }
 
 .ai-project-card h3 span {
@@ -2025,6 +2069,8 @@ body.light-theme .filter-btn.active {
 .ai-project-card p {
     text-align: center;
     width: 100%;
+    margin: 0;
+    align-self: start;
 }
 
 .ai-project-card .project-tags {
@@ -2035,6 +2081,7 @@ body.light-theme .filter-btn.active {
     gap: 0.4rem;
     width: 100%;
     align-self: end;
+    margin-top: 1rem;
 }
 
 body.light-theme .ai-project-card {
@@ -3315,10 +3362,16 @@ footer {
    ========================================== */
 .contact-header {
     justify-content: center;
+    margin-bottom: 1.75rem;
 }
 
 .contact-header h2 {
     text-align: center;
+}
+
+#contact.section {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
 .contact-value-prop {
@@ -3331,13 +3384,13 @@ footer {
 
 /* Contact card wrapper */
 .contact-card {
-    max-width: 640px;
+    max-width: 560px;
     margin-left: auto;
     margin-right: auto;
-    padding: 2.25rem 1.75rem;
+    padding: 1.5rem 1.5rem;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 18px;
+    border-radius: 16px;
     text-align: center;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -3360,12 +3413,12 @@ body.light-theme .contact-card {
 }
 
 .contact-card .primary-cta {
-    margin: 0 0 1.25rem;
+    margin: 0 0 0.85rem;
 }
 
 .contact-card .secondary-options {
-    margin: 1.25rem 0 0;
-    padding-top: 1.25rem;
+    margin: 0.85rem 0 0;
+    padding-top: 0.85rem;
     border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
@@ -4128,17 +4181,17 @@ select:focus-visible,
    ========================================== */
 .contact-terminal-wrap {
     max-width: 720px;
-    margin: 3rem auto 0;
+    margin: 1.5rem auto 0;
 }
 
 .contact-terminal-intro {
     text-align: center;
     color: var(--text-secondary);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin: 0 0 1rem;
+    margin: 0 0 0.65rem;
     opacity: 0.7;
 }
 
@@ -4149,18 +4202,21 @@ select:focus-visible,
 
 .terminal-window {
     width: 100%;
-    height: min(520px, 75vh);
+    max-width: 720px;
+    margin: 0 auto;
+    height: min(380px, 52vh);
     background: #0a0e0a;
     border: 1px solid rgba(0, 255, 157, 0.2);
-    border-radius: 14px;
+    border-radius: 12px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 14px 40px rgba(0, 0, 0, 0.5),
         0 0 0 1px rgba(0, 255, 157, 0.08),
         inset 0 1px 0 rgba(255, 255, 255, 0.05);
     font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
 }
 
 .terminal-titlebar-spacer {
@@ -4381,4 +4437,339 @@ select:focus-visible,
     .terminal-window { height: 90vh; }
     .terminal-chips { padding: 0.5rem 0.7rem; }
     .terminal-chip { font-size: 0.65rem; padding: 0.3rem 0.5rem; }
+}
+
+/* ==========================================
+   FINAL POLISH PASS
+   1. Custom scrollbar (animated, accent-coloured)
+   2. Contact + terminal fits 100vh on landing
+   3. Project card title alignment (subgrid-like fix)
+   4. Mobile-first responsive rebuild
+   5. Touch-friendly tap targets
+   6. Smooth focus states for a11y
+   7. Reduced motion respect
+   8. Smoother section transitions
+   ========================================== */
+
+/* 1. Custom scrollbar — minimal, accent-tinted, animated */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--accent-rgb), 0.4) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg,
+        rgba(var(--accent-rgb), 0.35) 0%,
+        rgba(var(--accent-rgb), 0.55) 50%,
+        rgba(var(--accent-rgb), 0.35) 100%);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg,
+        rgba(var(--accent-rgb), 0.6) 0%,
+        rgba(var(--accent-rgb), 0.85) 50%,
+        rgba(var(--accent-rgb), 0.6) 100%);
+    background-clip: padding-box;
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.6);
+}
+
+body.light-theme ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg,
+        rgba(var(--accent-strong-rgb), 0.35) 0%,
+        rgba(var(--accent-strong-rgb), 0.55) 50%,
+        rgba(var(--accent-strong-rgb), 0.35) 100%);
+    background-clip: padding-box;
+}
+
+/* 2. Contact section fits viewport after rocket lands */
+@media (min-width: 769px) {
+    #contact.section {
+        min-height: calc(100vh - 80px);
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0;
+    }
+
+    #contact .section-header {
+        margin-bottom: 1rem;
+    }
+
+    #contact .section-header h2 {
+        font-size: 1.85rem;
+    }
+
+    #contact .contact-card {
+        padding: 1.25rem 1.5rem;
+    }
+
+    #contact .contact-terminal-wrap {
+        margin-top: 1rem;
+    }
+
+    #contact .terminal-window {
+        height: min(320px, 42vh);
+    }
+}
+
+/* Slightly looser on tall screens */
+@media (min-width: 769px) and (min-height: 1000px) {
+    #contact .terminal-window {
+        height: 380px;
+    }
+}
+
+/* 3. Project card title alignment — flex on h3 vertical center */
+.ai-project-card .project-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ai-project-card h3 {
+    font-size: 1.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+}
+
+.ai-project-card p {
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+/* 4. Mobile responsive rebuild */
+@media (max-width: 768px) {
+    /* Typography scaling */
+    h1 { font-size: 2.4rem; line-height: 1.15; margin-bottom: 1rem; }
+    h2 { font-size: 1.85rem; }
+    h3 { font-size: 1.2rem; }
+
+    .section {
+        padding: 2.5rem 1rem;
+    }
+
+    .section-header {
+        margin-bottom: 2rem;
+    }
+
+    /* Navbar mobile */
+    .navbar { height: 64px; }
+    .nav-container { padding: 0 1rem; gap: 0.5rem; }
+    .nav-links {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: var(--nav-bg);
+        padding: 1.25rem;
+        gap: 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+        transform: translateY(-120%);
+        transition: transform 0.3s ease;
+        z-index: 999;
+    }
+    .nav-links.is-open { transform: translateY(0); }
+    .nav-links a { font-size: 1rem; }
+    .nav-links .btn-primary { width: 100%; text-align: center; }
+    .mobile-menu-btn { display: inline-flex !important; }
+
+    /* Hero compact on mobile */
+    .hero { padding: 5rem 1rem 3rem !important; min-height: auto !important; }
+
+    /* Project filters scrollable */
+    .project-filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 0 1rem 0.5rem;
+        margin: 0 -1rem 1.5rem;
+        gap: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .project-filters::-webkit-scrollbar { display: none; }
+    .filter-btn {
+        flex: 0 0 auto;
+        padding: 0.5rem 1rem;
+        font-size: 0.82rem;
+    }
+
+    /* Cards: single column with auto rows */
+    .ai-projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+        padding: 0 0.5rem;
+    }
+    .ai-project-card {
+        grid-template-rows: auto auto auto auto;
+        padding: 1.25rem;
+    }
+    .ai-project-card h3 {
+        -webkit-line-clamp: unset;
+        line-clamp: unset;
+    }
+
+    /* Featured cards stack */
+    .featured-projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+    .featured-project { padding: 1.25rem 1.1rem 1rem; }
+
+    /* Contact mobile */
+    .contact-card {
+        padding: 1.25rem 1rem;
+        max-width: 100%;
+    }
+    .contact-card .primary-cta a {
+        width: 100%;
+        justify-content: center;
+    }
+    .secondary-options {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .secondary-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Terminal mobile */
+    .terminal-window {
+        height: min(420px, 60vh);
+        font-size: 0.78rem;
+    }
+
+    /* Certifications grid */
+    .certifications-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.85rem;
+    }
+
+    /* Timeline mobile */
+    .timeline-item {
+        flex-direction: column !important;
+        gap: 0.5rem;
+    }
+    .timeline-date {
+        font-size: 0.8rem;
+    }
+
+    /* Skills grid */
+    .skills-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Warp hint smaller on mobile */
+    .xray-hint {
+        bottom: 12px !important;
+        right: 12px !important;
+        padding: 0.4rem 0.65rem !important;
+        font-size: 0.65rem !important;
+    }
+
+    /* Hide cockpit shake on mobile (perf) */
+    body.xray .rocket-pov .cockpit-frame {
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.55rem; }
+    .ai-project-card { padding: 1rem; }
+    .terminal-window { height: 360px; font-size: 0.72rem; }
+    .terminal-chip { font-size: 0.62rem; padding: 0.25rem 0.45rem; }
+}
+
+/* 5. Touch-friendly tap targets — minimum 44x44 on mobile */
+@media (hover: none) and (pointer: coarse) {
+    .filter-btn,
+    .nav-links a,
+    .cv-download-btn,
+    .cta-primary-btn,
+    .secondary-link,
+    .terminal-chip,
+    .theme-toggle-btn,
+    .mobile-menu-btn {
+        min-height: 44px;
+    }
+}
+
+/* 6. Smooth focus states for keyboard nav */
+:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+    box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.25);
+}
+
+/* 7. Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    body.xray .rocket-pov .cockpit-frame { animation: none; }
+}
+
+/* 8. Selection styling */
+::selection {
+    background: rgba(var(--accent-rgb), 0.35);
+    color: var(--text-primary);
+}
+
+body.light-theme ::selection {
+    background: rgba(var(--accent-strong-rgb), 0.3);
+}
+
+/* 9. Smoother hero → projects transition (was abrupt) */
+#projects {
+    padding-top: 5rem;
+    background:
+        linear-gradient(180deg,
+            transparent 0%,
+            rgba(var(--accent-rgb), 0.02) 50%,
+            transparent 100%);
+}
+
+/* 10. Image / icon defaults — prevent jank */
+img, svg, video {
+    max-width: 100%;
+    height: auto;
+}
+
+i[data-lucide] {
+    flex-shrink: 0;
 }

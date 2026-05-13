@@ -164,25 +164,20 @@ themeToggle.addEventListener('click', () => {
 const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
 const navLinks = document.querySelector('.nav-links');
 
-mobileMenuBtn.addEventListener('click', () => {
-    const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-    mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+if (mobileMenuBtn && navLinks) {
+    mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('is-open');
+        mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
 
-    if (navLinks.style.display === 'flex') {
-        navLinks.style.display = 'none';
-    } else {
-        navLinks.style.display = 'flex';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '80px';
-        navLinks.style.left = '0';
-        navLinks.style.width = '100%';
-        navLinks.style.background = 'var(--nav-bg)';
-        navLinks.style.padding = '2rem';
-        navLinks.style.borderBottom = '1px solid var(--border-color)';
-        navLinks.style.backdropFilter = 'blur(20px)';
-    }
-});
+    // Close menu when any link is tapped
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('is-open');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        });
+    });
+}
 
 // ==========================================
 // SCROLL SPY FOR ACTIVE NAV LINK
@@ -572,6 +567,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let stars = [];
     let speed = 8;
     let dpr = Math.max(1, window.devicePixelRatio || 1);
+    const hudVel = document.getElementById('hud-velocity');
+    const hudStatus = document.getElementById('hud-status');
 
     const STAR_COUNT = 900;
     const Z_FAR = 1800;
@@ -674,6 +671,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Spool-up easing — start at 8 (immediately visible), accelerate to 42
         speed = Math.min(42, speed + 0.9);
+
+        // HUD velocity readout — maps speed range to a c-fraction
+        if (hudVel) {
+            const c = ((speed - 8) / 34) * 0.92 + 0.02;
+            hudVel.textContent = c.toFixed(2) + ' c';
+        }
+        if (hudStatus) {
+            if (speed < 14) hudStatus.textContent = 'SPOOLING DRIVE...';
+            else if (speed < 24) hudStatus.textContent = 'ACCELERATION NOMINAL';
+            else if (speed < 36) hudStatus.textContent = 'BREAKING ATMOSPHERE';
+            else hudStatus.textContent = 'WARP STABLE — TRAJECTORY LOCKED';
+        }
 
         raf = requestAnimationFrame(tick);
     };
