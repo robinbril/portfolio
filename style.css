@@ -253,6 +253,12 @@ em {
     transition: background var(--transition-speed), border-color var(--transition-speed);
 }
 
+/* Account for sticky navbar when scrolling to section anchors */
+.section,
+section[id] {
+    scroll-margin-top: 100px;
+}
+
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -2100,18 +2106,17 @@ body.light-theme .filter-btn.active {
 }
 
 .ai-project-card p {
-    /* Expands to fill space between h3 and tags. Internal flex
-       centering keeps the text optically in the middle of its block. */
+    /* Block paragraph with text-align center so inline <strong> elements
+       flow naturally inside the line. Margin auto vertically centers
+       the paragraph block between h3 and tags. */
     flex: 1 1 auto;
     width: 100%;
-    margin: 0;
+    margin: auto 0;
     padding: 0;
     text-align: center;
     line-height: 1.55;
     font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
 }
 
 .ai-project-card .project-tags {
