@@ -3,28 +3,83 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robin Bril | AI Engineer</title>
-    <meta name="description" content="Portfolio van Robin Bril, Senior AI Specialist en Data Consultant.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+    <title>Robin Bril | Senior AI Engineer · Agents, MCP, Enterprise AI</title>
+    <meta name="description"
+        content="Robin Bril — Senior AI Engineer met productie-ervaring in agent-systemen, MCP-koppelingen en enterprise AI op Azure. Beschikbaar voor freelance en fulltime opdrachten.">
+    <meta name="author" content="Robin Bril">
+    <link rel="canonical" href="https://robinbril.dev/">
+
+    <!-- Open Graph / social preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://robinbril.dev/">
+    <meta property="og:title" content="Robin Bril | Senior AI Engineer">
+    <meta property="og:description"
+        content="Productie AI-agents, MCP-koppelingen en enterprise AI op Azure. Freelance & fulltime beschikbaar.">
+    <meta property="og:image" content="https://robinbril.dev/favicon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Robin Bril | Senior AI Engineer">
+    <meta name="twitter:description"
+        content="Productie AI-agents, MCP-koppelingen en enterprise AI op Azure.">
+    <meta name="twitter:image" content="https://robinbril.dev/favicon.png">
+
+    <!-- Inline theme bootstrap — prevents flash on reload -->
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme') || 'dark';
+                document.documentElement.dataset.theme = t;
+                // Apply to body as soon as it exists (before paint, no flash)
+                new MutationObserver(function (_, obs) {
+                    if (document.body) {
+                        document.body.classList.remove('dark-theme', 'light-theme');
+                        document.body.classList.add(t + '-theme');
+                        obs.disconnect();
+                    }
+                }).observe(document.documentElement, { childList: true });
+            } catch (e) {}
+        })();
+    </script>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
 
-    <!-- Fonts -->
+    <!-- Fonts (with font-display: swap baked in by Google) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="ai-styles.css">
     <link rel="stylesheet" href="apple-premium.css">
 
-    <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Icons (deferred, doesn't block render) -->
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Structured data: Person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Robin Bril",
+      "jobTitle": "Senior AI Engineer",
+      "url": "https://robinbril.dev",
+      "email": "robin.bril@gmail.com",
+      "sameAs": [
+        "https://github.com/robinbril",
+        "https://www.linkedin.com/in/robinbril/"
+      ],
+      "knowsAbout": ["AI Engineering", "AI Agents", "MCP", "Enterprise AI", "Azure", "Claude Code"]
+    }
+    </script>
 </head>
 
 <body class="dark-theme">
