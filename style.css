@@ -942,11 +942,9 @@ body.light-theme .tags span:hover {
    AI PORTFOLIO SECTION
    ========================================== */
 .ai-portfolio-section {
-    padding: 4rem 1.25rem;
+    padding: 6rem 1.25rem 4rem;
     max-width: none;
-    background:
-        radial-gradient(circle at 18% 18%, rgba(var(--accent-rgb), 0.12), transparent 28%),
-        linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.04) 42%, transparent);
+    background: transparent;
 }
 
 .ai-portfolio-section .section-header {
@@ -1468,11 +1466,12 @@ body.light-theme .filter-btn.active {
 /* AI Projects Grid */
 .ai-projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 380px));
     grid-auto-rows: minmax(440px, auto);
     gap: 2rem;
     margin-top: 2rem;
     align-items: stretch;
+    justify-content: center;
 }
 
 .ai-project-card {
