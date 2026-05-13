@@ -1502,75 +1502,40 @@ body.xray .xray-hint {
     transform: translateY(0);
 }
 
-body.xray .xray-scanline {
-    opacity: 1;
-    animation: xray-sweep 1.4s cubic-bezier(0.55, 0.05, 0.45, 0.95) forwards;
-}
-
-@keyframes xray-sweep {
-    0% {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% {
-        transform: translateY(100vh);
-        opacity: 0;
-    }
-}
+/* xray-scanline retired — warp canvas replaces it */
+.xray-scanline { display: none; }
 
 body.xray {
     background: #020405 !important;
 }
 
-body.xray .ai-project-card,
-body.xray .featured-project,
-body.xray .cert-item,
-body.xray .timeline-item,
-body.xray .stat-item,
-body.xray .glow-card,
-body.xray .contact-card,
-body.xray .terminal-window {
-    outline: 1px solid rgba(0, 255, 157, 0.45) !important;
-    outline-offset: -1px;
-    background-image: none !important;
-}
-
-/* Dim non-structural content so structure pops */
+/* Dim site content so the starfield carries the eye */
+body.xray .hero-video,
 body.xray img,
-body.xray video,
-body.xray .hero-video {
-    opacity: 0.18 !important;
+body.xray video {
+    opacity: 0.06 !important;
 }
 
-body.xray p,
-body.xray span,
-body.xray h1,
-body.xray h2,
-body.xray h3,
-body.xray h4,
-body.xray h5,
-body.xray h6,
-body.xray a,
-body.xray button {
-    opacity: 0.55;
+body.xray main,
+body.xray header {
+    opacity: 0.18;
+    transition: opacity 0.25s ease;
 }
 
-/* Disable our backdrop gradients so the outlines stand out */
+/* Disable backdrop gradients so deep space is truly deep */
 body.xray::before {
     background: none !important;
 }
 
 body.xray::after {
-    content: "X-RAY MODE  —  release SPACE";
+    content: "WARP ENGAGED  —  release SPACE";
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 99999;
     padding: 0.55rem 1.1rem;
-    background: rgba(0, 0, 0, 0.92);
+    background: rgba(0, 0, 0, 0.88);
     border: 1.5px solid #00ff9d;
     color: #00ff9d;
     font-family: 'JetBrains Mono', monospace;
@@ -1580,8 +1545,37 @@ body.xray::after {
     text-transform: uppercase;
     border-radius: 4px;
     pointer-events: none;
-    box-shadow: 0 0 24px rgba(0, 255, 157, 0.4);
+    box-shadow: 0 0 24px rgba(0, 255, 157, 0.45);
     opacity: 1 !important;
+    animation: warp-hint-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes warp-hint-pulse {
+    0%, 100% { box-shadow: 0 0 24px rgba(0, 255, 157, 0.4); }
+    50% { box-shadow: 0 0 36px rgba(0, 255, 157, 0.75); }
+}
+
+/* Warp starfield canvas */
+#warp-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    background: radial-gradient(ellipse at center,
+        rgba(0, 0, 0, 0.4) 0%,
+        #000 70%);
+}
+
+body.xray #warp-canvas {
+    opacity: 1;
+}
+
+body.xray {
+    background: #000 !important;
 }
 
 @media (max-width: 768px) {

@@ -85,14 +85,14 @@
 
     <div class="cursor-glow"></div>
 
-    <!-- X-Ray hint (default visible, bottom-right) -->
+    <!-- Warp hint (default visible, bottom-right) -->
     <div class="xray-hint" id="xray-hint" aria-hidden="true">
-        <i data-lucide="eye-off"></i>
-        <span>HOLD <kbd>SPACE</kbd> FOR X-RAY</span>
+        <i data-lucide="rocket"></i>
+        <span>HOLD <kbd>SPACE</kbd> TO WARP</span>
     </div>
 
-    <!-- X-Ray scan line (only visible while x-ray active) -->
-    <div class="xray-scanline" aria-hidden="true"></div>
+    <!-- Warp starfield canvas (only renders while space is held) -->
+    <canvas id="warp-canvas" aria-hidden="true"></canvas>
 
     <header>
     <nav class="navbar">

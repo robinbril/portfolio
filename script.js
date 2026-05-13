@@ -559,10 +559,100 @@ document.addEventListener('DOMContentLoaded', () => {
 // Show-more toggle is now handled inside the filter block above.
 
 // ==========================================
-// X-RAY MODE — hold SPACE to reveal layout
+// WARP MODE — hold SPACE to engage hyperspace
 // ==========================================
 (() => {
-    let xrayActive = false;
+    const canvas = document.getElementById('warp-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let warpActive = false;
+    let raf = null;
+    let scanTimer = null;
+    let stars = [];
+    let speed = 2;
+    let dpr = Math.max(1, window.devicePixelRatio || 1);
+
+    const STAR_COUNT = 520;
+
+    const resize = () => {
+        dpr = Math.max(1, window.devicePixelRatio || 1);
+        canvas.width = Math.floor(window.innerWidth * dpr);
+        canvas.height = Math.floor(window.innerHeight * dpr);
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const seedStars = () => {
+        stars = [];
+        const w = canvas.width;
+        const h = canvas.height;
+        for (let i = 0; i < STAR_COUNT; i++) {
+            stars.push({
+                x: (Math.random() - 0.5) * w,
+                y: (Math.random() - 0.5) * h,
+                z: Math.random() * w,
+                pz: 0,
+                tint: Math.random(),
+            });
+        }
+    };
+
+    const tick = () => {
+        if (!warpActive) return;
+        const w = canvas.width;
+        const h = canvas.height;
+        const cx = w / 2;
+        const cy = h / 2;
+
+        // Trailing fade — leaves the streaks behind
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.lineCap = 'round';
+        ctx.lineWidth = 1.4 * dpr;
+
+        for (let i = 0; i < stars.length; i++) {
+            const s = stars[i];
+            s.pz = s.z;
+            s.z -= speed * dpr * 4;
+
+            if (s.z < 1) {
+                s.x = (Math.random() - 0.5) * w;
+                s.y = (Math.random() - 0.5) * h;
+                s.z = w;
+                s.pz = w;
+            }
+
+            const sx = (s.x / s.z) * (w / 2) + cx;
+            const sy = (s.y / s.z) * (h / 2) + cy;
+            const px = (s.x / s.pz) * (w / 2) + cx;
+            const py = (s.y / s.pz) * (h / 2) + cy;
+
+            const t = 1 - s.z / w;
+            // mostly white, with the occasional accent-green or violet tint
+            const alpha = Math.min(1, t * 1.4);
+            if (s.tint < 0.85) {
+                ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+            } else if (s.tint < 0.95) {
+                ctx.strokeStyle = `rgba(0, 255, 157, ${alpha})`;
+            } else {
+                ctx.strokeStyle = `rgba(150, 130, 255, ${alpha})`;
+            }
+
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.lineTo(sx, sy);
+            ctx.stroke();
+        }
+
+        // Easing accelerator so it feels like spooling up
+        speed = Math.min(20, speed + 0.45);
+
+        raf = requestAnimationFrame(tick);
+    };
 
     const isTypingTarget = (el) => {
         if (!el) return false;
@@ -572,27 +662,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
 
-    let scanTimer = null;
-
     const activate = () => {
-        if (xrayActive) return;
-        xrayActive = true;
+        if (warpActive) return;
+        warpActive = true;
         document.body.classList.add('xray');
 
-        // Scan line sweeps top -> bottom (1.4s via CSS), then jump to contact
+        speed = 2;
+        seedStars();
+        // Paint a black frame first so the streaks start from a clean slate
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(tick);
+
         clearTimeout(scanTimer);
         scanTimer = setTimeout(() => {
-            if (!xrayActive) return;
+            if (!warpActive) return;
             const contact = document.getElementById('contact');
             if (contact) contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 1300);
+        }, 1100);
     };
 
     const deactivate = () => {
         clearTimeout(scanTimer);
-        if (!xrayActive) return;
-        xrayActive = false;
+        if (!warpActive) return;
+        warpActive = false;
         document.body.classList.remove('xray');
+        cancelAnimationFrame(raf);
+        // brief decay so it doesn't cut abruptly
+        let fade = 1;
+        const decay = () => {
+            fade -= 0.08;
+            ctx.fillStyle = `rgba(0, 0, 0, ${Math.max(0.15, 0.4 - fade)})`;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            if (fade > 0) requestAnimationFrame(decay);
+        };
+        decay();
     };
 
     document.addEventListener('keydown', (e) => {
@@ -608,7 +713,6 @@ document.addEventListener('DOMContentLoaded', () => {
         deactivate();
     });
 
-    // Bail out if focus leaves the window, page hides, or mouse leaves the document
     window.addEventListener('blur', deactivate);
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) deactivate();
