@@ -756,17 +756,44 @@ document.addEventListener('DOMContentLoaded', () => {
         run(v);
     });
 
-    // Chip click: fill the input, do NOT execute (user presses Enter)
+    // Chip click: pulse the chip, autotype command into chat (~500ms), then execute
+    let chipBusy = false;
     chips.forEach((chip) => {
         chip.addEventListener('click', () => {
+            if (chipBusy) return;
             const cmd = chip.getAttribute('data-cmd');
             if (!cmd) return;
-            input.value = cmd;
-            input.focus();
-            // Tiny pulse to hint at "press Enter"
-            input.classList.remove('terminal-input--pulse');
-            void input.offsetWidth;
-            input.classList.add('terminal-input--pulse');
+            chipBusy = true;
+
+            // Pulse the chip
+            chip.classList.remove('terminal-chip--press');
+            void chip.offsetWidth;
+            chip.classList.add('terminal-chip--press');
+
+            // Animate typing into a user line inside the chat
+            const line = document.createElement('div');
+            line.className = 'terminal-line terminal-line--user terminal-line--typing';
+            body.appendChild(line);
+            body.scrollTop = body.scrollHeight;
+
+            const totalMs = 500;
+            const stepMs = Math.max(20, Math.floor(totalMs / cmd.length));
+            let i = 0;
+            const typer = setInterval(() => {
+                line.textContent = cmd.slice(0, ++i);
+                body.scrollTop = body.scrollHeight;
+                if (i >= cmd.length) {
+                    clearInterval(typer);
+                    line.classList.remove('terminal-line--typing');
+                    // Execute after a tiny beat
+                    setTimeout(() => {
+                        const fn = commands[cmd];
+                        if (fn) fn();
+                        else print('error', `command not found: ${cmd}`);
+                        chipBusy = false;
+                    }, 120);
+                }
+            }, stepMs);
         });
     });
 })();
