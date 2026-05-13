@@ -1001,3 +1001,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     elements.forEach((el) => observer.observe(el));
 })();
+
+// ==========================================
+// STAT COUNTER ANIMATION — count up on first view
+// ==========================================
+(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stats = document.querySelectorAll('.stat-number[data-count]');
+    if (!stats.length) return;
+
+    const animate = (el) => {
+        const target = parseInt(el.dataset.count, 10) || 0;
+        const suffix = el.dataset.suffix || '';
+        if (prefersReduced) {
+            el.textContent = target + suffix;
+            return;
+        }
+        const duration = 1400;
+        const start = performance.now();
+        const ease = (t) => 1 - Math.pow(1 - t, 3);
+
+        const step = (now) => {
+            const t = Math.min(1, (now - start) / duration);
+            const value = Math.round(target * ease(t));
+            el.textContent = value + (t === 1 ? suffix : '');
+            if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                animate(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.4 });
+
+    stats.forEach((el) => observer.observe(el));
+})();
