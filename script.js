@@ -570,10 +570,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let raf = null;
     let scanTimer = null;
     let stars = [];
-    let speed = 2;
+    let speed = 8;
     let dpr = Math.max(1, window.devicePixelRatio || 1);
 
-    const STAR_COUNT = 520;
+    const STAR_COUNT = 900;
+    const Z_FAR = 1800;
+    const FOCAL = 320;
 
     const resize = () => {
         dpr = Math.max(1, window.devicePixelRatio || 1);
@@ -587,15 +589,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const seedStars = () => {
         stars = [];
-        const w = canvas.width;
-        const h = canvas.height;
         for (let i = 0; i < STAR_COUNT; i++) {
             stars.push({
-                x: (Math.random() - 0.5) * w,
-                y: (Math.random() - 0.5) * h,
-                z: Math.random() * w,
+                x: (Math.random() - 0.5) * 2400,
+                y: (Math.random() - 0.5) * 2400,
+                // Spread z evenly so stars are visible from frame 1
+                z: Math.random() * Z_FAR,
                 pz: 0,
                 tint: Math.random(),
+                size: 0.6 + Math.random() * 1.4,
             });
         }
     };
@@ -606,50 +608,72 @@ document.addEventListener('DOMContentLoaded', () => {
         const h = canvas.height;
         const cx = w / 2;
         const cy = h / 2;
+        const focal = FOCAL * dpr;
 
-        // Trailing fade — leaves the streaks behind
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.22)';
+        // Trailing fade — leaves streaks behind. Lower alpha = longer trails
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+        ctx.fillRect(0, 0, w, h);
+
+        // Radial core glow — the warp tunnel
+        const coreR = Math.min(w, h) * 0.35;
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
+        const intensity = Math.min(1, (speed - 8) / 35);
+        grad.addColorStop(0, `rgba(120, 200, 255, ${0.05 + intensity * 0.18})`);
+        grad.addColorStop(0.45, `rgba(40, 100, 200, ${0.03 + intensity * 0.08})`);
+        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
         ctx.lineCap = 'round';
-        ctx.lineWidth = 1.4 * dpr;
 
         for (let i = 0; i < stars.length; i++) {
             const s = stars[i];
             s.pz = s.z;
-            s.z -= speed * dpr * 4;
+            s.z -= speed;
 
             if (s.z < 1) {
-                s.x = (Math.random() - 0.5) * w;
-                s.y = (Math.random() - 0.5) * h;
-                s.z = w;
-                s.pz = w;
+                s.x = (Math.random() - 0.5) * 2400;
+                s.y = (Math.random() - 0.5) * 2400;
+                s.z = Z_FAR;
+                s.pz = Z_FAR;
+                continue;
             }
 
-            const sx = (s.x / s.z) * (w / 2) + cx;
-            const sy = (s.y / s.z) * (h / 2) + cy;
-            const px = (s.x / s.pz) * (w / 2) + cx;
-            const py = (s.y / s.pz) * (h / 2) + cy;
+            const sx = (s.x / s.z) * focal + cx;
+            const sy = (s.y / s.z) * focal + cy;
+            const psx = (s.x / s.pz) * focal + cx;
+            const psy = (s.y / s.pz) * focal + cy;
 
-            const t = 1 - s.z / w;
-            // mostly white, with the occasional accent-green or violet tint
-            const alpha = Math.min(1, t * 1.4);
-            if (s.tint < 0.85) {
+            // depth -> brightness + thickness
+            const t = 1 - s.z / Z_FAR;
+            const alpha = Math.min(1, t * 1.6 + 0.15);
+            const lw = (t * 2.4 + 0.4) * s.size * dpr;
+
+            if (s.tint < 0.78) {
                 ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-            } else if (s.tint < 0.95) {
+            } else if (s.tint < 0.92) {
                 ctx.strokeStyle = `rgba(0, 255, 157, ${alpha})`;
             } else {
-                ctx.strokeStyle = `rgba(150, 130, 255, ${alpha})`;
+                ctx.strokeStyle = `rgba(170, 140, 255, ${alpha})`;
             }
+            ctx.lineWidth = lw;
 
             ctx.beginPath();
-            ctx.moveTo(px, py);
+            ctx.moveTo(psx, psy);
             ctx.lineTo(sx, sy);
             ctx.stroke();
+
+            // Glow head on close stars
+            if (t > 0.65) {
+                ctx.fillStyle = ctx.strokeStyle;
+                ctx.beginPath();
+                ctx.arc(sx, sy, lw * 0.7, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
 
-        // Easing accelerator so it feels like spooling up
-        speed = Math.min(20, speed + 0.45);
+        // Spool-up easing — start at 8 (immediately visible), accelerate to 42
+        speed = Math.min(42, speed + 0.9);
 
         raf = requestAnimationFrame(tick);
     };
@@ -667,9 +691,9 @@ document.addEventListener('DOMContentLoaded', () => {
         warpActive = true;
         document.body.classList.add('xray');
 
-        speed = 2;
+        speed = 8;
         seedStars();
-        // Paint a black frame first so the streaks start from a clean slate
+        // Clean black slate
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         cancelAnimationFrame(raf);
@@ -680,7 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!warpActive) return;
             const contact = document.getElementById('contact');
             if (contact) contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 1100);
+        }, 1200);
     };
 
     const deactivate = () => {
@@ -689,13 +713,14 @@ document.addEventListener('DOMContentLoaded', () => {
         warpActive = false;
         document.body.classList.remove('xray');
         cancelAnimationFrame(raf);
-        // brief decay so it doesn't cut abruptly
-        let fade = 1;
+        // Quick black fade so the canvas exits cleanly
+        let n = 0;
         const decay = () => {
-            fade -= 0.08;
-            ctx.fillStyle = `rgba(0, 0, 0, ${Math.max(0.15, 0.4 - fade)})`;
+            n++;
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            if (fade > 0) requestAnimationFrame(decay);
+            if (n < 6) requestAnimationFrame(decay);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
         };
         decay();
     };

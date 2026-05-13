@@ -2016,6 +2016,13 @@ body.light-theme .filter-btn.active {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+}
+
+.ai-project-card h3 span {
+    display: inline;
 }
 
 .ai-project-card .project-tags {
