@@ -63,53 +63,13 @@ if (document.readyState === 'loading') {
 const cursorGlow = document.querySelector('.cursor-glow');
 
 document.addEventListener('mousemove', (e) => {
+    if (!cursorGlow) return;
+
     const x = e.clientX;
     const y = e.clientY;
 
     cursorGlow.style.left = x + 'px';
     cursorGlow.style.top = y + 'px';
-});
-
-// ==========================================
-// BUTTON HOVER SOUNDS (Professional & Subtle)
-// ==========================================
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-function playHoverSound() {
-    // Create subtle, professional "click" sound
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    // Soft tone frequency (not harsh)
-    oscillator.frequency.value = 500;
-    oscillator.type = 'sine';
-
-    // Very subtle volume with quick fade
-    gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
-
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.1);
-}
-
-// Add hover sound to all interactive elements
-const interactiveElements = document.querySelectorAll(`
-    .btn-primary,
-    .btn-secondary,
-    .project-card,
-    .nav-links a:not(.btn-primary),
-    .theme-toggle-btn,
-    .stat-pill,
-    .glow-card
-`);
-
-interactiveElements.forEach(element => {
-    element.addEventListener('mouseenter', () => {
-        playHoverSound();
-    });
 });
 
 // ==========================================
@@ -122,7 +82,6 @@ if (contactFormTrigger && emailReveal) {
     contactFormTrigger.addEventListener('click', (e) => {
         e.preventDefault();
         emailReveal.classList.toggle('hidden');
-        playHoverSound(); // reuse existing sound
     });
 }
 
