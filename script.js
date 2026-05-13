@@ -280,47 +280,69 @@ const projectCards = document.querySelectorAll('.ai-project-card');
 if (filterButtons.length > 0 && projectCards.length > 0) {
     const projectsGrid = document.querySelector('.ai-projects-grid');
     const showMoreBtn = document.getElementById('showMoreProjects');
+    const VISIBLE_LIMIT = 6;
+    let currentFilter = 'agents';
+    let isExpanded = false;
+
+    const applyFilter = () => {
+        const matches = [];
+        projectCards.forEach((card) => {
+            const categories = (card.getAttribute('data-category') || '').split(' ');
+            if (categories.includes(currentFilter)) {
+                matches.push(card);
+                card.style.display = '';
+                card.classList.remove('hidden');
+            } else {
+                card.style.display = 'none';
+                card.classList.add('hidden');
+            }
+        });
+
+        if (!isExpanded) {
+            matches.forEach((card, i) => {
+                if (i >= VISIBLE_LIMIT) {
+                    card.style.display = 'none';
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        if (showMoreBtn) {
+            if (matches.length > VISIBLE_LIMIT) {
+                showMoreBtn.style.display = 'flex';
+                const btnText = showMoreBtn.querySelector('span');
+                if (btnText) {
+                    btnText.textContent = isExpanded
+                        ? 'Toon minder'
+                        : `Toon alle ${matches.length}`;
+                }
+                showMoreBtn.classList.toggle('expanded', isExpanded);
+            } else {
+                showMoreBtn.style.display = 'none';
+            }
+        }
+    };
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const filter = button.getAttribute('data-filter');
-
-            // Update active state
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-
-            // When filter is not 'all', expand grid to show all matching cards
-            if (filter !== 'all') {
-                if (projectsGrid) projectsGrid.classList.add('expanded');
-                if (showMoreBtn) showMoreBtn.style.display = 'none';
-            } else {
-                // Reset to collapsed state for 'all'
-                if (projectsGrid) projectsGrid.classList.remove('expanded');
-                if (showMoreBtn) {
-                    showMoreBtn.style.display = 'flex';
-                    showMoreBtn.classList.remove('expanded');
-                    const btnText = showMoreBtn.querySelector('span');
-                    if (btnText) btnText.textContent = 'Toon alle projecten';
-                }
-            }
-
-            // Filter cards
-            projectCards.forEach((card) => {
-                const categories = card.getAttribute('data-category').split(' ');
-
-                if (filter === 'all' || categories.includes(filter)) {
-                    card.classList.remove('hidden');
-                    card.style.display = '';
-                } else {
-                    card.classList.add('hidden');
-                    card.style.display = 'none';
-                }
-            });
-
-            // Play subtle feedback sound
+            currentFilter = filter;
+            isExpanded = false;
+            applyFilter();
             playHoverSound();
         });
     });
+
+    if (showMoreBtn) {
+        showMoreBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            applyFilter();
+        });
+    }
+
+    applyFilter();
 }
 
 // ==========================================
@@ -557,30 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initShowMoreToggle();
 });
 
-// ==========================================
-// SHOW MORE TOGGLE FOR PROJECTS
-// ==========================================
-function initShowMoreToggle() {
-    const showMoreBtn = document.getElementById('showMoreProjects');
-    const projectsGrid = document.querySelector('.ai-projects-grid');
-
-    if (!showMoreBtn || !projectsGrid) return;
-
-    showMoreBtn.addEventListener('click', () => {
-        const isExpanded = projectsGrid.classList.toggle('expanded');
-        showMoreBtn.classList.toggle('expanded');
-
-        const btnText = showMoreBtn.querySelector('span');
-        if (btnText) {
-            btnText.textContent = isExpanded ? 'Toon minder' : 'Toon alle projecten';
-        }
-
-        // Re-initialize Lucide icons for newly visible cards
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-    });
-}
+// Show-more toggle is now handled inside the filter block above.
 
 // ==========================================
 // X-RAY MODE — hold SPACE to reveal layout
