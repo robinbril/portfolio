@@ -21,20 +21,20 @@ body.dark-theme {
     --btn-primary-text: #0a0a0a;
 }
 
-/* Light Theme - Baby Blue (Default) */
+/* Light Theme - Pastel Baby Blue (Default) */
 body.light-theme {
     --bg-color: #f8fafc;
     --card-bg: #ffffff;
     --text-primary: #0f172a;
     --text-secondary: #475569;
-    --accent-primary: #60a5fa;
+    --accent-primary: #bfdbfe;
     --accent-secondary: #93c5fd;
-    --accent-rgb: 96, 165, 250;
+    --accent-rgb: 191, 219, 254;
     --accent-secondary-rgb: 147, 197, 253;
     --border-color: #e2e8f0;
     --nav-bg: rgba(248, 250, 252, 0.95);
-    --btn-primary-bg: #60a5fa;
-    --btn-primary-text: #ffffff;
+    --btn-primary-bg: #93c5fd;
+    --btn-primary-text: #0f172a;
 }
 
 /* ==========================================
