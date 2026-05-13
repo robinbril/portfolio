@@ -63,6 +63,8 @@ if (document.readyState === 'loading') {
 const cursorGlow = document.querySelector('.cursor-glow');
 
 document.addEventListener('mousemove', (e) => {
+    if (!cursorGlow) return;
+
     const x = e.clientX;
     const y = e.clientY;
 
@@ -71,31 +73,36 @@ document.addEventListener('mousemove', (e) => {
 });
 
 // ==========================================
-// BUTTON HOVER SOUNDS (Professional & Subtle)
+// BUTTON HOVER SOUNDS
 // ==========================================
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let audioContext;
+
+function getAudioContext() {
+    if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    return audioContext;
+}
 
 function playHoverSound() {
-    // Create subtle, professional "click" sound
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
+    const context = getAudioContext();
+    const oscillator = context.createOscillator();
+    const gainNode = context.createGain();
 
     oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    gainNode.connect(context.destination);
 
-    // Soft tone frequency (not harsh)
     oscillator.frequency.value = 500;
     oscillator.type = 'sine';
 
-    // Very subtle volume with quick fade
-    gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+    gainNode.gain.setValueAtTime(0.08, context.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.1);
 
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.1);
+    oscillator.start(context.currentTime);
+    oscillator.stop(context.currentTime + 0.1);
 }
 
-// Add hover sound to all interactive elements
 const interactiveElements = document.querySelectorAll(`
     .btn-primary,
     .btn-secondary,
@@ -122,7 +129,7 @@ if (contactFormTrigger && emailReveal) {
     contactFormTrigger.addEventListener('click', (e) => {
         e.preventDefault();
         emailReveal.classList.toggle('hidden');
-        playHoverSound(); // reuse existing sound
+        playHoverSound();
     });
 }
 
@@ -132,8 +139,9 @@ if (contactFormTrigger && emailReveal) {
 const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 
-// Check for saved theme preference or default to light (sky)
-const savedTheme = localStorage.getItem('theme') || 'light-theme';
+// Check for saved theme preference or default to dark.
+const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+body.classList.remove('light-theme', 'dark-theme');
 body.classList.add(savedTheme);
 
 themeToggle.addEventListener('click', () => {
