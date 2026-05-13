@@ -155,9 +155,11 @@
             xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <radialGradient id="warpCore" cx="50%" cy="46%" r="48%">
-                    <stop offset="0%" stop-color="rgba(46,242,160,0.16)" />
-                    <stop offset="25%" stop-color="rgba(76,201,176,0.07)" />
-                    <stop offset="55%" stop-color="rgba(138,124,255,0.03)" />
+                    <stop offset="0%" stop-color="rgba(232,255,246,0.5)" />
+                    <stop offset="6%" stop-color="rgba(46,242,160,0.28)" />
+                    <stop offset="18%" stop-color="rgba(46,242,160,0.14)" />
+                    <stop offset="40%" stop-color="rgba(76,201,176,0.06)" />
+                    <stop offset="70%" stop-color="rgba(138,124,255,0.025)" />
                     <stop offset="100%" stop-color="rgba(0,0,0,0)" />
                 </radialGradient>
                 <radialGradient id="canopyGlow" cx="50%" cy="46%" r="58%">
@@ -179,29 +181,36 @@
             <ellipse cx="800" cy="410" rx="520" ry="380" fill="url(#warpCore)" />
 
             <!-- Lens flare burst at warp core -->
-            <g class="lens-flare" transform="translate(800 410)" opacity="0.55">
+            <g class="lens-flare" transform="translate(800 410)">
                 <defs>
                     <radialGradient id="flareCore" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="rgba(232,255,246,0.9)"/>
-                        <stop offset="40%" stop-color="rgba(46,242,160,0.4)"/>
+                        <stop offset="0%" stop-color="rgba(255,255,255,1)"/>
+                        <stop offset="20%" stop-color="rgba(232,255,246,0.85)"/>
+                        <stop offset="55%" stop-color="rgba(46,242,160,0.35)"/>
                         <stop offset="100%" stop-color="rgba(46,242,160,0)"/>
                     </radialGradient>
                     <radialGradient id="flareRay" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="rgba(232,255,246,0.4)"/>
+                        <stop offset="0%" stop-color="rgba(232,255,246,0.55)"/>
+                        <stop offset="60%" stop-color="rgba(46,242,160,0.18)"/>
                         <stop offset="100%" stop-color="rgba(232,255,246,0)"/>
                     </radialGradient>
                 </defs>
-                <circle cx="0" cy="0" r="42" fill="url(#flareCore)">
-                    <animate attributeName="r" values="38;46;38" dur="3.4s" repeatCount="indefinite"/>
+                <!-- Outer soft glow -->
+                <circle cx="0" cy="0" r="180" fill="url(#flareCore)" opacity="0.35">
+                    <animate attributeName="r" values="170;200;170" dur="4s" repeatCount="indefinite"/>
                 </circle>
-                <ellipse cx="0" cy="0" rx="220" ry="2.5" fill="url(#flareRay)"/>
-                <ellipse cx="0" cy="0" rx="2.5" ry="160" fill="url(#flareRay)"/>
-                <ellipse cx="0" cy="0" rx="140" ry="1.5" fill="url(#flareRay)" transform="rotate(45)"/>
-                <ellipse cx="0" cy="0" rx="140" ry="1.5" fill="url(#flareRay)" transform="rotate(-45)"/>
+                <!-- Bright pulsing core -->
+                <circle cx="0" cy="0" r="56" fill="url(#flareCore)">
+                    <animate attributeName="r" values="52;62;52" dur="3.4s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Diffraction rays -->
+                <ellipse cx="0" cy="0" rx="320" ry="3" fill="url(#flareRay)"/>
+                <ellipse cx="0" cy="0" rx="3" ry="240" fill="url(#flareRay)"/>
+                <ellipse cx="0" cy="0" rx="200" ry="2" fill="url(#flareRay)" transform="rotate(45)" opacity="0.7"/>
+                <ellipse cx="0" cy="0" rx="200" ry="2" fill="url(#flareRay)" transform="rotate(-45)" opacity="0.7"/>
+                <!-- Subtle inner ring -->
+                <circle cx="0" cy="0" r="32" fill="none" stroke="rgba(232,255,246,0.4)" stroke-width="0.8"/>
             </g>
-
-            <!-- Atmospheric haze layer for depth -->
-            <rect x="0" y="0" width="1600" height="900" fill="url(#warpCore)" opacity="0.3"/>
 
             <!-- Diagonal light sweep for asymmetry -->
             <line x1="300" y1="900" x2="560" y2="180" stroke="rgba(46,242,160,0.025)" stroke-width="90" />
@@ -233,34 +242,10 @@
                 <line x1="0" y1="675" x2="1600" y2="675" />
             </g>
 
-            <!-- HUD corner brackets instead of full rectangle -->
-            <g stroke="#2EF2A0" stroke-width="1.5" fill="none" opacity="0.3" stroke-linecap="round">
-                <polyline points="365,225 365,198 392,198" />
-                <polyline points="1235,198 1262,198 1262,225" />
-                <polyline points="365,655 365,682 392,682" />
-                <polyline points="1235,682 1262,682 1262,655" />
-            </g>
-            <!-- Ghost of the full frame, very faint -->
-            <rect x="366" y="199" width="895" height="482" rx="2" fill="none" stroke="#2EF2A0" stroke-width="0.4" opacity="0.06" />
-
-            <!-- Crosshair with tick marks, above exact center -->
-            <g stroke="rgba(46,242,160,0.4)" stroke-width="1.2" fill="none">
-                <circle cx="800" cy="415" r="38" />
-                <circle cx="800" cy="415" r="2" fill="rgba(46,242,160,0.65)" stroke="none" />
-                <line x1="738" y1="415" x2="778" y2="415" />
-                <line x1="822" y1="415" x2="862" y2="415" />
-                <line x1="800" y1="353" x2="800" y2="393" />
-                <line x1="800" y1="437" x2="800" y2="477" />
-                <!-- Tick marks at cardinal points -->
-                <line x1="794" y1="373" x2="806" y2="373" />
-                <line x1="794" y1="457" x2="806" y2="457" />
-                <line x1="758" y1="409" x2="758" y2="421" />
-                <line x1="842" y1="409" x2="842" y2="421" />
-                <!-- Outer ring ticks -->
-                <line x1="800" y1="370" x2="800" y2="362" stroke-width="0.8" opacity="0.5" />
-                <line x1="800" y1="460" x2="800" y2="468" stroke-width="0.8" opacity="0.5" />
-                <line x1="755" y1="415" x2="747" y2="415" stroke-width="0.8" opacity="0.5" />
-                <line x1="845" y1="415" x2="853" y2="415" stroke-width="0.8" opacity="0.5" />
+            <!-- Subtle crosshair, minimal -->
+            <g stroke="rgba(46,242,160,0.25)" stroke-width="1" fill="none">
+                <circle cx="800" cy="415" r="22" opacity="0.5" />
+                <circle cx="800" cy="415" r="1.5" fill="rgba(232,255,246,0.85)" stroke="none" />
             </g>
 
             <!-- Rivets -->

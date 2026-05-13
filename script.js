@@ -627,27 +627,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const pulse = 0.5 + 0.5 * Math.sin(pulsePhase * 2.1);
         const coreStr = intensity * (0.85 + pulse * 0.15);
 
-        const coreR = Math.min(w, h) * 0.42;
+        const coreR = Math.min(w, h) * 0.5;
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
-        grad.addColorStop(0, `rgba(232, 255, 246, ${0.08 + coreStr * 0.18})`);
-        grad.addColorStop(0.15, `rgba(46, 242, 160, ${0.06 + coreStr * 0.22})`);
-        grad.addColorStop(0.4, `rgba(76, 201, 176, ${0.03 + coreStr * 0.1})`);
-        grad.addColorStop(0.7, `rgba(138, 124, 255, ${0.01 + coreStr * 0.04})`);
+        grad.addColorStop(0, `rgba(255, 255, 255, ${0.18 + coreStr * 0.32})`);
+        grad.addColorStop(0.08, `rgba(232, 255, 246, ${0.14 + coreStr * 0.26})`);
+        grad.addColorStop(0.2, `rgba(46, 242, 160, ${0.1 + coreStr * 0.24})`);
+        grad.addColorStop(0.45, `rgba(76, 201, 176, ${0.04 + coreStr * 0.1})`);
+        grad.addColorStop(0.75, `rgba(138, 124, 255, ${0.02 + coreStr * 0.04})`);
         grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        // Bright center burst at high speed
-        if (speed > 28) {
-            const burstStr = Math.min(1, (speed - 28) / 14);
-            const burstR = (60 + burstStr * 80) * dpr;
-            const burst = ctx.createRadialGradient(cx, cy, 0, cx, cy, burstR);
-            burst.addColorStop(0, `rgba(255, 255, 255, ${burstStr * 0.45 * (0.8 + pulse * 0.2)})`);
-            burst.addColorStop(0.4, `rgba(232, 255, 246, ${burstStr * 0.18})`);
-            burst.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = burst;
-            ctx.fillRect(0, 0, w, h);
-        }
+        // Continuous bright center burst (intensifies with speed)
+        const burstStr = Math.min(1, (speed - 8) / 32);
+        const burstR = (50 + burstStr * 120) * dpr * (0.9 + pulse * 0.15);
+        const burst = ctx.createRadialGradient(cx, cy, 0, cx, cy, burstR);
+        burst.addColorStop(0, `rgba(255, 255, 255, ${0.3 + burstStr * 0.5})`);
+        burst.addColorStop(0.25, `rgba(232, 255, 246, ${0.12 + burstStr * 0.3})`);
+        burst.addColorStop(0.6, `rgba(46, 242, 160, ${burstStr * 0.18})`);
+        burst.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = burst;
+        ctx.fillRect(0, 0, w, h);
 
         ctx.lineCap = 'round';
 
