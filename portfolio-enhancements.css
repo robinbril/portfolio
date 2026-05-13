@@ -8,7 +8,7 @@
 }
 
 [data-category*="vision"] {
-    border-left-color: #8b5cf6 !important;
+    border-left-color: var(--accent-primary) !important;
 }
 
 [data-category*="automation"] {

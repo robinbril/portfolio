@@ -73,8 +73,8 @@ body.light-theme .ai-project-card:hover {
 
 /* Colored Icon Gradients - Premium Quality */
 .icon-violet {
-    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-    box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.3);
 }
 
 .icon-emerald {
@@ -118,8 +118,8 @@ body.light-theme .ai-project-card:hover {
 }
 
 .icon-purple {
-    background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
-    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.3);
 }
 
 .icon-slate {
@@ -133,7 +133,7 @@ body.light-theme .ai-project-card:hover {
 }
 
 .availability-badge.active .pulse::before {
-    background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-primary) 100%);
 }
 
 .icon-lime {
