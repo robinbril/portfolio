@@ -1539,9 +1539,8 @@ body.xray .featured-projects-grid,
 body.xray .ai-projects-grid,
 body.xray .certifications-grid,
 body.xray .timeline {
-    outline: 1.5px solid rgba(0, 255, 157, 0.9) !important;
+    outline: 1px solid rgba(0, 255, 157, 0.45) !important;
     outline-offset: -1px;
-    box-shadow: 0 0 12px rgba(0, 255, 157, 0.18) !important;
     background-image: none !important;
 }
 
@@ -1549,7 +1548,7 @@ body.xray .timeline {
 body.xray img,
 body.xray video,
 body.xray .hero-video {
-    opacity: 0.06 !important;
+    opacity: 0.18 !important;
 }
 
 body.xray p,
@@ -1562,7 +1561,7 @@ body.xray h5,
 body.xray h6,
 body.xray a,
 body.xray button {
-    opacity: 0.35;
+    opacity: 0.55;
 }
 
 /* Disable our backdrop gradients so the outlines stand out */
@@ -3792,30 +3791,7 @@ body.light-theme .progress-bar::after {
 /* ==========================================
    ROLE DESCRIPTION LISTS
    ========================================== */
-.role-description ul,
-ul.role-description {
-    list-style: none;
-    padding-left: 0;
-    margin: 0 0 1.5rem 0;
-}
-
-.role-description li,
-ul.role-description li {
-    position: relative;
-    padding-left: 1.5rem;
-    margin-bottom: 0.8rem;
-    line-height: 1.7;
-    color: var(--text-secondary);
-}
-
-.role-description li::before,
-ul.role-description li::before {
-    content: '▹';
-    position: absolute;
-    left: 0;
-    color: var(--accent-primary);
-    font-size: 1.2rem;
-}
+/* Triangle-bullet rules removed — using single green-dot style in the primary block above. */
 
 /* Responsive */
 @media (max-width: 768px) {
