@@ -116,3 +116,76 @@ body.light-theme .project-icon-wrapper i {
     box-shadow:
         0 12px 32px rgba(0, 0, 0, 0.2);
 }
+/* ==========================================
+   PREMIUM CARD MICRO-INTERACTIONS
+   ========================================== */
+
+/* Animated accent line grows from center on hover */
+.ai-project-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(var(--accent-rgb), 0.7),
+        transparent);
+    border-radius: 2px;
+    opacity: 0;
+    transition:
+        width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.ai-project-card:hover::after {
+    width: 60%;
+    opacity: 1;
+}
+
+/* Subtle lift + brighter title on hover */
+.ai-project-card {
+    transition:
+        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.ai-project-card:hover {
+    transform: translateY(-4px);
+}
+
+.ai-project-card h3 {
+    transition: filter 0.4s ease;
+}
+
+.ai-project-card:hover h3 {
+    filter: brightness(1.15);
+}
+
+/* Icon wrapper subtle pulse on card hover */
+.ai-project-card .project-icon-wrapper {
+    transition:
+        transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.4s ease;
+}
+
+.ai-project-card:hover .project-icon-wrapper {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(var(--accent-rgb), 0.18),
+        0 0 24px rgba(var(--accent-rgb), 0.25);
+}
+
+/* Tags glow subtly on card hover */
+.ai-project-card .project-tags span {
+    transition: all 0.3s ease;
+}
+
+.ai-project-card:hover .project-tags span {
+    border-color: rgba(var(--accent-rgb), 0.4);
+}

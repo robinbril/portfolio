@@ -948,3 +948,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 })();
+
+// ==========================================
+// SCROLL REVEAL — premium fade-in on scroll
+// Respects prefers-reduced-motion
+// ==========================================
+(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const targets = [
+        '.section-header',
+        '.about-content > *',
+        '.featured-project',
+        '.ai-project-card',
+        '.timeline-item',
+        '.cert-item',
+        '.stat-item',
+        '.skill-category',
+        '.testimonial-compact',
+        '.contact-card',
+        '.contact-terminal-wrap'
+    ];
+
+    const elements = document.querySelectorAll(targets.join(', '));
+    if (!elements.length) return;
+
+    // Tag each element with reveal class + stagger index within its parent grid
+    const gridMap = new Map();
+    elements.forEach((el) => {
+        el.classList.add('reveal');
+        const grid = el.parentElement;
+        if (!grid) return;
+        const key = grid;
+        if (!gridMap.has(key)) gridMap.set(key, 0);
+        const idx = gridMap.get(key);
+        el.style.setProperty('--reveal-index', String(idx));
+        gridMap.set(key, idx + 1);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -60px 0px'
+    });
+
+    elements.forEach((el) => observer.observe(el));
+})();
