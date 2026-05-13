@@ -504,11 +504,20 @@ body.dark-theme .hero::after {
 .hero-subtitle {
     font-size: 1.15rem;
     line-height: 1.8;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     max-width: 750px;
     margin-left: auto;
     margin-right: auto;
     color: var(--text-secondary);
+}
+
+.hero-detail {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    max-width: 640px;
+    margin: 0 auto 2rem;
+    color: var(--text-secondary);
+    opacity: 0.75;
 }
 
 /* Hero Stats Badges */
@@ -2959,6 +2968,42 @@ ul.role-description li::before {
 /* Mobile: show only first 5 cards */
 @media (max-width: 768px) {
     .ai-projects-grid:not(.expanded) .ai-project-card:nth-child(n+6) {
+        display: none;
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY
+   ========================================== */
+
+/* Keyboard focus rings — visible across themes */
+:focus-visible {
+    outline: 2px solid var(--accent-strong, var(--accent-primary));
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent-strong, var(--accent-primary));
+    outline-offset: 3px;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-video {
         display: none;
     }
 }
