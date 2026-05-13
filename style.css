@@ -13,8 +13,10 @@ body.dark-theme {
     --text-secondary: #a1a1aa;
     --accent-primary: #00ff9d;
     --accent-secondary: #7000ff;
+    --accent-strong: #00ff9d;
     --accent-rgb: 0, 255, 157;
     --accent-secondary-rgb: 112, 0, 255;
+    --accent-strong-rgb: 0, 255, 157;
     --border-color: #27272a;
     --nav-bg: rgba(10, 10, 10, 0.9);
     --btn-primary-bg: #00ff9d;
@@ -29,8 +31,10 @@ body.light-theme {
     --text-secondary: #475569;
     --accent-primary: #bfdbfe;
     --accent-secondary: #93c5fd;
+    --accent-strong: #3b82f6;
     --accent-rgb: 191, 219, 254;
     --accent-secondary-rgb: 147, 197, 253;
+    --accent-strong-rgb: 59, 130, 246;
     --border-color: #e2e8f0;
     --nav-bg: rgba(248, 250, 252, 0.95);
     --btn-primary-bg: #93c5fd;
@@ -329,8 +333,8 @@ body.light-theme .btn-primary:hover {
     align-items: center;
     gap: 0.5rem;
     padding: 0.9rem 1.8rem;
-    background: transparent;
-    border: 1px solid var(--border-color);
+    background: rgba(15, 23, 42, 0.04);
+    border: 1px solid transparent;
     color: var(--text-primary);
     border-radius: 6px;
     font-weight: 600;
@@ -339,9 +343,16 @@ body.light-theme .btn-primary:hover {
 }
 
 .btn-secondary:hover {
-    border-color: var(--accent-primary);
-    background: rgba(var(--accent-rgb), 0.05);
+    background: rgba(15, 23, 42, 0.08);
     transform: translateY(-2px);
+}
+
+body.dark-theme .btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+body.dark-theme .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* ==========================================
@@ -1081,6 +1092,7 @@ body.light-theme .filter-btn.active {
 .ai-projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-auto-rows: 1fr;
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -1310,8 +1322,8 @@ body.light-theme .icon-green {
 }
 
 body.light-theme .ai-project-card p strong {
-    color: var(--accent-primary);
-    text-shadow: 0 0 8px rgba(var(--accent-rgb), 0.15);
+    color: var(--accent-strong);
+    text-shadow: 0 0 8px rgba(var(--accent-strong-rgb), 0.15);
 }
 
 /* Project Tags - tighter spacing */
