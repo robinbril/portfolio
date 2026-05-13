@@ -218,30 +218,7 @@ sections.forEach(section => {
     observer.observe(section);
 });
 
-// ==========================================
-// FADE-IN ANIMATION ON SCROLL
-// ==========================================
-const fadeElements = document.querySelectorAll('.glow-card, .project-card, .timeline-item, .stat-item, .cert-item');
-
-const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-            fadeObserver.unobserve(entry.target);
-        }
-    });
-}, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-});
-
-fadeElements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    fadeObserver.observe(el);
-});
+// Scroll fade-in animation disabled — caused text to appear to jump on scroll/filter.
 
 // ==========================================
 // SMOOTH SCROLL WITH OFFSET FOR NAV

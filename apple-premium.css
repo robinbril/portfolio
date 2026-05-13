@@ -37,9 +37,8 @@ body.light-theme .ai-project-card {
         0 1px 0 rgba(255, 255, 255, 1) inset;
 }
 
-/* Magnetic hover with subtle lift */
+/* Hover: glow only, no lift (no jumping text) */
 .ai-project-card:hover {
-    transform: translateY(-6px);
     border-color: rgba(255, 255, 255, 0.25);
     box-shadow:
         0 20px 50px rgba(0, 0, 0, 0.18),
@@ -112,7 +111,6 @@ body.light-theme .project-icon-wrapper i {
 }
 
 .ai-project-card:hover .project-icon-wrapper {
-    transform: translateY(-4px) scale(1.1);
     box-shadow:
         0 12px 32px rgba(0, 0, 0, 0.2);
 }
