@@ -859,6 +859,31 @@ body.light-theme .tech-badge:hover {
 .role-description {
     line-height: 1.7;
     margin-bottom: 1.5rem;
+    list-style: none;
+    padding-left: 0;
+}
+
+.role-description li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.65rem;
+}
+
+.role-description li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.45);
+}
+
+body.light-theme .role-description li::before {
+    background: var(--accent-strong);
+    box-shadow: 0 0 6px rgba(var(--accent-strong-rgb), 0.35);
 }
 
 /* ==========================================
@@ -1385,6 +1410,10 @@ body.light-theme .terminal-path {
 /* ==========================================
    X-RAY MODE (hold SPACE to activate)
    ========================================== */
+body.xray {
+    background: #020405 !important;
+}
+
 body.xray section,
 body.xray .ai-project-card,
 body.xray .featured-project,
@@ -1394,37 +1423,64 @@ body.xray .stat-item,
 body.xray .glow-card,
 body.xray nav,
 body.xray header,
-body.xray footer {
-    outline: 1px solid rgba(var(--accent-rgb), 0.35) !important;
+body.xray footer,
+body.xray .contact-card,
+body.xray .terminal-window,
+body.xray .featured-projects-grid,
+body.xray .ai-projects-grid,
+body.xray .certifications-grid,
+body.xray .timeline {
+    outline: 1.5px solid rgba(0, 255, 157, 0.9) !important;
     outline-offset: -1px;
+    box-shadow: 0 0 12px rgba(0, 255, 157, 0.18) !important;
+    background-image: none !important;
 }
 
-body.xray {
-    background: #050505 !important;
+/* Dim non-structural content so structure pops */
+body.xray img,
+body.xray video,
+body.xray .hero-video {
+    opacity: 0.06 !important;
+}
+
+body.xray p,
+body.xray span,
+body.xray h1,
+body.xray h2,
+body.xray h3,
+body.xray h4,
+body.xray h5,
+body.xray h6,
+body.xray a,
+body.xray button {
+    opacity: 0.35;
+}
+
+/* Disable our backdrop gradients so the outlines stand out */
+body.xray::before {
+    background: none !important;
 }
 
 body.xray::after {
-    content: "XRAY MODE — release SPACE to exit";
+    content: "X-RAY MODE  —  release SPACE";
     position: fixed;
-    bottom: 16px;
-    left: 16px;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 99999;
-    padding: 0.5rem 0.85rem;
-    background: rgba(0, 0, 0, 0.85);
-    border: 1px solid var(--accent-primary);
-    color: var(--accent-primary);
+    padding: 0.55rem 1.1rem;
+    background: rgba(0, 0, 0, 0.92);
+    border: 1.5px solid #00ff9d;
+    color: #00ff9d;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     border-radius: 4px;
     pointer-events: none;
-}
-
-body.xray img,
-body.xray video {
-    opacity: 0.15;
+    box-shadow: 0 0 24px rgba(0, 255, 157, 0.4);
+    opacity: 1 !important;
 }
 
 @media (max-width: 768px) {

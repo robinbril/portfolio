@@ -570,28 +570,39 @@ document.addEventListener('DOMContentLoaded', () => {
         return tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable;
     };
 
-    document.addEventListener('keydown', (e) => {
-        if (e.code !== 'Space') return;
-        if (isTypingTarget(e.target)) return;
-        if (e.repeat || xrayActive) return;
+    const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
+
+    const activate = () => {
+        if (xrayActive) return;
         xrayActive = true;
         document.body.classList.add('xray');
-        e.preventDefault();
-    });
+    };
 
-    document.addEventListener('keyup', (e) => {
-        if (e.code !== 'Space') return;
+    const deactivate = () => {
         if (!xrayActive) return;
         xrayActive = false;
         document.body.classList.remove('xray');
+    };
+
+    document.addEventListener('keydown', (e) => {
+        if (!isSpace(e)) return;
+        if (isTypingTarget(e.target)) return;
+        e.preventDefault();
+        if (e.repeat) return;
+        activate();
     });
 
-    window.addEventListener('blur', () => {
-        if (xrayActive) {
-            xrayActive = false;
-            document.body.classList.remove('xray');
-        }
+    document.addEventListener('keyup', (e) => {
+        if (!isSpace(e)) return;
+        deactivate();
     });
+
+    // Bail out if focus leaves the window, page hides, or mouse leaves the document
+    window.addEventListener('blur', deactivate);
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) deactivate();
+    });
+    document.addEventListener('mouseleave', deactivate);
 })();
 
 // ==========================================
