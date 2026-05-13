@@ -1006,6 +1006,15 @@ body.light-theme .tags span:hover {
 .featured-project--flagship {
     --case-accent: #5eead4;
     --case-accent-rgb: 94, 234, 212;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.07), transparent 40%),
+        radial-gradient(circle at 88% 10%, rgba(94, 234, 212, 0.16), transparent 32%),
+        linear-gradient(145deg, #090d16 0%, #111827 58%, #080a0f 100%);
+}
+
+.featured-project--flagship .featured-content h3 {
+    font-size: clamp(2.15rem, 3.05vw, 2.95rem);
+    line-height: 1.02;
 }
 
 .featured-project--secure {
@@ -1127,6 +1136,14 @@ body.light-theme .tags span:hover {
     margin-bottom: 1rem;
 }
 
+.featured-stack {
+    position: relative;
+    padding: 0.85rem;
+    border: 1px solid rgba(var(--case-accent-rgb), 0.2);
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.46);
+}
+
 .featured-stack span,
 .secure-rail span {
     min-height: 32px;
@@ -1145,8 +1162,10 @@ body.light-theme .tags span:hover {
     position: absolute;
     top: 1.2rem;
     right: 1.2rem;
-    width: 190px;
-    height: 150px;
+    width: 150px;
+    height: 112px;
+    border: 1px solid rgba(94, 234, 212, 0.18);
+    border-radius: 14px;
     opacity: 0.78;
     pointer-events: none;
 }
@@ -1155,16 +1174,15 @@ body.light-theme .tags span:hover {
 .project-orbit::after {
     content: '';
     position: absolute;
-    inset: 28px 18px;
-    border: 1px solid rgba(94, 234, 212, 0.26);
-    border-radius: 999px;
-    transform: rotate(-18deg);
+    inset: 16px;
+    border: 1px solid rgba(94, 234, 212, 0.14);
+    border-radius: 10px;
 }
 
 .project-orbit::after {
-    inset: 48px 44px;
-    transform: rotate(22deg);
-    opacity: 0.7;
+    inset: 38px 52px 26px;
+    background: rgba(94, 234, 212, 0.15);
+    box-shadow: 0 0 24px rgba(94, 234, 212, 0.2);
 }
 
 .project-orbit span {
@@ -1178,18 +1196,18 @@ body.light-theme .tags span:hover {
 }
 
 .project-orbit span:nth-child(1) {
-    top: 32px;
-    right: 44px;
+    top: 18px;
+    right: 18px;
 }
 
 .project-orbit span:nth-child(2) {
-    top: 84px;
-    right: 124px;
+    top: 52px;
+    right: 70px;
 }
 
 .project-orbit span:nth-child(3) {
-    right: 24px;
-    bottom: 26px;
+    right: 110px;
+    bottom: 18px;
 }
 
 .secure-rail {
