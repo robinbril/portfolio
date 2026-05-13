@@ -570,9 +570,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const hudVel = document.getElementById('hud-velocity');
     const hudStatus = document.getElementById('hud-status');
 
-    const STAR_COUNT = 900;
-    const Z_FAR = 1800;
-    const FOCAL = 320;
+    const STAR_COUNT = 1100;
+    const Z_FAR = 2000;
+    const FOCAL = 340;
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let pulsePhase = 0;
 
     const resize = () => {
         dpr = Math.max(1, window.devicePixelRatio || 1);
@@ -588,35 +592,46 @@ document.addEventListener('DOMContentLoaded', () => {
         stars = [];
         for (let i = 0; i < STAR_COUNT; i++) {
             stars.push({
-                x: (Math.random() - 0.5) * 2400,
-                y: (Math.random() - 0.5) * 2400,
-                // Spread z evenly so stars are visible from frame 1
+                x: (Math.random() - 0.5) * 2600,
+                y: (Math.random() - 0.5) * 2600,
                 z: Math.random() * Z_FAR,
                 pz: 0,
                 tint: Math.random(),
-                size: 0.6 + Math.random() * 1.4,
+                size: 0.5 + Math.random() * 1.6,
+                layer: Math.random(),
             });
         }
     };
 
-    const tick = () => {
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    const tick = (ts) => {
         if (!warpActive) return;
         const w = canvas.width;
         const h = canvas.height;
-        const cx = w / 2;
-        const cy = h / 2;
         const focal = FOCAL * dpr;
 
-        // Trailing fade — leaves streaks behind. Lower alpha = longer trails
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+        const parallaxX = mouseX * 18 * dpr;
+        const parallaxY = mouseY * 14 * dpr;
+        const cx = w / 2 + parallaxX;
+        const cy = h * 0.46 + parallaxY;
+
+        ctx.fillStyle = 'rgba(7, 17, 31, 0.2)';
         ctx.fillRect(0, 0, w, h);
 
-        // Radial core glow — the warp tunnel
-        const coreR = Math.min(w, h) * 0.35;
+        const intensity = Math.min(1, (speed - 8) / 34);
+        pulsePhase += 0.018;
+        const pulse = 0.5 + 0.5 * Math.sin(pulsePhase * 2.1);
+        const coreStr = intensity * (0.85 + pulse * 0.15);
+
+        const coreR = Math.min(w, h) * 0.42;
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
-        const intensity = Math.min(1, (speed - 8) / 35);
-        grad.addColorStop(0, `rgba(120, 200, 255, ${0.05 + intensity * 0.18})`);
-        grad.addColorStop(0.45, `rgba(40, 100, 200, ${0.03 + intensity * 0.08})`);
+        grad.addColorStop(0, `rgba(46, 242, 160, ${0.06 + coreStr * 0.22})`);
+        grad.addColorStop(0.25, `rgba(76, 201, 176, ${0.03 + coreStr * 0.1})`);
+        grad.addColorStop(0.5, `rgba(138, 124, 255, ${0.01 + coreStr * 0.04})`);
         grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
@@ -629,8 +644,8 @@ document.addEventListener('DOMContentLoaded', () => {
             s.z -= speed;
 
             if (s.z < 1) {
-                s.x = (Math.random() - 0.5) * 2400;
-                s.y = (Math.random() - 0.5) * 2400;
+                s.x = (Math.random() - 0.5) * 2600;
+                s.y = (Math.random() - 0.5) * 2600;
                 s.z = Z_FAR;
                 s.pz = Z_FAR;
                 continue;
@@ -641,17 +656,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const psx = (s.x / s.pz) * focal + cx;
             const psy = (s.y / s.pz) * focal + cy;
 
-            // depth -> brightness + thickness
             const t = 1 - s.z / Z_FAR;
-            const alpha = Math.min(1, t * 1.6 + 0.15);
-            const lw = (t * 2.4 + 0.4) * s.size * dpr;
+            const farFade = s.layer < 0.3 ? 0.55 : 1;
+            const alpha = Math.min(1, (t * 1.8 + 0.1) * farFade);
+            const lw = (t * 2.6 + 0.3) * s.size * dpr * farFade;
 
-            if (s.tint < 0.78) {
-                ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
-            } else if (s.tint < 0.92) {
-                ctx.strokeStyle = `rgba(0, 255, 157, ${alpha})`;
+            if (s.tint < 0.65) {
+                ctx.strokeStyle = `rgba(232, 255, 246, ${alpha})`;
+            } else if (s.tint < 0.82) {
+                ctx.strokeStyle = `rgba(46, 242, 160, ${alpha})`;
+            } else if (s.tint < 0.93) {
+                ctx.strokeStyle = `rgba(76, 201, 176, ${alpha * 0.85})`;
             } else {
-                ctx.strokeStyle = `rgba(170, 140, 255, ${alpha})`;
+                ctx.strokeStyle = `rgba(138, 124, 255, ${alpha * 0.9})`;
             }
             ctx.lineWidth = lw;
 
@@ -660,19 +677,16 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.lineTo(sx, sy);
             ctx.stroke();
 
-            // Glow head on close stars
-            if (t > 0.65) {
+            if (t > 0.6) {
                 ctx.fillStyle = ctx.strokeStyle;
                 ctx.beginPath();
-                ctx.arc(sx, sy, lw * 0.7, 0, Math.PI * 2);
+                ctx.arc(sx, sy, lw * 0.65, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
-        // Spool-up easing — start at 8 (immediately visible), accelerate to 42
-        speed = Math.min(42, speed + 0.9);
+        speed = Math.min(42, speed + 0.85);
 
-        // HUD velocity readout — maps speed range to a c-fraction
         if (hudVel) {
             const c = ((speed - 8) / 34) * 0.92 + 0.02;
             hudVel.textContent = c.toFixed(2) + ' c';
