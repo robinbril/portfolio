@@ -1092,9 +1092,10 @@ body.light-theme .filter-btn.active {
 .ai-projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    grid-auto-rows: 1fr;
+    grid-auto-rows: minmax(440px, auto);
     gap: 2rem;
     margin-top: 2rem;
+    align-items: stretch;
 }
 
 .ai-project-card {
