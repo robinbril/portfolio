@@ -5500,3 +5500,93 @@ body.light-theme .nav-links a.is-active:not(.btn-primary)::after {
     background: var(--accent-strong);
     box-shadow: 0 0 8px rgba(var(--accent-strong-rgb, 0, 112, 173), 0.4);
 }
+
+/* ==========================================
+   READABILITY BUMP (analysis #4)
+   ========================================== */
+
+/* Project cards: bigger body text, more line-height */
+.ai-project-card p {
+    font-size: 0.98rem !important;
+    line-height: 1.7 !important;
+    color: var(--text-secondary);
+}
+
+body.light-theme .ai-project-card p {
+    color: #334155;
+}
+
+/* Featured cards: bump description */
+.featured-project .featured-content p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(226, 232, 240, 0.88);
+}
+
+body.light-theme .featured-project .featured-content p {
+    color: #1e293b;
+}
+
+/* Timeline / experience: bigger bullets */
+.role-description {
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.role-description li {
+    margin-bottom: 0.8rem;
+}
+
+/* About text: larger and more legible */
+.about-text p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+}
+
+/* Skill tags: slightly larger */
+.skill-tags span {
+    font-size: 0.85rem;
+}
+
+/* Section eyebrows + labels: improve contrast */
+.section-eyebrow {
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    opacity: 0.95;
+}
+
+/* ==========================================
+   FEATURED CARD ARCHITECTURE DIAGRAMS (#5)
+   ========================================== */
+.card-diagram {
+    margin: 1rem 0 1.1rem;
+    padding: 0.85rem 0.6rem;
+    background: rgba(7, 17, 31, 0.45);
+    border: 1px solid rgba(var(--case-accent-rgb), 0.16);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card-diagram svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 130px;
+}
+
+body.light-theme .card-diagram {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(var(--case-accent-rgb), 0.18);
+}
+
+body.light-theme .card-diagram svg text {
+    fill: var(--accent-strong) !important;
+}
+
+body.light-theme .card-diagram svg rect[stroke*="46,242,160"] {
+    stroke: rgba(0, 112, 173, 0.5) !important;
+}
+
+@media (max-width: 768px) {
+    .card-diagram { display: none; }
+}

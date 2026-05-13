@@ -720,14 +720,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
 
+    const pickDestination = () => {
+        const order = ['projects', 'experience', 'skills', 'contact'];
+        const labels = {
+            projects: 'PROJECTS',
+            experience: 'EXPERIENCE',
+            skills: 'SKILLS',
+            contact: 'CONTACT'
+        };
+        const scrollY = window.scrollY + window.innerHeight * 0.4;
+        for (const id of order) {
+            const el = document.getElementById(id);
+            if (el && el.offsetTop > scrollY) {
+                return { id, label: labels[id] };
+            }
+        }
+        // Already past last section - cycle back to start
+        return { id: 'home', label: 'BASE STATION' };
+    };
+
     const activate = () => {
         if (warpActive) return;
         warpActive = true;
         document.body.classList.add('xray');
 
+        const dest = pickDestination();
+        const hudDest = document.getElementById('hud-destination');
+        if (hudDest) hudDest.textContent = dest.label;
+
         speed = 8;
         seedStars();
-        // Clean black slate
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         cancelAnimationFrame(raf);
@@ -736,8 +758,9 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(scanTimer);
         scanTimer = setTimeout(() => {
             if (!warpActive) return;
-            const contact = document.getElementById('contact');
-            if (contact) contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const target = document.getElementById(dest.id);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + dest.label;
         }, 1200);
     };
 
@@ -1053,3 +1076,82 @@ document.addEventListener('DOMContentLoaded', () => {
     stats.forEach((el) => observer.observe(el));
 })();
 
+
+// ==========================================
+// TERMINAL AUTOPROMPT — types example commands in the placeholder
+// to teach discoverability. Stops once user interacts.
+// ==========================================
+(() => {
+    const input = document.getElementById('terminal-input');
+    if (!input) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const examples = ['help', 'linkedin', 'whatsapp', 'book call', 'email'];
+    let exampleIdx = 0;
+    let charIdx = 0;
+    let phase = 'typing'; // typing | hold | erasing
+    let stopped = false;
+    let timer = null;
+
+    const stop = () => {
+        stopped = true;
+        clearTimeout(timer);
+        input.placeholder = 'Enter command...';
+    };
+
+    input.addEventListener('focus', stop, { once: true });
+    input.addEventListener('input', stop, { once: true });
+
+    let observerStarted = false;
+    const startTyping = () => {
+        if (observerStarted || stopped) return;
+        observerStarted = true;
+
+        const step = () => {
+            if (stopped) return;
+            const word = examples[exampleIdx];
+            if (phase === 'typing') {
+                charIdx++;
+                input.placeholder = 'try: ' + word.slice(0, charIdx);
+                if (charIdx >= word.length) {
+                    phase = 'hold';
+                    timer = setTimeout(step, 1400);
+                    return;
+                }
+                timer = setTimeout(step, 90 + Math.random() * 40);
+            } else if (phase === 'hold') {
+                phase = 'erasing';
+                timer = setTimeout(step, 60);
+            } else {
+                charIdx--;
+                input.placeholder = 'try: ' + word.slice(0, Math.max(0, charIdx));
+                if (charIdx <= 0) {
+                    exampleIdx = (exampleIdx + 1) % examples.length;
+                    phase = 'typing';
+                    timer = setTimeout(step, 500);
+                    return;
+                }
+                timer = setTimeout(step, 35);
+            }
+        };
+        timer = setTimeout(step, 800);
+    };
+
+    // Start when the terminal section enters viewport
+    const wrap = input.closest('.contact-terminal-wrap') || input.closest('.terminal-window');
+    if (wrap && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) {
+                    startTyping();
+                    io.disconnect();
+                }
+            });
+        }, { threshold: 0.4 });
+        io.observe(wrap);
+    } else {
+        startTyping();
+    }
+})();
