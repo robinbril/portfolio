@@ -259,7 +259,7 @@
                         <span class="terminal-prompt">&gt;_</span>
                         <span class="terminal-path">/sales_agent</span>
                         <span class="terminal-path">/logistics_agent</span>
-                        <span class="terminal-path">/contract_search</span>
+                        <span class="terminal-path">/legal_knowledge_base</span>
                         <span class="terminal-path">/voice_kb</span>
                     </div>
                 </div>
@@ -284,14 +284,31 @@
                             enterprise-omgeving, met gecontroleerde LLM-orchestratie en bestaande
                             governancekaders.</p>
                     </div>
+                    <div class="secure-rail">
+                        <details>
+                            <summary>Restricted context</summary>
+                            <p>Ontworpen voor afgebakende data-, security- en toegangsregels binnen een
+                                enterprise-omgeving.</p>
+                        </details>
+                        <details>
+                            <summary>Governance workflow</summary>
+                            <p>Agentacties lopen via duidelijke processtappen, logging en menselijke
+                                controlepunten.</p>
+                        </details>
+                        <details>
+                            <summary>Stakeholder alignment</summary>
+                            <p>Technische realisatie afgestemd met senior stakeholders vanuit Analytics,
+                                IT en de business.</p>
+                        </details>
+                    </div>
                     <div class="card-metrics">
+                        <div class="card-metric">
+                            <span class="card-metric-label">ROLE</span>
+                            <span class="card-metric-value card-metric-value--wide">AI Engineer</span>
+                        </div>
                         <div class="card-metric">
                             <span class="card-metric-label">DEPLOY</span>
                             <span class="card-metric-value">On-prem</span>
-                        </div>
-                        <div class="card-metric">
-                            <span class="card-metric-label">ACCESS</span>
-                            <span class="card-metric-value">RBAC</span>
                         </div>
                         <div class="card-metric">
                             <span class="card-metric-label">LIVE</span>
@@ -337,26 +354,51 @@
                     </div>
                 </a>
 
-                <!-- Enterprise MCP Server Suite -->
+                <!-- D365 CE MCP -->
                 <div class="ai-project-card" data-category="mcp">
                     <div class="project-icon-wrapper icon-indigo">
-                        <i data-lucide="plug"></i>
+                        <i data-lucide="users"></i>
                     </div>
-                    <h3>Enterprise MCP Server Suite</h3>
-                    <p>14+ koppelingen waarmee AI-agents veilig toegang krijgen tot bedrijfssoftware
-                        zoals Microsoft Dynamics, Outlook, SharePoint en SQL-databases. Hierdoor kan
-                        AI niet alleen advies geven, maar ook <strong>gecontroleerd echte acties
-                        uitvoeren</strong> — een order aanmaken, een document opzoeken, een rapport
-                        genereren.</p>
+                    <h3>D365 CE MCP <span style="font-weight:400;opacity:0.7;">· C# .NET 8</span></h3>
+                    <p>MCP-server voor Dynamics 365 Customer Engagement (Sales, Service). Geeft
+                        AI-agents <strong>CRUD-toegang tot accounts, contacts, opportunities en
+                        cases</strong> via de Dataverse Web API met OAuth.</p>
                     <div class="project-tags">
-                        <span class="tag-indigo">D365 F&amp;O</span>
-                        <span class="tag-indigo">Business Central</span>
-                        <span class="tag-blue">Outlook</span>
-                        <span class="tag-blue">SharePoint</span>
-                        <span class="tag-blue">Microsoft Graph</span>
-                        <span class="tag-emerald">SQL Server</span>
-                        <span class="tag-emerald">PDF Extract</span>
-                        <span class="tag-emerald">Doc Generation</span>
+                        <span class="tag-indigo">D365 CE</span>
+                        <span class="tag-blue">Dataverse</span>
+                        <span class="tag-violet">Entra ID</span>
+                    </div>
+                </div>
+
+                <!-- Teams MCP -->
+                <div class="ai-project-card" data-category="mcp">
+                    <div class="project-icon-wrapper icon-blue">
+                        <i data-lucide="message-square"></i>
+                    </div>
+                    <h3>Teams MCP <span style="font-weight:400;opacity:0.7;">· C# .NET 8</span></h3>
+                    <p>Microsoft Teams MCP-server via Graph API. AI-agents kunnen
+                        <strong>channels lezen, berichten sturen en chat-context ophalen</strong>
+                        voor HITL-workflows en notificaties.</p>
+                    <div class="project-tags">
+                        <span class="tag-blue">Microsoft Teams</span>
+                        <span class="tag-indigo">Graph API</span>
+                        <span class="tag-violet">Webhooks</span>
+                    </div>
+                </div>
+
+                <!-- APIARY MCP -->
+                <div class="ai-project-card" data-category="mcp">
+                    <div class="project-icon-wrapper icon-amber">
+                        <i data-lucide="hexagon"></i>
+                    </div>
+                    <h3>APIARY MCP <span style="font-weight:400;opacity:0.7;">· Python</span></h3>
+                    <p>Orchestration MCP die meerdere MCP-servers combineert tot een unified API
+                        gateway. Agents benaderen <strong>alle enterprise-koppelingen via
+                        een enkel endpoint</strong> met routing en auth-forwarding.</p>
+                    <div class="project-tags">
+                        <span class="tag-amber">Python</span>
+                        <span class="tag-orange">Gateway</span>
+                        <span class="tag-emerald">Multi-MCP</span>
                     </div>
                 </div>
 
@@ -938,8 +980,8 @@
                         <ul class="role-description">
                             <li>Actief lid van een Amsterdamse studentenbeleggingscommunity, met focus op
                                 fundamentele analyse, data-gedreven inzichten en technische analyse.</li>
-                            <li>Actief lid van een Amsterdamse studentenbeleggingscommunity die
-                                <strong>eerste plaats</strong> behaalde in zowel de Nationale Investeringscompetitie
+                            <li>De vereniging behaalde
+                                <strong>eerste plaats</strong> in zowel de Nationale Investeringscompetitie
                                 2023 als 2024, gerankt op Sharpe-ratio over 9 maanden tussen 20 studenten-beleggingsverenigingen.</li>
                         </ul>
                         <div class="tags">
