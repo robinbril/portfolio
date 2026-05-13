@@ -566,16 +566,16 @@ body.dark-theme .hero::after {
 }
 
 .hero-subtitle {
-    font-size: 1.2rem;
-    line-height: 1.65;
+    font-size: 1.25rem;
+    line-height: 1.6;
     margin-bottom: 1.25rem;
-    max-width: 640px;
+    max-width: 540px;
     margin-left: auto;
     margin-right: auto;
-    color: var(--text-primary);
-    font-weight: 700;
+    color: var(--text-secondary);
+    font-weight: 300;
     text-wrap: balance;
-    letter-spacing: -0.005em;
+    letter-spacing: 0.01em;
 }
 
 /* Hero Stats Badges */
