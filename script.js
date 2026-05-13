@@ -572,13 +572,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
 
+    let scanTimer = null;
+
     const activate = () => {
         if (xrayActive) return;
         xrayActive = true;
         document.body.classList.add('xray');
+
+        // Scan line sweeps top -> bottom (1.4s via CSS), then jump to contact
+        clearTimeout(scanTimer);
+        scanTimer = setTimeout(() => {
+            if (!xrayActive) return;
+            const contact = document.getElementById('contact');
+            if (contact) contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 1300);
     };
 
     const deactivate = () => {
+        clearTimeout(scanTimer);
         if (!xrayActive) return;
         xrayActive = false;
         document.body.classList.remove('xray');

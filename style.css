@@ -1410,6 +1410,115 @@ body.light-theme .terminal-path {
 /* ==========================================
    X-RAY MODE (hold SPACE to activate)
    ========================================== */
+
+/* Default hint pill (visible when xray is OFF) */
+.xray-hint {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 9000;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 0.95rem;
+    background: rgba(10, 14, 18, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    user-select: none;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.xray-hint i {
+    width: 14px;
+    height: 14px;
+    color: var(--accent-primary);
+}
+
+.xray-hint kbd {
+    display: inline-block;
+    padding: 1px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.85);
+    font-family: inherit;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+}
+
+body.light-theme .xray-hint {
+    background: rgba(255, 255, 255, 0.75);
+    border-color: rgba(15, 23, 42, 0.12);
+    color: rgba(15, 23, 42, 0.7);
+}
+
+body.light-theme .xray-hint i {
+    color: var(--accent-strong);
+}
+
+body.light-theme .xray-hint kbd {
+    background: rgba(15, 23, 42, 0.04);
+    border-color: rgba(15, 23, 42, 0.22);
+    color: rgba(15, 23, 42, 0.85);
+}
+
+body.xray .xray-hint {
+    opacity: 0;
+}
+
+@media (max-width: 768px) {
+    .xray-hint { display: none; }
+}
+
+/* Scan line: full-width green sweep, animated when xray is active */
+.xray-scanline {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(0, 255, 157, 0.85) 30%,
+        #00ff9d 50%,
+        rgba(0, 255, 157, 0.85) 70%,
+        transparent);
+    box-shadow: 0 0 24px rgba(0, 255, 157, 0.9),
+                0 0 60px rgba(0, 255, 157, 0.6),
+                0 0 120px rgba(0, 255, 157, 0.35);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(0);
+}
+
+body.xray .xray-scanline {
+    opacity: 1;
+    animation: xray-sweep 1.4s cubic-bezier(0.55, 0.05, 0.45, 0.95) forwards;
+}
+
+@keyframes xray-sweep {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
 body.xray {
     background: #020405 !important;
 }
