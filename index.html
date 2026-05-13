@@ -178,6 +178,31 @@
             <!-- Warp core glow, slightly above center -->
             <ellipse cx="800" cy="410" rx="520" ry="380" fill="url(#warpCore)" />
 
+            <!-- Lens flare burst at warp core -->
+            <g class="lens-flare" transform="translate(800 410)" opacity="0.55">
+                <defs>
+                    <radialGradient id="flareCore" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="rgba(232,255,246,0.9)"/>
+                        <stop offset="40%" stop-color="rgba(46,242,160,0.4)"/>
+                        <stop offset="100%" stop-color="rgba(46,242,160,0)"/>
+                    </radialGradient>
+                    <radialGradient id="flareRay" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="rgba(232,255,246,0.4)"/>
+                        <stop offset="100%" stop-color="rgba(232,255,246,0)"/>
+                    </radialGradient>
+                </defs>
+                <circle cx="0" cy="0" r="42" fill="url(#flareCore)">
+                    <animate attributeName="r" values="38;46;38" dur="3.4s" repeatCount="indefinite"/>
+                </circle>
+                <ellipse cx="0" cy="0" rx="220" ry="2.5" fill="url(#flareRay)"/>
+                <ellipse cx="0" cy="0" rx="2.5" ry="160" fill="url(#flareRay)"/>
+                <ellipse cx="0" cy="0" rx="140" ry="1.5" fill="url(#flareRay)" transform="rotate(45)"/>
+                <ellipse cx="0" cy="0" rx="140" ry="1.5" fill="url(#flareRay)" transform="rotate(-45)"/>
+            </g>
+
+            <!-- Atmospheric haze layer for depth -->
+            <rect x="0" y="0" width="1600" height="900" fill="url(#warpCore)" opacity="0.3"/>
+
             <!-- Diagonal light sweep for asymmetry -->
             <line x1="300" y1="900" x2="560" y2="180" stroke="rgba(46,242,160,0.025)" stroke-width="90" />
 
@@ -311,7 +336,25 @@
                 poster="hero-bg.webp">
                 <source src="hero-bg.mp4" type="video/mp4">
             </video>
+
+            <!-- Animated decorative layer: grid + floating dots -->
+            <div class="hero-deco" aria-hidden="true">
+                <div class="hero-grid"></div>
+                <div class="hero-orb hero-orb--1"></div>
+                <div class="hero-orb hero-orb--2"></div>
+                <div class="hero-orb hero-orb--3"></div>
+                <svg class="hero-rings" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="300" cy="300" r="120" fill="none" stroke="rgba(46,242,160,0.12)" stroke-width="0.8"/>
+                    <circle cx="300" cy="300" r="200" fill="none" stroke="rgba(46,242,160,0.08)" stroke-width="0.6"/>
+                    <circle cx="300" cy="300" r="280" fill="none" stroke="rgba(46,242,160,0.04)" stroke-width="0.5"/>
+                </svg>
+            </div>
+
             <div class="hero-content">
+                <div class="hero-eyebrow">
+                    <span class="hero-pulse"></span>
+                    <span>Available · Amsterdam · Remote</span>
+                </div>
                 <h1>AI Engineer</h1>
                 <p class="hero-subtitle">
                     Ik bouw AI die zelfstandig werkt.<br>
@@ -328,7 +371,29 @@
                         Contact
                     </a>
                 </div>
+
+                <div class="hero-stats" aria-hidden="true">
+                    <div class="hero-stat">
+                        <strong>14+</strong>
+                        <span>MCP Servers</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>7+</strong>
+                        <span>Production Agents</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>200+</strong>
+                        <span>Automations</span>
+                    </div>
+                </div>
             </div>
+
+            <a href="#about" class="hero-scroll-cue" aria-label="Scroll naar verder">
+                <span class="hero-scroll-line"></span>
+                <span class="hero-scroll-label">SCROLL</span>
+            </a>
         </section>
 
         <!-- About Section -->
