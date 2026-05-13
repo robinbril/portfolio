@@ -118,11 +118,11 @@ body.dark-theme::after {
     z-index: -1;
     pointer-events: none;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 40%, transparent 85%);
-    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 40%, transparent 85%);
+        linear-gradient(rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 100% 90% at 50% 40%, black 50%, transparent 95%);
+    -webkit-mask-image: radial-gradient(ellipse 100% 90% at 50% 40%, black 50%, transparent 95%);
 }
 
 body.light-theme::before {
@@ -1237,6 +1237,25 @@ body.light-theme .card-corner {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+}
+
+/* Company name — clearly separated from the tool title */
+.card-company {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    align-self: flex-start;
+    padding: 0.4rem 0.75rem;
+    background: rgba(var(--case-accent-rgb), 0.1);
+    border: 1px solid rgba(var(--case-accent-rgb), 0.3);
+    border-radius: 999px;
+    color: var(--case-accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
 }
 
 .card-id-dot {
@@ -2373,9 +2392,11 @@ body.light-theme .tag-magenta {
 }
 
 .contact-card {
-    display: inline-block;
+    display: block;
     width: 100%;
     max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .contact-card h2 {
@@ -2967,38 +2988,39 @@ footer {
 }
 
 .keyword {
-    color: #1e293b;
+    color: #c084fc;
     font-weight: 600;
 }
 
 .variable {
-    color: #1e293b;
+    color: #f59e0b;
 }
 
 .string {
-    color: #64748b;
+    color: #10b981;
 }
 
 .comment {
-    color: #6b7280;
+    color: #94a3b8;
     font-style: italic;
 }
 
 .operator {
-    color: #1f2937;
+    color: #f43f5e;
+    font-weight: 600;
 }
 
 .class {
-    color: #1e293b;
+    color: #38bdf8;
     font-weight: 600;
 }
 
 .method {
-    color: #475569;
+    color: #facc15;
 }
 
 .bracket {
-    color: #4b5563;
+    color: #94a3b8;
 }
 
 /* Progress Container */
@@ -3021,10 +3043,11 @@ footer {
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: #1e293b;
+    background: linear-gradient(90deg, #38bdf8 0%, #c084fc 50%, #f43f5e 100%);
     transition: width 0.1s linear;
     position: relative;
     border-radius: 3px;
+    box-shadow: 0 0 12px rgba(192, 132, 252, 0.5);
 }
 
 .progress-info {
