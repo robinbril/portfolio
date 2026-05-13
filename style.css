@@ -2034,10 +2034,17 @@ body.light-theme .filter-btn.active {
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-left: 3px solid var(--accent-primary);
     border-radius: 16px;
-    padding: 1.5rem;
-    display: grid;
-    grid-template-rows: 80px 4.5rem 1fr auto;
-    justify-items: center;
+    padding: 1.75rem 1.5rem;
+    /* Three-zone flex column:
+       1. icon (fixed top)
+       2. h3 (fixed Y via min-height 2 lines)
+       3. p (flex-grow — its OWN flex centering keeps text in middle)
+       4. tags (fixed bottom)
+       Short descriptions visually float in the middle of their block;
+       long descriptions fill it. Title baseline aligns across all cards. */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
     position: relative;
@@ -2047,19 +2054,27 @@ body.light-theme .filter-btn.active {
 }
 
 .ai-project-card .project-icon-wrapper {
-    align-self: start;
-    justify-self: center;
+    width: 56px;
+    height: 56px;
+    flex: 0 0 auto;
+    margin: 0 0 1.5rem;
+    align-self: center;
 }
 
 .ai-project-card h3 {
-    text-align: center;
+    flex: 0 0 auto;
     width: 100%;
-    margin: 0;
-    align-self: center;
+    margin: 0 0 1rem;
+    padding: 0;
+    text-align: center;
+    line-height: 1.3;
+    font-size: 1.2rem;
+    /* min-height = 2 lines so 1-line and 2-line titles all reserve
+       the same vertical block; titles align across cards regardless. */
+    min-height: 2.6em;
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1.25;
 }
 
 .ai-project-card h3 span {
@@ -2067,21 +2082,30 @@ body.light-theme .filter-btn.active {
 }
 
 .ai-project-card p {
-    text-align: center;
+    /* Expands to fill space between h3 and tags. Internal flex
+       centering keeps the text optically in the middle of its block. */
+    flex: 1 1 auto;
     width: 100%;
     margin: 0;
-    align-self: start;
+    padding: 0;
+    text-align: center;
+    line-height: 1.55;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ai-project-card .project-tags {
+    flex: 0 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 0.4rem;
     width: 100%;
-    align-self: end;
-    margin-top: 1rem;
+    margin: 1.25rem 0 0;
+    min-height: 2.4em;
 }
 
 body.light-theme .ai-project-card {
@@ -4534,33 +4558,10 @@ body.light-theme ::-webkit-scrollbar-thumb {
     }
 }
 
-/* 3. Project card title alignment — flex on h3 vertical center */
-.ai-project-card .project-icon-wrapper {
-    width: 56px;
-    height: 56px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin: 0;
-    align-self: center;
-    justify-self: center;
-}
-
-.ai-project-card h3 {
-    font-size: 1.25rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
-}
-
-.ai-project-card p {
-    font-size: 0.92rem;
-    line-height: 1.5;
-}
+/* 3. Project card title alignment — handled in main .ai-project-card flex rules.
+   Intentionally NOT using -webkit-line-clamp here because it forces
+   display: -webkit-box and breaks the flex centering. min-height: 2.6em
+   on h3 already keeps titles aligned across cards. */
 
 /* 4. Mobile responsive rebuild */
 @media (max-width: 768px) {
@@ -4620,19 +4621,26 @@ body.light-theme ::-webkit-scrollbar-thumb {
         font-size: 0.82rem;
     }
 
-    /* Cards: single column with auto rows */
+    /* Cards: single column on mobile */
     .ai-projects-grid {
         grid-template-columns: 1fr !important;
         gap: 1rem;
         padding: 0 0.5rem;
+        grid-auto-rows: auto !important;
     }
     .ai-project-card {
-        grid-template-rows: auto auto auto auto;
         padding: 1.25rem;
+        min-height: 280px;
     }
     .ai-project-card h3 {
-        -webkit-line-clamp: unset;
-        line-clamp: unset;
+        min-height: auto;
+        font-size: 1.15rem;
+    }
+    .ai-project-card p {
+        font-size: 0.9rem;
+    }
+    .ai-project-card .project-tags {
+        min-height: auto;
     }
 
     /* Featured cards stack */
