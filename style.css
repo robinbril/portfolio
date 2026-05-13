@@ -1859,13 +1859,15 @@ body.light-theme .tag-magenta {
 
 .skills-header {
     max-width: 760px;
+    padding-top: 1.5rem;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 2.5rem;
 }
 
 .section-eyebrow {
-    display: inline-flex;
+    display: block;
+    width: 100%;
     margin-bottom: 0.85rem;
     color: var(--accent-strong);
     font-size: 0.78rem;
@@ -2902,18 +2904,22 @@ footer {
 }
 
 .quote-author-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 0.5rem;
+    row-gap: 0.25rem;
+    align-items: center;
     min-width: 0;
 }
 
 .quote-author strong {
+    grid-column: 1 / -1;
     font-size: 0.9375rem;
     color: var(--text-primary);
 }
 
 .quote-author span {
+    grid-column: 1;
     font-size: 0.8125rem;
     color: var(--text-secondary);
 }
@@ -2924,7 +2930,8 @@ footer {
     justify-content: center;
     width: 18px;
     height: 18px;
-    margin-left: 0.5rem;
+    grid-column: 2;
+    grid-row: 2;
     color: var(--text-secondary);
     opacity: 0.5;
     transition: all 0.2s ease;
