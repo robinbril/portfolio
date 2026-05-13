@@ -2379,8 +2379,25 @@ footer {
 
 .quote-author {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.875rem;
+}
+
+.quote-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(124, 58, 237, 0.25);
+}
+
+.quote-author-text {
+    display: flex;
     flex-direction: column;
     gap: 0.25rem;
+    min-width: 0;
 }
 
 .quote-author strong {
