@@ -4542,6 +4542,9 @@ body.light-theme ::-webkit-scrollbar-thumb {
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    margin: 0;
+    align-self: center;
+    justify-self: center;
 }
 
 .ai-project-card h3 {
