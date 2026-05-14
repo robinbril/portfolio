@@ -465,56 +465,6 @@
                             Hive AI-platform, met toepassingen in sales, logistiek, een AI-gedreven
                             kennisbank voor de juridische afdeling en voice-driven knowledge search.</p>
                     </div>
-                    <!-- Architecture diagram: agents <- Hive -> MCP servers -->
-                    <div class="card-diagram" aria-hidden="true">
-                        <svg viewBox="0 0 320 134" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="dia-flow-l" x1="1" y1="0" x2="0" y2="0">
-                                    <stop offset="0%" stop-color="rgba(46,242,160,0.55)"/>
-                                    <stop offset="100%" stop-color="rgba(46,242,160,0.08)"/>
-                                </linearGradient>
-                                <linearGradient id="dia-flow-r" x1="0" y1="0" x2="1" y2="0">
-                                    <stop offset="0%" stop-color="rgba(46,242,160,0.55)"/>
-                                    <stop offset="100%" stop-color="rgba(46,242,160,0.08)"/>
-                                </linearGradient>
-                            </defs>
-
-                            <!-- Connection lines: hub to spokes -->
-                            <g stroke-width="1" fill="none">
-                                <path d="M 160 58 L 90 22" stroke="url(#dia-flow-l)"/>
-                                <path d="M 160 58 L 90 58" stroke="url(#dia-flow-l)"/>
-                                <path d="M 160 58 L 90 94" stroke="url(#dia-flow-l)"/>
-                                <path d="M 160 58 L 230 22" stroke="url(#dia-flow-r)"/>
-                                <path d="M 160 58 L 230 58" stroke="url(#dia-flow-r)"/>
-                                <path d="M 160 58 L 230 94" stroke="url(#dia-flow-r)"/>
-                            </g>
-
-                            <!-- Left column: agents -->
-                            <g>
-                                <rect x="14" y="14" width="76" height="16" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.45)"/>
-                                <text x="52" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" fill="#2EF2A0">SALES</text>
-                                <rect x="14" y="50" width="76" height="16" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.45)"/>
-                                <text x="52" y="61" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" fill="#2EF2A0">LOGISTICS</text>
-                                <rect x="14" y="86" width="76" height="16" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.45)"/>
-                                <text x="52" y="97" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" fill="#2EF2A0">LEGAL</text>
-                            </g>
-
-                            <!-- Right column: MCP servers -->
-                            <g>
-                                <rect x="230" y="14" width="76" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.3)"/>
-                                <text x="268" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.9">D365 MCP</text>
-                                <rect x="230" y="50" width="76" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.3)"/>
-                                <text x="268" y="61" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.9">GRAPH MCP</text>
-                                <rect x="230" y="86" width="76" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.3)"/>
-                                <text x="268" y="97" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.9">VOICE MCP</text>
-                            </g>
-
-                            <!-- Central hub: HIVE only (bigger circle, label below) -->
-                            <circle cx="160" cy="58" r="26" fill="rgba(46,242,160,0.16)" stroke="rgba(46,242,160,0.7)" stroke-width="1.4"/>
-                            <text x="160" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="800" fill="#E8FFF6">HIVE</text>
-                            <text x="160" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" font-weight="600" fill="#2EF2A0" opacity="0.55" letter-spacing="0.2em">ORCHESTRATOR</text>
-                        </svg>
-                    </div>
                     <div class="secure-rail">
                         <details>
                             <summary>Sales order automation</summary>
@@ -574,40 +524,6 @@
                         <p>Private Gen-AI platform met multi-agent workflows binnen een streng beveiligde
                             enterprise-omgeving, met gecontroleerde LLM-orchestratie en bestaande
                             governancekaders.</p>
-                    </div>
-                    <!-- Architecture diagram: layered security model -->
-                    <div class="card-diagram" aria-hidden="true">
-                        <svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="dia-shield" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="rgba(46,242,160,0.16)"/>
-                                    <stop offset="100%" stop-color="rgba(46,242,160,0.04)"/>
-                                </linearGradient>
-                            </defs>
-                            <!-- Outer perimeter: on-premise boundary -->
-                            <rect x="6" y="10" width="308" height="90" rx="6" fill="url(#dia-shield)" stroke="rgba(46,242,160,0.4)" stroke-dasharray="4 3"/>
-                            <text x="14" y="22" font-family="JetBrains Mono, monospace" font-size="6" fill="#2EF2A0" opacity="0.6" letter-spacing="1.2">ON-PREMISE PERIMETER</text>
-                            <!-- Middle layer: governance / audit -->
-                            <rect x="20" y="32" width="280" height="58" rx="4" fill="rgba(46,242,160,0.05)" stroke="rgba(46,242,160,0.3)"/>
-                            <text x="28" y="44" font-family="JetBrains Mono, monospace" font-size="6" fill="#2EF2A0" opacity="0.55" letter-spacing="1.2">GOVERNANCE · AUDIT · POLICY</text>
-                            <!-- Inner core: agents -->
-                            <g>
-                                <rect x="38" y="56" width="74" height="22" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.5)"/>
-                                <text x="75" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0">LLM AGENT</text>
-                                <rect x="124" y="56" width="74" height="22" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.5)"/>
-                                <text x="161" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0">RAG</text>
-                                <rect x="210" y="56" width="74" height="22" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.5)"/>
-                                <text x="247" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0">KB</text>
-                            </g>
-                            <!-- Connection lines between core nodes -->
-                            <g stroke="rgba(46,242,160,0.35)" stroke-width="0.8" fill="none">
-                                <path d="M 112 67 L 124 67"/>
-                                <path d="M 198 67 L 210 67"/>
-                            </g>
-                            <!-- Status dot -->
-                            <circle cx="304" cy="22" r="2.5" fill="#2EF2A0"/>
-                            <circle cx="304" cy="22" r="5" fill="none" stroke="#2EF2A0" stroke-width="0.5" opacity="0.5"/>
-                        </svg>
                     </div>
                     <div class="secure-rail">
                         <details>
@@ -778,7 +694,7 @@
                     <div class="project-tags">
                         <span class="tag-teal">D365 F&amp;O</span>
                         <span class="tag-green">PDF Extraction</span>
-                        <span class="tag-emerald">Claude</span>
+                        <span class="tag-emerald">Claude Sonnet 4.6</span>
                     </div>
                 </div>
 
@@ -795,7 +711,7 @@
                     <div class="project-tags">
                         <span class="tag-rose">SharePoint</span>
                         <span class="tag-red">AKS + Istio</span>
-                        <span class="tag-pink">Claude Sonnet</span>
+                        <span class="tag-pink">Claude Sonnet 4.6</span>
                     </div>
                 </div>
 
@@ -891,7 +807,7 @@
                     <div class="project-tags">
                         <span class="tag-blue">CrewAI</span>
                         <span class="tag-indigo">LangGraph</span>
-                        <span class="tag-purple">Claude 3.5</span>
+                        <span class="tag-purple">GPT 5.4</span>
                     </div>
                 </div>
 
@@ -904,7 +820,7 @@
                     <p>Automatische planning met conflict-detectie via Microsoft Graph. Analyseert inbox-context
                         en genereert afspraken met follow-up reminders.</p>
                     <div class="project-tags">
-                        <span class="tag-amber">GPT-4</span>
+                        <span class="tag-amber">Claude Sonnet 4.6</span>
                         <span class="tag-orange">Outlook Graph</span>
                         <span class="tag-yellow">Python</span>
                     </div>
@@ -935,7 +851,7 @@
                         Ontworpen met fallback-scenario's voor verschillende omgevingen.</p>
                     <div class="project-tags">
                         <span class="tag-indigo">Whisper</span>
-                        <span class="tag-blue">GPT-4</span>
+                        <span class="tag-blue">GPT 5.4</span>
                         <span class="tag-cyan">WebRTC</span>
                     </div>
                 </div>
@@ -949,7 +865,7 @@
                     <p>Van idee tot live deployment via geautomatiseerde AI-pipeline. Genereert Next.js sites
                         met copy, afbeeldingen en one-click deploy.</p>
                     <div class="project-tags">
-                        <span class="tag-teal">GPT-4</span>
+                        <span class="tag-teal">Claude Sonnet 4.6</span>
                         <span class="tag-green">Vercel AI SDK</span>
                         <span class="tag-teal">DALL·E 3</span>
                     </div>
@@ -991,7 +907,7 @@
                         <i data-lucide="settings"></i>
                     </div>
                     <h3>Claude Workflow Automator</h3>
-                    <p>Claude 3.5 prompt-technieken geïmplementeerd voor enterprise automatisering. Van artifacts
+                    <p>Claude Sonnet 4.6 prompt-technieken geïmplementeerd voor enterprise automatisering. Van artifacts
                         tot MCP. <strong>Geïntegreerd in meerdere workflows.</strong></p>
                     <div class="project-tags">
                         <span class="tag-purple">Anthropic API</span>

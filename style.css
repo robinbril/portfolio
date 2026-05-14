@@ -5732,3 +5732,29 @@ body.light-theme .card-diagram svg rect[stroke*="46,242,160"] {
         0 0 24px rgba(46, 242, 160, 0.45),
         0 0 8px rgba(232, 255, 246, 0.6);
 }
+
+/* ==========================================
+   FEATURED CARDS COMPRESSED
+   ========================================== */
+.featured-project {
+    padding: 1.25rem 1.35rem 1.1rem !important;
+}
+
+.featured-project--flagship .featured-content h3,
+.featured-project--secure .featured-content h3 {
+    font-size: clamp(1.45rem, 2.1vw, 1.95rem) !important;
+}
+
+.featured-project .featured-content p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.secure-rail {
+    margin: 0.85rem 0 0.85rem !important;
+}
+
+.card-metrics {
+    margin-top: 0.75rem !important;
+    padding-top: 0.9rem !important;
+}
