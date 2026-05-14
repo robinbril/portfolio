@@ -157,6 +157,22 @@ body.light-theme::after {
         background: var(--bg-color) !important;
     }
 
+    html {
+        background: #0b0d11 !important;
+    }
+
+    html:has(body.light-theme) {
+        background: #f8fafc !important;
+    }
+
+    body.dark-theme {
+        background: #0b0d11 !important;
+    }
+
+    body.light-theme {
+        background: #f8fafc !important;
+    }
+
     body::before,
     body::after {
         content: none !important;

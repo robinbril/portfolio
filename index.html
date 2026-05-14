@@ -163,46 +163,42 @@
     <!-- Warp starfield canvas (only renders while space is held) -->
     <canvas id="warp-canvas" aria-hidden="true"></canvas>
 
-    <!-- Warp HUD overlay - dark glass panels for guaranteed legibility -->
+    <!-- Warp HUD overlay - cockpit frame met struts + canopy + pilot silhouet (3D vibe) -->
     <div class="warp-hud" id="warp-hud" aria-hidden="true">
-        <div class="warp-stage">
-            <div class="warp-eyebrow">NEXT STOP</div>
-            <div class="warp-big" id="hud-big-destination">OVER MIJ</div>
-            <div class="warp-hint">Release SPACE to land here</div>
-        </div>
 
-        <div class="warp-bottom">
-            <ol class="warp-route" id="warp-route" aria-label="Warp route stops">
-                <li class="warp-stop is-active" data-section="about">
-                    <span class="warp-stop-dot"></span>
-                    <span class="warp-stop-label">Over mij</span>
-                </li>
-                <li class="warp-stop" data-section="projects">
-                    <span class="warp-stop-dot"></span>
-                    <span class="warp-stop-label">Projecten</span>
-                </li>
-                <li class="warp-stop" data-section="experience">
-                    <span class="warp-stop-dot"></span>
-                    <span class="warp-stop-label">Ervaring</span>
-                </li>
-                <li class="warp-stop" data-section="skills">
-                    <span class="warp-stop-dot"></span>
-                    <span class="warp-stop-label">Skills</span>
-                </li>
-                <li class="warp-stop" data-section="contact">
-                    <span class="warp-stop-dot"></span>
-                    <span class="warp-stop-label">Contact</span>
-                </li>
-            </ol>
+        <!-- Top HUD strip: ingebed in cockpit canopy -->
+        <h2 id="hud-big-destination">OVER MIJ</h2>
 
-            <div class="warp-velocity">
-                <span class="warp-velocity-label">VELOCITY</span>
-                <span class="warp-velocity-value" id="hud-velocity">0.00 c</span>
-                <span class="warp-velocity-status" id="hud-status">SPOOLING DRIVE</span>
-            </div>
-        </div>
+        <!-- Bottom dashboard: pilot card | 5 route stops | velocity stack -->
+        <ol class="warp-route" id="warp-route" aria-label="Warp route stops">
+            <li class="warp-stop is-active" data-section="about">
+                <span class="warp-stop-dot"></span>
+                <span class="warp-stop-label">Over mij</span>
+            </li>
+            <li class="warp-stop" data-section="projects">
+                <span class="warp-stop-dot"></span>
+                <span class="warp-stop-label">Projecten</span>
+            </li>
+            <li class="warp-stop" data-section="experience">
+                <span class="warp-stop-dot"></span>
+                <span class="warp-stop-label">Ervaring</span>
+            </li>
+            <li class="warp-stop" data-section="skills">
+                <span class="warp-stop-dot"></span>
+                <span class="warp-stop-label">Skills</span>
+            </li>
+            <li class="warp-stop" data-section="contact">
+                <span class="warp-stop-dot"></span>
+                <span class="warp-stop-label">Contact</span>
+            </li>
+        </ol>
 
-        <span id="hud-destination" hidden>OVER MIJ</span>
+        <!-- Right dashboard readouts -->
+        <div id="hud-velocity">0.00 c</div>
+        <div id="hud-status">SPOOLING DRIVE</div>
+
+        <!-- Left dashboard pilot-card (decoratief, CSS-painted) -->
+        <span id="hud-destination" aria-hidden="true">RB-01</span>
     </div>
 
     <header>

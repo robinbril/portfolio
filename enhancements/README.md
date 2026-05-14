@@ -558,3 +558,121 @@ Worden volledig overschreven door `04-light-theme.css`. Niet aangeraakt in deze 
 3. **Filter-btn AA contrast** — primary button tekst op `#0d9488` haalt 3.8:1; AA voor body-text is 4.5:1. Maak knop-tekst `font-weight: 700` (dan 3:1 voldoende per AA Large) of donker de teal naar `#0f766e` (4.5:1). Aanbevolen: bold.
 4. **Focus rings** — geen expliciete `:focus-visible` outline in deze file. A11y follow-up: `outline: 2px solid #0d9488; outline-offset: 2px;` op interactieve elementen.
 5. **Tag colors** — alle 17 `.tag-*` klassen kregen dezelfde neutrale stijl. Semantische kleuring (bv. `tag-emerald` echt groen) is een aparte enhancement.
+
+---
+
+## 01-cockpit (UPDATED) — full-viewport cockpit frame
+
+Vervangt de twee zwevende glasspanelen (`.warp-stage` top, `.warp-bottom` bottom) door een complete cockpit: vaste side-struts links + rechts, een geïntegreerde top-HUD strip, een dashboard onderaan en een pilot-silhouet in 3D-vibe (achteraanzicht, helm + schouders, subtle head-bob).
+
+Files:
+
+- `enhancements/01-warp-hud.css` — herschreven (overschrijft de oude floating-panel CSS).
+- `cockpit-pilot.svg` — pilot silhouet, gerenderd als `background-image` op `.warp-hud`. Path is relatief vanaf de CSS: `url("../cockpit-pilot.svg")`.
+
+### Wire-up
+
+Geen CSS-link toevoegen — `01-warp-hud.css` zit al in `<head>`. Verifieer load-volgorde:
+
+```html
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="ai-styles.css">
+<link rel="stylesheet" href="apple-premium.css">
+<!-- enhancements -->
+<link rel="stylesheet" href="enhancements/01-warp-hud.css">
+```
+
+### HTML changes — vervang `index.html` regels 149–198
+
+De huidige markup heeft losse `.warp-stage` + `.warp-bottom` panels en een onbruikte `.rocket-cockpit` sub-tree. Vervang het hele blok (vanaf het commentaar `<!-- Warp HUD overlay ... -->` t/m de sluitende `</div>` van `#warp-hud` en de hidden `<span id="hud-destination">`) door:
+
+```html
+<!-- Warp HUD overlay — cockpit frame (struts + canopy via CSS background) -->
+<div class="warp-hud" id="warp-hud" aria-hidden="true">
+
+    <!-- Top HUD strip: NEXT STOP + destination text + RELEASE prompt -->
+    <h2 id="hud-big-destination">OVER MIJ</h2>
+
+    <!-- Bottom dashboard grid: pilot card | 5 route stops | velocity stack -->
+    <ol class="warp-route" id="warp-route" aria-label="Warp route stops">
+        <li class="warp-stop is-active" data-section="about">
+            <span class="warp-stop-dot"></span>
+            <span class="warp-stop-label">Over mij</span>
+        </li>
+        <li class="warp-stop" data-section="projects">
+            <span class="warp-stop-dot"></span>
+            <span class="warp-stop-label">Projecten</span>
+        </li>
+        <li class="warp-stop" data-section="experience">
+            <span class="warp-stop-dot"></span>
+            <span class="warp-stop-label">Ervaring</span>
+        </li>
+        <li class="warp-stop" data-section="skills">
+            <span class="warp-stop-dot"></span>
+            <span class="warp-stop-label">Skills</span>
+        </li>
+        <li class="warp-stop" data-section="contact">
+            <span class="warp-stop-dot"></span>
+            <span class="warp-stop-label">Contact</span>
+        </li>
+    </ol>
+
+    <!-- Right dashboard readouts: velocity + drive status -->
+    <div id="hud-velocity">0.00 c</div>
+    <div id="hud-status">SPOOLING DRIVE</div>
+
+    <!-- Left dashboard pilot-card region (purely decorative, CSS-painted) -->
+    <span id="hud-destination" aria-hidden="true">RB-01</span>
+</div>
+```
+
+Aandachtspunten:
+
+- `<h2 id="hud-big-destination">` vervangt de oude `<div class="warp-big">`. Het id is wat de cycler in `script.js` regel 747 update via `document.getElementById('hud-big-destination')`. Klassen `.warp-stage`, `.warp-eyebrow`, `.warp-big`, `.warp-hint` zijn weg — geen `script.js` referentie ernaar.
+- `#hud-velocity` en `#hud-status` zijn nu directe `<div>` kinderen i.p.v. nested onder `.warp-bottom > .warp-velocity`. JS leest ze via `getElementById` (regels 567–568), dus de nesting is irrelevant voor de logica.
+- `#hud-destination` is GEEN tekstdoel meer voor JS — wordt nooit door `script.js` aangeraakt. Wij gebruiken het als visueel anchor voor de pilot-card (linker dashboard kolom). De `aria-hidden="true"` is nieuw; het oude `hidden` attribuut wordt door de CSS overruled.
+- `.warp-route` blijft `<ol>` met 5 `<li class="warp-stop">` — exact wat de cycler `renderStop()` (regels 740–759) verwacht: `document.querySelectorAll('.warp-stop')`, toggle van `is-active` + `is-past`.
+- De oude `.rocket-cockpit` decoratieve struts (regels 152–161) zijn verwijderd. De nieuwe CSS tekent de struts zelf via `background-image` op `.warp-hud`. Mocht je de oude markup laten staan: de nieuwe CSS heeft `display: none !important` voor `.rocket-cockpit`, dus geen visuele botsing.
+
+### JS hooks — wat blijft contract
+
+De volgende selectors mogen NIET veranderen in `script.js`:
+
+| Selector | Gebruikt op regel | Functie |
+|---|---|---|
+| `document.getElementById('hud-big-destination')` | 567, 747 | destination tekst (top strip) |
+| `document.getElementById('hud-velocity')` | 567, 703 | velocity readout |
+| `document.getElementById('hud-status')` | 568, 707, 800 | drive status |
+| `document.querySelectorAll('.warp-stop')` | 741 | route stops toggle |
+| `el.classList.add('is-active' \| 'is-past')` | 743–745 | active/past state CSS-hook |
+| `data-section="<id>"` op `.warp-stop` | (renderStop koppeling) | sectie-id voor `scrollToSection` |
+
+`#hud-destination` (de hidden legacy span) wordt door JS niet meer gelezen of geschreven. Veilig om puur decoratief te gebruiken.
+
+### Z-index hiërarchie
+
+```
+canvas (#warp-canvas)         z-index: auto / ~30      (starfield achtergrond)
+.warp-hud root                z-index: 40              (cockpit overlay)
+  .warp-hud::before (canopy)  z-index: 1   (binnen .warp-hud)
+  #hud-big-destination        z-index: 5
+  #warp-route (dashboard)     z-index: 5
+  #hud-destination (pilot)    z-index: 6
+  #hud-velocity / #hud-status z-index: 6
+header / navbar               z-index: 100             (site nav blijft altijd boven)
+```
+
+`.warp-hud` heeft `pointer-events: none`, dus de cockpit blokkeert nooit klikken op de pagina eronder.
+
+### Mobiel gedrag (≤768px)
+
+- Struts naar `width: 0` (background-size 0 0) → frame valt weg, dashboard pakt volle breedte.
+- Pilot silhouet schaalt naar 150×138px, blijft zichtbaar onderaan center.
+- Top-strip behoudt `NEXT STOP` label maar drop het `RELEASE SPACE` lid.
+- Dashboard wordt 2-rij: pilot-callsign-strip bovenaan (compact 36px hoog), 5 stops daaronder, velocity + status rechts onderaan.
+
+### Performance + accessibility
+
+- Alleen `transform`, `opacity`, `filter`, `background-position-y` en `box-shadow` worden geanimeerd.
+- `prefers-reduced-motion: reduce` cancelt: pilot-bob, LED-breathe, stop-pulse, status-blink, blinker-fade, en de progress-rail transition.
+- Niets met `backdrop-filter` op `.warp-hud` zelf (dat zou de canvas-render vertragen tijdens warp). De oude panels hadden wel `backdrop-filter: blur(24px)` — die zijn nu weg.
