@@ -5995,57 +5995,108 @@ body.xray .warp-hud {
     opacity: 1;
 }
 
-/* Central stage with eyebrow + big label + hint */
+/* Top dark glass panel with destination */
 .warp-stage {
     position: absolute;
-    top: 22%;
+    top: 56px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    padding: 1.1rem 2.2rem 1.2rem;
+    background: rgba(5, 10, 20, 0.85);
+    border: 1px solid rgba(46, 242, 160, 0.32);
+    border-radius: 16px;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(46, 242, 160, 0.08) inset,
+        0 0 38px rgba(46, 242, 160, 0.22);
+    min-width: 340px;
 }
 
 .warp-eyebrow {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.45em;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.5em;
     color: #2EF2A0;
-    opacity: 0.55;
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.55rem;
+    text-transform: uppercase;
+    padding-left: 0.5em;
+}
+
+.warp-big {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    margin: 0.1rem 0 0.7rem;
+    text-shadow:
+        0 2px 24px rgba(0, 0, 0, 0.7),
+        0 0 18px rgba(46, 242, 160, 0.45);
+    transition: opacity 0.18s ease-out;
+}
+
+.warp-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: rgba(232, 240, 250, 0.8);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
-/* Route — bus-stop timeline */
-.warp-route {
+/* Bottom dark glass panel with route + velocity */
+.warp-bottom {
     position: absolute;
-    bottom: 200px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding: 1.1rem 1.75rem;
+    background: rgba(5, 10, 20, 0.88);
+    border: 1px solid rgba(46, 242, 160, 0.28);
+    border-radius: 18px;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(46, 242, 160, 0.06) inset,
+        0 0 32px rgba(46, 242, 160, 0.15);
+    width: min(960px, 92vw);
+}
+
+/* Bus-stop timeline inside the dark panel */
+.warp-route {
+    display: flex;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-between;
     gap: 0;
-    padding: 0 2rem;
+    padding: 0;
     margin: 0;
     list-style: none;
-    width: min(900px, 80vw);
+    flex: 1 1 auto;
+    position: relative;
     font-family: 'JetBrains Mono', monospace;
 }
 
-/* Track line connecting all stops */
 .warp-route::before {
     content: '';
     position: absolute;
-    top: 11px;
-    left: 8%;
-    right: 8%;
+    top: 8px;
+    left: 4%;
+    right: 4%;
     height: 1px;
     background: linear-gradient(90deg,
-        rgba(46, 242, 160, 0) 0%,
-        rgba(46, 242, 160, 0.35) 12%,
-        rgba(46, 242, 160, 0.55) 50%,
-        rgba(46, 242, 160, 0.35) 88%,
-        rgba(46, 242, 160, 0) 100%);
+        rgba(46, 242, 160, 0.2),
+        rgba(46, 242, 160, 0.5) 50%,
+        rgba(46, 242, 160, 0.2));
 }
 
 .warp-stop {
@@ -6062,111 +6113,118 @@ body.xray .warp-hud {
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: rgba(7, 17, 31, 0.95);
-    border: 1.5px solid rgba(46, 242, 160, 0.4);
-    margin-top: 4px;
+    background: #0a0f17;
+    border: 1.5px solid rgba(46, 242, 160, 0.5);
+    margin-top: 1px;
     transition:
-        width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
         background 0.3s ease,
         border-color 0.3s ease,
         box-shadow 0.4s ease;
 }
 
 .warp-stop-label {
-    margin-top: 0.85rem;
+    margin-top: 0.7rem;
     font-size: 0.68rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
+    font-weight: 700;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(232, 240, 250, 0.4);
+    color: rgba(232, 240, 250, 0.55);
     transition: color 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
 }
 
-/* Active stop — glowing, larger */
 .warp-stop.is-active .warp-stop-dot {
-    width: 22px;
-    height: 22px;
-    margin-top: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: -2px;
     background: #2EF2A0;
     border-color: #E8FFF6;
     box-shadow:
-        0 0 0 4px rgba(46, 242, 160, 0.18),
-        0 0 18px rgba(46, 242, 160, 0.6),
-        0 0 32px rgba(46, 242, 160, 0.35);
+        0 0 0 4px rgba(46, 242, 160, 0.22),
+        0 0 18px rgba(46, 242, 160, 0.75),
+        0 0 32px rgba(46, 242, 160, 0.4);
     animation: warp-stop-pulse 1.6s ease-in-out infinite;
 }
 
 .warp-stop.is-active .warp-stop-label {
-    color: #E8FFF6;
-    transform: translateY(2px) scale(1.08);
-    text-shadow: 0 0 12px rgba(46, 242, 160, 0.4);
+    color: #ffffff;
+    transform: scale(1.08);
+    text-shadow: 0 0 12px rgba(46, 242, 160, 0.5);
 }
 
-/* Stops that have already cycled past (lit history) */
 .warp-stop.is-past .warp-stop-dot {
-    background: rgba(46, 242, 160, 0.5);
-    border-color: rgba(46, 242, 160, 0.7);
+    background: rgba(46, 242, 160, 0.6);
+    border-color: rgba(46, 242, 160, 0.85);
 }
 
 .warp-stop.is-past .warp-stop-label {
-    color: rgba(46, 242, 160, 0.55);
+    color: rgba(46, 242, 160, 0.75);
 }
 
 @keyframes warp-stop-pulse {
     0%, 100% {
         box-shadow:
-            0 0 0 4px rgba(46, 242, 160, 0.18),
-            0 0 18px rgba(46, 242, 160, 0.6),
-            0 0 32px rgba(46, 242, 160, 0.35);
+            0 0 0 4px rgba(46, 242, 160, 0.22),
+            0 0 18px rgba(46, 242, 160, 0.75),
+            0 0 32px rgba(46, 242, 160, 0.4);
     }
     50% {
         box-shadow:
-            0 0 0 8px rgba(46, 242, 160, 0.1),
-            0 0 26px rgba(46, 242, 160, 0.85),
-            0 0 48px rgba(46, 242, 160, 0.5);
+            0 0 0 8px rgba(46, 242, 160, 0.12),
+            0 0 28px rgba(46, 242, 160, 0.9),
+            0 0 50px rgba(46, 242, 160, 0.55);
     }
 }
 
-@media (max-width: 700px) {
-    .warp-route {
-        bottom: 170px;
-        gap: 0;
-        padding: 0 0.5rem;
-    }
-    .warp-stop-label { font-size: 0.55rem; }
-    .warp-stop-dot { width: 10px; height: 10px; }
-    .warp-stop.is-active .warp-stop-dot { width: 16px; height: 16px; }
-}
-
+/* Velocity compact on the right side of bottom panel */
 .warp-velocity {
-    position: absolute;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
     font-family: 'JetBrains Mono', monospace;
     color: #2EF2A0;
+    padding-left: 1.75rem;
+    border-left: 1px solid rgba(46, 242, 160, 0.18);
+    min-width: 130px;
 }
 
 .warp-velocity-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.4em;
-    opacity: 0.45;
+    font-size: 0.6rem;
+    letter-spacing: 0.32em;
+    opacity: 0.55;
+    text-transform: uppercase;
 }
 
 .warp-velocity-value {
-    font-size: 2.6rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    margin: 0.35rem 0 0.25rem;
-    opacity: 0.92;
+    margin-top: 0.15rem;
+    color: #2EF2A0;
+    text-shadow: 0 0 14px rgba(46, 242, 160, 0.45);
 }
 
 .warp-velocity-status {
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    opacity: 0.4;
+    font-size: 0.6rem;
+    letter-spacing: 0.16em;
+    opacity: 0.55;
+    margin-top: 0.2rem;
+    text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+    .warp-stage { top: 28px; padding: 0.9rem 1.4rem 1rem; min-width: 0; width: 88vw; }
+    .warp-big { font-size: clamp(28px, 8vw, 44px); }
+    .warp-bottom { bottom: 20px; padding: 0.9rem 1rem; gap: 1rem; flex-direction: column; }
+    .warp-route { width: 100%; }
+    .warp-stop-label { font-size: 0.55rem; }
+    .warp-stop-dot { width: 10px; height: 10px; }
+    .warp-stop.is-active .warp-stop-dot { width: 14px; height: 14px; }
+    .warp-velocity { flex-direction: row; align-items: center; gap: 0.75rem; padding-left: 0; border-left: 0; border-top: 1px solid rgba(46,242,160,0.18); padding-top: 0.5rem; width: 100%; justify-content: center; min-width: 0; }
+    .warp-velocity-value { font-size: 1.2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

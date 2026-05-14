@@ -147,41 +147,43 @@
     <!-- Warp starfield canvas (only renders while space is held) -->
     <canvas id="warp-canvas" aria-hidden="true"></canvas>
 
-    <!-- Warp HUD overlay - bus-route stops, no rectangle -->
+    <!-- Warp HUD overlay - dark glass panels for guaranteed legibility -->
     <div class="warp-hud" id="warp-hud" aria-hidden="true">
         <div class="warp-stage">
             <div class="warp-eyebrow">NEXT STOP</div>
             <div class="warp-big" id="hud-big-destination">OVER MIJ</div>
-            <div class="warp-hint">RELEASE SPACE TO LAND HERE</div>
+            <div class="warp-hint">Release SPACE to land here</div>
         </div>
 
-        <ol class="warp-route" id="warp-route" aria-label="Warp route stops">
-            <li class="warp-stop is-active" data-section="about">
-                <span class="warp-stop-dot"></span>
-                <span class="warp-stop-label">Over mij</span>
-            </li>
-            <li class="warp-stop" data-section="projects">
-                <span class="warp-stop-dot"></span>
-                <span class="warp-stop-label">Projecten</span>
-            </li>
-            <li class="warp-stop" data-section="experience">
-                <span class="warp-stop-dot"></span>
-                <span class="warp-stop-label">Ervaring</span>
-            </li>
-            <li class="warp-stop" data-section="skills">
-                <span class="warp-stop-dot"></span>
-                <span class="warp-stop-label">Skills</span>
-            </li>
-            <li class="warp-stop" data-section="contact">
-                <span class="warp-stop-dot"></span>
-                <span class="warp-stop-label">Contact</span>
-            </li>
-        </ol>
+        <div class="warp-bottom">
+            <ol class="warp-route" id="warp-route" aria-label="Warp route stops">
+                <li class="warp-stop is-active" data-section="about">
+                    <span class="warp-stop-dot"></span>
+                    <span class="warp-stop-label">Over mij</span>
+                </li>
+                <li class="warp-stop" data-section="projects">
+                    <span class="warp-stop-dot"></span>
+                    <span class="warp-stop-label">Projecten</span>
+                </li>
+                <li class="warp-stop" data-section="experience">
+                    <span class="warp-stop-dot"></span>
+                    <span class="warp-stop-label">Ervaring</span>
+                </li>
+                <li class="warp-stop" data-section="skills">
+                    <span class="warp-stop-dot"></span>
+                    <span class="warp-stop-label">Skills</span>
+                </li>
+                <li class="warp-stop" data-section="contact">
+                    <span class="warp-stop-dot"></span>
+                    <span class="warp-stop-label">Contact</span>
+                </li>
+            </ol>
 
-        <div class="warp-velocity">
-            <div class="warp-velocity-label">VELOCITY</div>
-            <div class="warp-velocity-value" id="hud-velocity">0.00 c</div>
-            <div class="warp-velocity-status" id="hud-status">SPOOLING DRIVE...</div>
+            <div class="warp-velocity">
+                <span class="warp-velocity-label">VELOCITY</span>
+                <span class="warp-velocity-value" id="hud-velocity">0.00 c</span>
+                <span class="warp-velocity-status" id="hud-status">SPOOLING DRIVE</span>
+            </div>
         </div>
 
         <span id="hud-destination" hidden>OVER MIJ</span>

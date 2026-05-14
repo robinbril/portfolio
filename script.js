@@ -567,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hudVel = document.getElementById('hud-velocity');
     const hudStatus = document.getElementById('hud-status');
 
-    const STAR_COUNT = 1100;
+    const STAR_COUNT = 1250;
     const Z_FAR = 2000;
     const FOCAL = 340;
 
@@ -698,16 +698,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        speed = Math.min(42, speed + 0.85);
+        speed = Math.min(56, speed + 1.25);
 
         if (hudVel) {
-            const c = ((speed - 8) / 34) * 0.92 + 0.02;
+            const c = ((speed - 12) / 44) * 0.96 + 0.03;
             hudVel.textContent = c.toFixed(2) + ' c';
         }
         if (hudStatus) {
-            if (speed < 14) hudStatus.textContent = 'SPOOLING DRIVE...';
-            else if (speed < 24) hudStatus.textContent = 'ACCELERATION NOMINAL';
-            else if (speed < 36) hudStatus.textContent = 'BREAKING ATMOSPHERE';
+            if (speed < 18) hudStatus.textContent = 'SPOOLING DRIVE...';
+            else if (speed < 31) hudStatus.textContent = 'ACCELERATION NOMINAL';
+            else if (speed < 45) hudStatus.textContent = 'BREAKING ATMOSPHERE';
             else hudStatus.textContent = 'WARP STABLE — TRAJECTORY LOCKED';
         }
 
@@ -732,8 +732,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'skills',     label: 'SKILLS' },
         { id: 'contact',    label: 'CONTACT' }
     ];
-    const STOP_MS = 1100;
-    const FADE_MS = 180;
+    const STOP_MS = 760;
+    const FADE_MS = 110;
     let stopTimer = null;
     let stopIdx = 0;
 
@@ -770,7 +770,7 @@ document.addEventListener('DOMContentLoaded', () => {
         warpActive = true;
         document.body.classList.add('xray');
 
-        speed = 8;
+        speed = 12;
         seedStars();
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
