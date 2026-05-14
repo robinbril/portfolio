@@ -16,30 +16,25 @@
    1. Scroll reveal — sections fade up via IntersectionObserver (.in-view)
    ========================================================================== */
 
+/* Section zelf BLIJFT zichtbaar (anders krijg je grote lege gaten als
+   observer faalt op offscreen secties). Alleen de directe kinderen fade
+   subtle in - en met opacity initial 0.4 ipv 0, zodat content altijd
+   zichtbaar genoeg is. */
 .section[data-reveal],
 .hero[data-reveal] {
-    opacity: 0;
-    transform: translate3d(0, var(--reveal-distance), 0);
-    transition: opacity var(--reveal-duration) var(--ease-out-soft),
-                transform var(--reveal-duration) var(--ease-out-soft);
-    will-change: opacity, transform;
-}
-
-.section[data-reveal].in-view,
-.hero[data-reveal].in-view {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
 }
 
-/* Stagger inner children of a revealed section */
-.section[data-reveal] > * {
-    opacity: 0;
-    transform: translate3d(0, calc(var(--reveal-distance) * 0.6), 0);
+.section[data-reveal] > *,
+.hero[data-reveal] > * {
+    opacity: 0.4;
+    transform: translate3d(0, calc(var(--reveal-distance) * 0.4), 0);
     transition: opacity 500ms var(--ease-out-soft),
                 transform 500ms var(--ease-out-soft);
 }
 
-.section[data-reveal].in-view > * {
+.section[data-reveal].in-view > *,
+.hero[data-reveal].in-view > * {
     opacity: 1;
     transform: translate3d(0, 0, 0);
 }

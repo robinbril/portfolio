@@ -12,15 +12,14 @@
    NOT applied to #home (hero, above the fold) or #contact (form interactive,
    keep it always rendered to avoid focus jank).
 ------------------------------------------------------------------------- */
-#about,
-#projects,
-#experience,
-#skills,
-#education,
-#certifications {
+/* Disabled: content-visibility + contain-intrinsic-size veroorzaakte
+   grote lege gaten tussen secties wanneer offscreen content lager was
+   dan de gereserveerde 1200px placeholder.
+#about, #projects, #experience, #skills, #education, #certifications {
     content-visibility: auto;
     contain-intrinsic-size: 1px 1200px;
 }
+*/
 
 /* ---------- 2. Card containment: isolate layout/paint per card -------- */
 .featured-project,
