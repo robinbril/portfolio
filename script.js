@@ -625,13 +625,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const pulse = 0.5 + 0.5 * Math.sin(pulsePhase * 2.1);
         const coreStr = intensity * (0.85 + pulse * 0.15);
 
-        const coreR = Math.min(w, h) * 0.5;
+        // Cover the FULL viewport diagonal so no dark vertical bands remain
+        // on the left/right edges of wide screens
+        const coreR = Math.hypot(w, h) * 0.65;
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
         grad.addColorStop(0, `rgba(255, 255, 255, ${0.18 + coreStr * 0.32})`);
         grad.addColorStop(0.08, `rgba(232, 255, 246, ${0.14 + coreStr * 0.26})`);
         grad.addColorStop(0.2, `rgba(46, 242, 160, ${0.1 + coreStr * 0.24})`);
-        grad.addColorStop(0.45, `rgba(76, 201, 176, ${0.04 + coreStr * 0.1})`);
-        grad.addColorStop(0.75, `rgba(138, 124, 255, ${0.02 + coreStr * 0.04})`);
+        grad.addColorStop(0.5, `rgba(76, 201, 176, ${0.05 + coreStr * 0.1})`);
+        grad.addColorStop(0.8, `rgba(46, 242, 160, ${0.02 + coreStr * 0.04})`);
         grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
