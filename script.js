@@ -249,7 +249,7 @@ const projectCards = document.querySelectorAll('.ai-project-card');
 if (filterButtons.length > 0 && projectCards.length > 0) {
     const projectsGrid = document.querySelector('.ai-projects-grid');
     const showMoreBtn = document.getElementById('showMoreProjects');
-    const VISIBLE_LIMIT = 4;
+    const VISIBLE_LIMIT = 6;
     let currentFilter = 'agents';
     let isExpanded = false;
 

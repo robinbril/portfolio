@@ -272,11 +272,7 @@ body.light-theme .ai-project-card h3 {
 .ai-project-card p {
     font-size: 0.85rem;
     line-height: 1.55;
-    opacity: 0.7;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    opacity: 0.8;
 }
 
 /* ---------- Tag chips: muted mono ---------- */
