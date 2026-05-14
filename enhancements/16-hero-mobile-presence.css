@@ -92,3 +92,41 @@
 
 /* Light-theme overrides verwijderd op Robin's verzoek - originele
    baby-blue palette + bestaande styles in style.css blijven leidend. */
+
+/* ============================================================
+   Hero stat labels - sleeker, niet uppercase + grijs.
+   Robin: 'die tekst in het grijs is meh'.
+   ============================================================ */
+.hero-stat span,
+.hero-stat-label {
+    font-family: 'Inter', system-ui, sans-serif !important;
+    font-size: 0.78rem !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+    text-transform: none !important;
+    letter-spacing: 0.01em !important;
+    font-weight: 400 !important;
+    margin-top: 0.4rem !important;
+}
+
+.hero-stat strong {
+    font-family: 'Inter', system-ui, sans-serif !important;
+    font-size: 2.25rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1 !important;
+    color: #5BD9A1 !important;
+}
+
+body.light-theme .hero-stat span,
+body.light-theme .hero-stat-label {
+    color: rgba(15, 23, 42, 0.55) !important;
+}
+
+@media (max-width: 768px) {
+    .hero-stat strong {
+        font-size: 1.65rem !important;
+    }
+    .hero-stat span {
+        font-size: 0.7rem !important;
+    }
+}

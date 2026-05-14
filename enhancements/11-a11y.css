@@ -342,7 +342,6 @@ summary:focus-visible,
    visible glyph.
    --------------------------------------------------------- */
 .theme-toggle-btn,
-.mobile-menu-btn,
 .modal-close,
 .terminal-submit,
 .source-link {
@@ -351,6 +350,17 @@ summary:focus-visible,
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+/* .mobile-menu-btn: alleen op mobile zichtbaar (verberg op desktop) */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        min-width: 44px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 /* ---------------------------------------------------------
