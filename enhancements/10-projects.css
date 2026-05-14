@@ -14,10 +14,10 @@
     opacity: 0 !important;
 }
 
-/* Clean 'What I Build' typing heading - sans-serif white met mint caret */
+/* Clean 'Mijn Projecten' typing heading - sans-serif white met mint caret */
 .typing-heading {
     font-family: 'Inter', system-ui, sans-serif !important;
-    font-size: clamp(2.25rem, 4.5vw, 3.5rem) !important;
+    font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
     font-weight: 700 !important;
     color: #ffffff !important;
     background: none !important;
@@ -25,8 +25,8 @@
     letter-spacing: -0.02em !important;
     line-height: 1.1;
     display: inline-flex;
-    align-items: center;
-    gap: 0.15em;
+    align-items: baseline;
+    gap: 0;
     margin: 0 auto !important;
     text-align: left;
     text-shadow: none;
@@ -37,25 +37,26 @@
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
+    max-width: 100%;
     width: 0;
-    animation: typingReveal 1.8s steps(12, end) 0.25s forwards;
+    animation: typingReveal 1.4s steps(14, end) 0.2s forwards;
 }
 
 .typing-heading .typing-caret {
     display: inline-block;
-    width: 0.18em;
-    height: 0.95em;
+    width: 2px;
+    height: 0.85em;
     background: #2ef2a0;
-    box-shadow: 0 0 8px rgba(46, 242, 160, 0.55);
+    box-shadow: 0 0 6px rgba(46, 242, 160, 0.55);
     animation: typingCaret 0.85s steps(2, jump-none) infinite;
-    vertical-align: middle;
-    margin-left: 0.1em;
-    transform: translateY(-0.05em);
+    margin-left: 0.08em;
+    align-self: center;
+    transform: translateY(0.04em);
 }
 
 @keyframes typingReveal {
     from { width: 0; }
-    to { width: 12ch; }
+    to { width: 14ch; }
 }
 
 @keyframes typingCaret {
