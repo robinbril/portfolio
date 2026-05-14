@@ -1631,7 +1631,7 @@ body.xray .rocket-pov {
 }
 
 body.xray .rocket-pov .cockpit-frame {
-    animation: cockpit-shake 0.2s linear infinite;
+    animation: none;
 }
 
 @media (max-width: 768px) {
@@ -5476,9 +5476,7 @@ body.light-theme .hero-scroll-cue {
 }
 
 body.xray .rocket-pov .cockpit-frame {
-    filter:
-        drop-shadow(0 0 20px rgba(46, 242, 160, 0.15))
-        drop-shadow(0 0 60px rgba(138, 124, 255, 0.05));
+    filter: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -5921,4 +5919,26 @@ body:not(.light-theme) .hero .btn-primary i {
 /* Solo background orb: softer */
 .hero-orb--solo {
     background: radial-gradient(circle, rgba(91, 217, 161, 0.12), transparent 65%);
+}
+
+/* ==========================================
+   KILL ALL VERTICAL EDGE LINES DURING WARP
+   - Hide scrollbar (was visible mint stripe on right)
+   - Lock overflow to prevent any edge artifacts
+   ========================================== */
+body.xray {
+    overflow: hidden !important;
+    scrollbar-width: none;
+}
+body.xray::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+html:has(body.xray) {
+    overflow: hidden !important;
+    scrollbar-width: none;
+}
+html:has(body.xray)::-webkit-scrollbar {
+    display: none;
 }
