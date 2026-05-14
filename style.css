@@ -5996,3 +5996,80 @@ body.light-theme .hero::before {
     z-index: 1;
     pointer-events: none;
 }
+
+/* ==========================================
+   WARP HUD — pure HTML overlay (no SVG, no rectangle artifacts)
+   ========================================== */
+.warp-hud {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+body.xray .warp-hud {
+    opacity: 1;
+}
+
+.warp-big {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 800;
+    color: #E8FFF6;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    transition: opacity 0.18s ease-out;
+    text-shadow:
+        0 0 24px rgba(46, 242, 160, 0.45),
+        0 0 6px rgba(232, 255, 246, 0.8);
+    text-align: center;
+}
+
+.warp-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #2EF2A0;
+    opacity: 0.55;
+    letter-spacing: 0.35em;
+    margin-top: 1rem;
+}
+
+.warp-velocity {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    color: #2EF2A0;
+}
+
+.warp-velocity-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    opacity: 0.45;
+}
+
+.warp-velocity-value {
+    font-size: 2.6rem;
+    font-weight: 800;
+    margin: 0.35rem 0 0.25rem;
+    opacity: 0.92;
+}
+
+.warp-velocity-status {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .warp-big { transition: none; }
+}

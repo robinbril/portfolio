@@ -753,12 +753,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!big) return;
         const paint = () => {
             big.textContent = label;
-            big.setAttribute('opacity', '0.95');
+            big.style.opacity = '0.95';
         };
         if (instant) {
             paint();
         } else {
-            big.setAttribute('opacity', '0');
+            big.style.opacity = '0';
             setTimeout(paint, FADE_MS);
         }
     };
@@ -777,7 +777,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(cycleTimer);
         cycleTimer = null;
         const big = document.getElementById('hud-big-destination');
-        if (big) big.setAttribute('opacity', '0');
+        if (big) big.style.opacity = '0';
     };
 
     const activate = () => {

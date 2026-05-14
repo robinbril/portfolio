@@ -149,91 +149,16 @@
     <!-- Warp starfield canvas (only renders while space is held) -->
     <canvas id="warp-canvas" aria-hidden="true"></canvas>
 
-    <!-- Rocket cockpit POV overlay (only visible while warping) -->
-    <div class="rocket-pov" id="rocket-pov" aria-hidden="true">
-        <svg class="cockpit-frame" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"
-            xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <radialGradient id="warpCore" cx="50%" cy="46%" r="48%">
-                    <stop offset="0%" stop-color="rgba(232,255,246,0.5)" />
-                    <stop offset="6%" stop-color="rgba(46,242,160,0.28)" />
-                    <stop offset="18%" stop-color="rgba(46,242,160,0.14)" />
-                    <stop offset="40%" stop-color="rgba(76,201,176,0.06)" />
-                    <stop offset="70%" stop-color="rgba(138,124,255,0.025)" />
-                    <stop offset="100%" stop-color="rgba(0,0,0,0)" />
-                </radialGradient>
-                <radialGradient id="canopyGlow" cx="50%" cy="46%" r="58%">
-                    <stop offset="50%" stop-color="rgba(0,0,0,0)" />
-                    <stop offset="100%" stop-color="rgba(0,0,0,0.92)" />
-                </radialGradient>
-                <linearGradient id="hullSheen" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="rgba(18,26,40,0.82)" />
-                    <stop offset="55%" stop-color="rgba(10,15,26,0.92)" />
-                    <stop offset="100%" stop-color="rgba(5,8,16,0.98)" />
-                </linearGradient>
-                <radialGradient id="rivet" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="rgba(46,242,160,0.6)" />
-                    <stop offset="100%" stop-color="rgba(46,242,160,0)" />
-                </radialGradient>
-            </defs>
-
-            <!-- Warp core glow, slightly above center (NO vignette rect — was darkening edges) -->
-            <ellipse cx="800" cy="410" rx="520" ry="380" fill="url(#warpCore)" />
-
-            <!-- Lens flare burst at warp core -->
-            <g class="lens-flare" transform="translate(800 410)">
-                <defs>
-                    <radialGradient id="flareCore" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="rgba(255,255,255,1)"/>
-                        <stop offset="20%" stop-color="rgba(232,255,246,0.85)"/>
-                        <stop offset="55%" stop-color="rgba(46,242,160,0.35)"/>
-                        <stop offset="100%" stop-color="rgba(46,242,160,0)"/>
-                    </radialGradient>
-                    <radialGradient id="flareRay" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="rgba(232,255,246,0.55)"/>
-                        <stop offset="60%" stop-color="rgba(46,242,160,0.18)"/>
-                        <stop offset="100%" stop-color="rgba(232,255,246,0)"/>
-                    </radialGradient>
-                </defs>
-                <!-- Outer soft glow -->
-                <circle cx="0" cy="0" r="180" fill="url(#flareCore)" opacity="0.35">
-                    <animate attributeName="r" values="170;200;170" dur="4s" repeatCount="indefinite"/>
-                </circle>
-                <!-- Bright pulsing core -->
-                <circle cx="0" cy="0" r="56" fill="url(#flareCore)">
-                    <animate attributeName="r" values="52;62;52" dur="3.4s" repeatCount="indefinite"/>
-                </circle>
-                <!-- Diffraction rays -->
-                <ellipse cx="0" cy="0" rx="320" ry="3" fill="url(#flareRay)"/>
-                <ellipse cx="0" cy="0" rx="3" ry="240" fill="url(#flareRay)"/>
-                <ellipse cx="0" cy="0" rx="200" ry="2" fill="url(#flareRay)" transform="rotate(45)" opacity="0.7"/>
-                <ellipse cx="0" cy="0" rx="200" ry="2" fill="url(#flareRay)" transform="rotate(-45)" opacity="0.7"/>
-                <!-- Subtle inner ring -->
-                <circle cx="0" cy="0" r="32" fill="none" stroke="rgba(232,255,246,0.4)" stroke-width="0.8"/>
-            </g>
-
-            <!-- Big roulette destination text — cycles while warping -->
-            <g text-anchor="middle" font-family="Inter, sans-serif">
-                <text id="hud-big-destination" x="800" y="430"
-                    font-size="96" font-weight="800"
-                    fill="#E8FFF6" opacity="0">DESTINATION</text>
-                <text id="hud-big-hint" x="800" y="490"
-                    font-size="13" font-weight="600"
-                    fill="#2EF2A0" opacity="0.65"
-                    font-family="JetBrains Mono, monospace"
-                    letter-spacing="0.35em">RELEASE TO LAND</text>
-            </g>
-
-            <!-- Hidden destination label - JS still updates this -->
-            <text id="hud-destination" x="-9999" y="-9999" font-size="1" fill="#2EF2A0" opacity="0">CONTACT</text>
-
-            <!-- Velocity panel — bottom centered, minimal -->
-            <g text-anchor="middle" font-family="JetBrains Mono, monospace">
-                <text x="800" y="780" font-size="10" fill="#2EF2A0" opacity="0.45" letter-spacing="2">VELOCITY</text>
-                <text id="hud-velocity" x="800" y="824" font-size="42" font-weight="800" fill="#2EF2A0" opacity="0.92">0.00 c</text>
-                <text id="hud-status" x="800" y="854" font-size="11" fill="#2EF2A0" opacity="0.4">SPOOLING DRIVE...</text>
-            </g>
-        </svg>
+    <!-- Warp HUD overlay - pure HTML, no SVG, no rectangle -->
+    <div class="warp-hud" id="warp-hud" aria-hidden="true">
+        <div class="warp-big" id="hud-big-destination"></div>
+        <div class="warp-hint">RELEASE SPACE TO LAND</div>
+        <div class="warp-velocity">
+            <div class="warp-velocity-label">VELOCITY</div>
+            <div class="warp-velocity-value" id="hud-velocity">0.00 c</div>
+            <div class="warp-velocity-status" id="hud-status">SPOOLING DRIVE...</div>
+        </div>
+        <span id="hud-destination" hidden>CONTACT</span>
     </div>
 
     <header>
