@@ -83,8 +83,9 @@ body.light-theme .hero .hero-status-chip__dot {
 .hero h1 {
     font-family: 'Inter', system-ui, sans-serif;
     font-weight: 900;
-    font-size: clamp(3.5rem, 13vw, 11rem);
-    line-height: 0.95;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1;
+    white-space: nowrap;
     letter-spacing: -0.04em;
     margin: 0 0 1.5rem 0;
     padding-bottom: 0.08em;
