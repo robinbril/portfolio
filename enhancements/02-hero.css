@@ -7,6 +7,11 @@
 .hero {
     position: relative;
     isolation: isolate;
+    /* Content iets omhoog: 'voorhoofd' kleiner. Robin's feedback.
+       align-items: center + extra padding-bottom shift de content omhoog
+       binnen de 100vh hero zonder de min-height te breken. */
+    align-items: center;
+    padding-bottom: clamp(80px, 10vh, 160px) !important;
 }
 
 body.dark-theme .hero::before {
