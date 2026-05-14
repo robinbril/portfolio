@@ -339,6 +339,8 @@ body.light-theme #certifications .cert-item.glow-card {
 .testimonials-compact {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    align-items: stretch;
     gap: 1.5rem;
     margin-top: 3.5rem;
 }
@@ -431,9 +433,12 @@ body.light-theme .testimonials-compact .quote-box:hover::before {
     color: rgba(5, 150, 105, 0.32);
 }
 
-/* Volgorde: auteur bovenaan, quote eronder (Robin's verzoek) */
+/* Volgorde: auteur bovenaan, quote eronder + author altijd op bottom van card
+   via flex-grow op de quote (zodat verschillende quote-lengtes de card volledig
+   vullen en alle author-blokken horizontaal gealigneerd staan over alle cards). */
 .testimonials-compact .quote-author {
     order: 1;
+    flex: 0 0 auto;
     padding-bottom: 1rem;
     padding-top: 0;
     margin-bottom: 0;
@@ -444,6 +449,7 @@ body.light-theme .testimonials-compact .quote-box:hover::before {
 
 .testimonials-compact .quote-text {
     order: 2;
+    flex: 1 1 auto;
     font-size: clamp(0.95rem, 1.5vw, 1.02rem);
     line-height: 1.6;
     font-style: italic;
