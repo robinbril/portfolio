@@ -4687,12 +4687,8 @@ body.light-theme ::-webkit-scrollbar-thumb {
 /* 2. Contact section fits viewport after rocket lands */
 @media (min-width: 769px) {
     #contact.section {
-        min-height: calc(100vh - 80px);
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
         gap: 0;
     }
 
