@@ -1594,7 +1594,12 @@ body.xray #warp-canvas {
 }
 
 body.xray {
-    background: #07111F !important;
+    background: #000 !important;
+}
+
+/* Kill bleed-through: solid black canvas backdrop during warp. */
+body.xray #warp-canvas {
+    background: #000 !important;
 }
 
 /* Rocket cockpit POV overlay */
