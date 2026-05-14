@@ -1540,11 +1540,6 @@ body.xray::after {
     display: none !important;
 }
 
-@keyframes warp-hint-pulse {
-    0%, 100% { box-shadow: 0 0 20px rgba(46, 242, 160, 0.2); }
-    50% { box-shadow: 0 0 32px rgba(46, 242, 160, 0.45); }
-}
-
 /* Warp starfield canvas */
 #warp-canvas {
     position: fixed;
@@ -5976,30 +5971,6 @@ body.light-theme .hero::before {
 
 body.xray .warp-hud {
     opacity: 1;
-}
-
-.warp-big {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(48px, 7vw, 96px);
-    font-weight: 800;
-    color: #E8FFF6;
-    letter-spacing: -0.01em;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.18s ease-out;
-    text-shadow:
-        0 0 28px rgba(46, 242, 160, 0.55),
-        0 0 10px rgba(232, 255, 246, 0.85);
-}
-
-.warp-hint {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: #2EF2A0;
-    opacity: 0.6;
-    letter-spacing: 0.35em;
-    margin-top: 1.25rem;
 }
 
 .warp-velocity {

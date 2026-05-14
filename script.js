@@ -724,7 +724,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
 
     const NAV_HEIGHT = 80;
-
     const DESTINATIONS = [
         { id: 'about',      label: 'OVER MIJ' },
         { id: 'projects',   label: 'PROJECTEN' },
@@ -732,48 +731,22 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'skills',     label: 'SKILLS' },
         { id: 'contact',    label: 'CONTACT' }
     ];
-    const CYCLE_MS = 900;
-    const FADE_MS = 160;
     let cycleTimer = null;
-    let currentDestIdx = 0;
+    let destIdx = 0;
+    const bigEl = () => document.getElementById('hud-big-destination');
+
+    const paintDest = (label) => {
+        const b = bigEl();
+        if (!b) return;
+        b.textContent = label;
+        b.style.opacity = '0.95';
+    };
 
     const scrollToSection = (id) => {
         const target = document.getElementById(id);
         if (!target) return;
         const y = target.getBoundingClientRect().top + window.pageYOffset - NAV_HEIGHT - 16;
         window.scrollTo({ top: y, behavior: 'smooth' });
-    };
-
-    const setBigDest = (label, instant) => {
-        const big = document.getElementById('hud-big-destination');
-        if (!big) return;
-        const paint = () => {
-            big.textContent = label;
-            big.style.opacity = '0.95';
-        };
-        if (instant) {
-            paint();
-        } else {
-            big.style.opacity = '0';
-            setTimeout(paint, FADE_MS);
-        }
-    };
-
-    const startCycle = () => {
-        currentDestIdx = 0;
-        setBigDest(DESTINATIONS[0].label, true);
-        clearInterval(cycleTimer);
-        cycleTimer = setInterval(() => {
-            currentDestIdx = (currentDestIdx + 1) % DESTINATIONS.length;
-            setBigDest(DESTINATIONS[currentDestIdx].label, false);
-        }, CYCLE_MS);
-    };
-
-    const stopCycle = () => {
-        clearInterval(cycleTimer);
-        cycleTimer = null;
-        const big = document.getElementById('hud-big-destination');
-        if (big) big.style.opacity = '0';
     };
 
     const activate = () => {
@@ -788,15 +761,28 @@ document.addEventListener('DOMContentLoaded', () => {
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(tick);
 
-        startCycle();
+        destIdx = 0;
+        paintDest(DESTINATIONS[0].label);
+        clearInterval(cycleTimer);
+        cycleTimer = setInterval(() => {
+            destIdx = (destIdx + 1) % DESTINATIONS.length;
+            const b = bigEl();
+            if (b) {
+                b.style.opacity = '0';
+                setTimeout(() => paintDest(DESTINATIONS[destIdx].label), 160);
+            }
+        }, 900);
     };
 
     const deactivate = () => {
         if (!warpActive) return;
         warpActive = false;
+        clearInterval(cycleTimer);
+        cycleTimer = null;
 
-        const dest = DESTINATIONS[currentDestIdx];
-        stopCycle();
+        const dest = DESTINATIONS[destIdx];
+        const b = bigEl();
+        if (b) b.style.opacity = '0';
 
         document.body.classList.remove('xray');
         cancelAnimationFrame(raf);
