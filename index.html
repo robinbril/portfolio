@@ -1390,9 +1390,10 @@
                     </a>
 
                     <div class="secondary-options">
-                        <a href="mailto:robin.bril@gmail.com" class="secondary-link">
+                        <a href="mailto:robin.bril@gmail.com?subject=Even%20kennismaken&body=Hi%20Robin%2C%0A%0A" class="secondary-link email-link"
+                            onclick="(function(el){try{navigator.clipboard.writeText('robin.bril@gmail.com');const lbl=el.querySelector('.email-label');if(lbl){const orig=lbl.textContent;lbl.textContent='Gekopieerd! Mail-app opent...';setTimeout(()=>{lbl.textContent=orig;},2500);}}catch(e){}})(this);">
                             <i data-lucide="mail"></i>
-                            <span>robin.bril@gmail.com</span>
+                            <span class="email-label">robin.bril@gmail.com</span>
                         </a>
                         <button type="button" class="secondary-link copy-phone-btn"
                             data-copy="06-4044 6732" onclick="navigator.clipboard.writeText('0640446732').then(()=>{this.querySelector('.copy-label').textContent='Gekopieerd!';setTimeout(()=>{this.querySelector('.copy-label').textContent='06-4044 6732'},2000)})">
