@@ -392,19 +392,9 @@ body.light-theme .testimonials-compact .quote-box {
     border: 1px solid rgba(15, 23, 42, 0.08);
 }
 
-/* Large opening-quote glyph, top-left */
+/* Quote glyph verwijderd op Robin's verzoek */
 .testimonials-compact .quote-box::before {
-    content: "\201C"; /* " */
-    position: absolute;
-    top: -0.2em;
-    left: 0.3rem;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 8.5rem;
-    line-height: 1;
-    color: rgba(46, 242, 160, 0.18);
-    pointer-events: none;
-    transition: color 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
-    z-index: 0;
+    content: none;
 }
 
 body.light-theme .testimonials-compact .quote-box::before {
