@@ -1524,8 +1524,9 @@ body.xray video {
 
 body.xray main,
 body.xray header {
-    opacity: 0.18;
+    opacity: 0;
     transition: opacity 0.25s ease;
+    pointer-events: none;
 }
 
 /* Film grain overlay for cinematic warp atmosphere */
