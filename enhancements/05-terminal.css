@@ -1,0 +1,205 @@
+/* 05 — Terminal interface upgrade: discoverability + polish */
+
+/* ---------- Tokens (scoped to terminal) ---------- */
+.terminal-window {
+    --term-mint: #00ff9d;
+    --term-mint-soft: rgba(0, 255, 157, 0.55);
+    --term-mint-ghost: rgba(0, 255, 157, 0.4);
+    --term-mint-muted: rgba(0, 255, 157, 0.18);
+    --term-shadow: 0 0 0 1px rgba(0, 255, 157, 0.18), 0 4px 18px rgba(0, 255, 157, 0.12);
+}
+
+/* ---------- Pulsing prompt hint ---------- */
+/* Sits just under the input row, fades 3s loop, mint muted */
+.terminal-prompt-hint {
+    display: block;
+    padding: 0.35rem 1rem 0.55rem;
+    font-family: inherit;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--term-mint-soft);
+    background: #0a0e0a;
+    border-top: 1px dashed rgba(0, 255, 157, 0.08);
+    pointer-events: none;
+    user-select: none;
+    animation: term-hint-pulse 3s ease-in-out infinite;
+}
+
+.terminal-prompt-hint kbd {
+    display: inline-block;
+    padding: 0 0.3rem;
+    margin: 0 0.15rem;
+    background: rgba(0, 255, 157, 0.08);
+    border: 1px solid var(--term-mint-muted);
+    border-radius: 3px;
+    color: var(--term-mint);
+    font-family: inherit;
+    font-size: 0.68rem;
+}
+
+.terminal-prompt-hint.is-hidden {
+    display: none;
+}
+
+@keyframes term-hint-pulse {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 0.95; }
+}
+
+/* ---------- Tab-complete ghost text ---------- */
+/* Wraps the input so the ghost can layer behind the caret */
+.terminal-input-wrap {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.terminal-input-wrap .terminal-input {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    background: transparent;
+}
+
+.terminal-ghost {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 1;
+    margin: 0;
+    padding: 0.25rem 0.5rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--term-mint-ghost);
+    opacity: 0.4;
+    pointer-events: none;
+    white-space: pre;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.terminal-ghost .term-ghost-typed {
+    visibility: hidden;
+}
+
+.terminal-ghost .term-ghost-suffix {
+    color: var(--term-mint-ghost);
+}
+
+/* TAB key affordance pill at the end of the ghost */
+.terminal-ghost .term-ghost-tab {
+    margin-left: 0.5rem;
+    padding: 0 0.3rem;
+    border: 1px solid var(--term-mint-muted);
+    border-radius: 3px;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    vertical-align: middle;
+    opacity: 0.8;
+}
+
+/* ---------- Command chips: hover + active glow ---------- */
+.terminal-chip {
+    transition:
+        transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+        color 220ms ease,
+        background 220ms ease,
+        border-color 220ms ease,
+        box-shadow 220ms ease;
+    will-change: transform;
+}
+
+.terminal-chip:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 1px rgba(0, 255, 157, 0.25), 0 4px 14px rgba(0, 255, 157, 0.08);
+}
+
+.terminal-chip:active,
+.terminal-chip.is-active {
+    transform: scale(0.98);
+    background: rgba(0, 255, 157, 0.14);
+    border-color: var(--term-mint);
+    color: var(--term-mint);
+    box-shadow: 0 0 0 1px var(--term-mint), 0 0 18px rgba(0, 255, 157, 0.35);
+}
+
+.terminal-chip:focus-visible {
+    outline: 2px solid var(--term-mint);
+    outline-offset: 2px;
+}
+
+/* ---------- Auto-typer effect on first viewport entry ---------- */
+.terminal-window.is-typing .terminal-input-prompt {
+    color: var(--term-mint);
+    animation: term-prompt-flash 1.2s ease-in-out 1;
+}
+
+.terminal-window.is-typing .terminal-ghost {
+    opacity: 0;
+}
+
+.terminal-window.is-typing .terminal-input::placeholder {
+    color: rgba(0, 255, 157, 0.85);
+}
+
+@keyframes term-prompt-flash {
+    0%, 100% { text-shadow: none; }
+    50% { text-shadow: 0 0 12px rgba(0, 255, 157, 0.7); }
+}
+
+/* ---------- Animated caret next to placeholder ---------- */
+/* Visible only when input is empty + not focused */
+.terminal-input-row .terminal-caret {
+    display: inline-block;
+    width: 7px;
+    height: 1em;
+    margin-left: -0.35rem;
+    background: var(--term-mint);
+    vertical-align: text-bottom;
+    animation: term-caret-blink 1s steps(2, jump-none) infinite;
+    pointer-events: none;
+}
+
+.terminal-input-row.is-focused .terminal-caret,
+.terminal-input-row.has-value .terminal-caret {
+    display: none;
+}
+
+@keyframes term-caret-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .terminal-prompt-hint,
+    .terminal-window.is-typing .terminal-input-prompt,
+    .terminal-input-row .terminal-caret,
+    .terminal-chip {
+        animation: none !important;
+        transition: none !important;
+    }
+    .terminal-chip:hover {
+        transform: none;
+    }
+}
+
+/* ---------- Mobile: stack chips in 2-col grid ---------- */
+@media (max-width: 600px) {
+    .terminal-chips {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.45rem;
+    }
+    .terminal-chip {
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem 0.4rem;
+        font-size: 0.68rem;
+    }
+    .terminal-prompt-hint {
+        font-size: 0.68rem;
+    }
+}

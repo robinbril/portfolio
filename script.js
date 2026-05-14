@@ -139,21 +139,21 @@ if (contactFormTrigger && emailReveal) {
 const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 
-// Dark theme is always the default on page load
-body.classList.remove('light-theme', 'dark-theme');
-body.classList.add('dark-theme');
+const applyTheme = (theme) => {
+    const isLight = theme === 'light';
+    document.documentElement.dataset.theme = theme;
+    body.classList.add('theme-switching');
+    body.classList.toggle('light-theme', isLight);
+    body.classList.toggle('dark-theme', !isLight);
+    window.setTimeout(() => body.classList.remove('theme-switching'), 180);
+};
 
-themeToggle.addEventListener('click', () => {
-    if (body.classList.contains('dark-theme')) {
-        body.classList.remove('dark-theme');
-        body.classList.add('light-theme');
-        localStorage.setItem('theme', 'light-theme');
-    } else {
-        body.classList.remove('light-theme');
-        body.classList.add('dark-theme');
-        localStorage.setItem('theme', 'dark-theme');
-    }
-    // Re-create icons after theme change
+// Dark theme is always the default on page load.
+applyTheme('dark');
+
+themeToggle?.addEventListener('click', () => {
+    const nextTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+    applyTheme(nextTheme);
     lucide.createIcons();
 });
 
@@ -1183,5 +1183,814 @@ document.addEventListener('DOMContentLoaded', () => {
         io.observe(wrap);
     } else {
         startTyping();
+    }
+})();
+(function () {
+    'use strict';
+
+    function init() {
+        var navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+
+        var sectionIds = ['about', 'projects', 'experience', 'skills', 'contact'];
+        var sections = sectionIds
+            .map(function (id) { return document.getElementById(id); })
+            .filter(Boolean);
+
+        var linkMap = {};
+        sectionIds.forEach(function (id) {
+            var link = navbar.querySelector('a[href="#' + id + '"]');
+            if (link) linkMap[id] = link;
+        });
+
+        var headerOffset = 80;
+
+        function setCurrent(id) {
+            Object.keys(linkMap).forEach(function (key) {
+                linkMap[key].classList.toggle('is-current', key === id);
+            });
+        }
+
+        if (sections.length && 'IntersectionObserver' in window) {
+            var visible = new Map();
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        visible.set(entry.target.id, entry.intersectionRatio);
+                    } else {
+                        visible.delete(entry.target.id);
+                    }
+                });
+
+                var best = null;
+                var bestRatio = 0;
+                visible.forEach(function (ratio, id) {
+                    if (ratio > bestRatio) {
+                        bestRatio = ratio;
+                        best = id;
+                    }
+                });
+                if (best) setCurrent(best);
+            }, {
+                rootMargin: '-' + headerOffset + 'px 0px -55% 0px',
+                threshold: [0, 0.25, 0.5, 0.75, 1]
+            });
+
+            sections.forEach(function (s) { io.observe(s); });
+        }
+
+        var ticking = false;
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+                navbar.classList.toggle('scrolled', window.scrollY > 40);
+                ticking = false;
+            });
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        navbar.addEventListener('click', function (e) {
+            var link = e.target.closest('a[href^="#"]');
+            if (!link || !navbar.contains(link)) return;
+            var href = link.getAttribute('href');
+            if (!href || href.length < 2) return;
+
+            var target = document.getElementById(href.slice(1));
+            if (!target) return;
+
+            e.preventDefault();
+            var rect = target.getBoundingClientRect();
+            var y = window.scrollY + rect.top - headerOffset + 1;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        });
+
+        var menuBtn = navbar.querySelector('.mobile-menu-btn');
+        var navLinks = navbar.querySelector('.nav-links');
+        if (menuBtn && navLinks) {
+            menuBtn.addEventListener('click', function () {
+                var open = navLinks.classList.toggle('is-open');
+                menuBtn.classList.toggle('is-open', open);
+                menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+/* 05 - Terminal interface upgrade: discoverability + tab-complete + auto-typer
+ *
+ * Self-contained IIFE. Idempotent and defensive.
+ * Reads optional data-commands attribute on #terminal-embed (comma-separated).
+ * Falls back to a built-in command list otherwise.
+ *
+ * Public surface (window.__terminalEnhance) is exposed only for debugging.
+ */
+(function () {
+    'use strict';
+
+    if (window.__terminalEnhanceLoaded) return;
+    window.__terminalEnhanceLoaded = true;
+
+    var run = function () {
+        try {
+            var input = document.getElementById('terminal-input');
+            var form = document.getElementById('terminal-form');
+            var embed = document.getElementById('terminal-embed');
+            var body = document.getElementById('terminal-body');
+            if (!input || !form || !embed) return;
+
+            var prefersReduced = false;
+            try {
+                prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            } catch (_) {}
+
+            /* ---------- Command list ---------- */
+            var fallbackCommands = ['help', 'linkedin', 'whatsapp', 'email', 'call', 'about', 'stack', 'github', 'available', 'clear'];
+            var dataAttr = embed.getAttribute('data-commands');
+            var commands = dataAttr
+                ? dataAttr.split(',').map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean)
+                : fallbackCommands.slice();
+
+            var cyclePlaceholders = ['help', 'linkedin', 'email', 'github', 'available'];
+
+            /* ---------- DOM scaffolding ---------- */
+            var inputRow = form;
+            inputRow.classList.add('has-enhance');
+
+            // Wrap input so we can layer a ghost behind it
+            var originalParent = input.parentNode;
+            var wrap = document.createElement('span');
+            wrap.className = 'terminal-input-wrap';
+            originalParent.insertBefore(wrap, input);
+            wrap.appendChild(input);
+
+            var ghost = document.createElement('span');
+            ghost.className = 'terminal-ghost';
+            ghost.setAttribute('aria-hidden', 'true');
+            ghost.innerHTML = '<span class="term-ghost-typed"></span><span class="term-ghost-suffix"></span><span class="term-ghost-tab">TAB</span>';
+            wrap.appendChild(ghost);
+            var ghostTyped = ghost.querySelector('.term-ghost-typed');
+            var ghostSuffix = ghost.querySelector('.term-ghost-suffix');
+            var ghostTab = ghost.querySelector('.term-ghost-tab');
+            ghost.style.display = 'none';
+
+            // Blinking caret after the prompt $ when input is empty + unfocused
+            var caret = document.createElement('span');
+            caret.className = 'terminal-caret';
+            caret.setAttribute('aria-hidden', 'true');
+            var promptEl = form.querySelector('.terminal-input-prompt');
+            if (promptEl && promptEl.parentNode) {
+                promptEl.parentNode.insertBefore(caret, promptEl.nextSibling);
+            }
+
+            // Pulsing prompt hint underneath the input row
+            var hint = document.createElement('div');
+            hint.className = 'terminal-prompt-hint';
+            hint.innerHTML = 'type <kbd>help</kbd> <kbd>&#x21B5;</kbd> for all commands &middot; <kbd>TAB</kbd> to autocomplete';
+            if (form.parentNode) form.parentNode.appendChild(hint);
+
+            /* ---------- Placeholder cycler ---------- */
+            var cycleIdx = 0;
+            var cycleTimer = null;
+            var stoppedCycle = false;
+            var DEFAULT_PLACEHOLDER = 'Enter command...';
+
+            var setPlaceholder = function (text) {
+                try { input.placeholder = text; } catch (_) {}
+            };
+
+            var stopCycle = function () {
+                if (stoppedCycle) return;
+                stoppedCycle = true;
+                if (cycleTimer) { clearTimeout(cycleTimer); cycleTimer = null; }
+            };
+
+            var tickCycle = function () {
+                if (stoppedCycle || prefersReduced) return;
+                var word = cyclePlaceholders[cycleIdx % cyclePlaceholders.length];
+                setPlaceholder('try: ' + word);
+                cycleIdx++;
+                cycleTimer = setTimeout(tickCycle, 2500);
+            };
+
+            /* ---------- Tab-complete ghost ---------- */
+            var findCompletion = function (value) {
+                var v = (value || '').toLowerCase();
+                if (!v) return null;
+                for (var i = 0; i < commands.length; i++) {
+                    if (commands[i] !== v && commands[i].indexOf(v) === 0) return commands[i];
+                }
+                return null;
+            };
+
+            var updateGhost = function () {
+                try {
+                    var raw = input.value;
+                    var completion = findCompletion(raw);
+                    if (!completion) {
+                        ghost.style.display = 'none';
+                        return;
+                    }
+                    ghostTyped.textContent = raw;
+                    ghostSuffix.textContent = completion.slice(raw.length);
+                    ghostTab.style.display = '';
+                    ghost.style.display = '';
+                } catch (_) {
+                    ghost.style.display = 'none';
+                }
+            };
+
+            /* ---------- Help echo fallback ---------- */
+            // If the existing handler already prints "Available commands:",
+            // we detect it and skip. Otherwise we print our own list.
+            var printLine = function (type, text) {
+                if (!body) return;
+                try {
+                    var line = document.createElement('div');
+                    line.className = 'terminal-line terminal-line--' + type;
+                    line.textContent = text;
+                    body.appendChild(line);
+                    body.scrollTop = body.scrollHeight;
+                } catch (_) {}
+            };
+
+            /* ---------- Input state tracking ---------- */
+            var syncRowState = function () {
+                if (input.value && input.value.length > 0) {
+                    inputRow.classList.add('has-value');
+                } else {
+                    inputRow.classList.remove('has-value');
+                }
+            };
+
+            input.addEventListener('focus', function () {
+                inputRow.classList.add('is-focused');
+                stopCycle();
+                setPlaceholder("type 'help' for options");
+                if (hint && hint.classList) hint.classList.add('is-hidden');
+            });
+
+            input.addEventListener('blur', function () {
+                inputRow.classList.remove('is-focused');
+            });
+
+            input.addEventListener('input', function () {
+                stopCycle();
+                syncRowState();
+                updateGhost();
+            });
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Tab' && !e.shiftKey) {
+                    var completion = findCompletion(input.value);
+                    if (completion) {
+                        e.preventDefault();
+                        input.value = completion;
+                        syncRowState();
+                        updateGhost();
+                    }
+                    return;
+                }
+                if (e.key === 'Escape') {
+                    ghost.style.display = 'none';
+                }
+            });
+
+            form.addEventListener('submit', function () {
+                var raw = (input.value || '').trim().toLowerCase();
+                if (raw !== 'help') return;
+                setTimeout(function () {
+                    try {
+                        if (!body) return;
+                        var lastLines = body.querySelectorAll('.terminal-line');
+                        var recent = lastLines[lastLines.length - 1];
+                        var alreadyHandled = recent && /available commands/i.test(recent.textContent || '');
+                        if (alreadyHandled) return;
+                        printLine('system', 'Available commands:');
+                        commands.forEach(function (c) {
+                            printLine('muted', '  ' + c);
+                        });
+                    } catch (_) {}
+                }, 30);
+            });
+
+            /* ---------- Auto-typer on first viewport entry ---------- */
+            var typedAlready = false;
+            var runAutoTyper = function () {
+                if (typedAlready) return;
+                typedAlready = true;
+                if (prefersReduced) {
+                    setPlaceholder("try: help");
+                    return;
+                }
+                stopCycle();
+                embed.classList.add('is-typing');
+                var sample = 'help';
+                var idx = 0;
+                var typeStep = function () {
+                    if (idx > sample.length) {
+                        setTimeout(function () {
+                            setPlaceholder(DEFAULT_PLACEHOLDER);
+                            embed.classList.remove('is-typing');
+                            embed.classList.add('is-typed');
+                            stoppedCycle = false;
+                            cycleIdx = 0;
+                            cycleTimer = setTimeout(tickCycle, 1200);
+                        }, 900);
+                        return;
+                    }
+                    setPlaceholder('try: ' + sample.slice(0, idx));
+                    idx++;
+                    setTimeout(typeStep, 110 + Math.random() * 50);
+                };
+                typeStep();
+            };
+
+            if ('IntersectionObserver' in window) {
+                try {
+                    var io = new IntersectionObserver(function (entries) {
+                        for (var i = 0; i < entries.length; i++) {
+                            if (entries[i].isIntersecting) {
+                                runAutoTyper();
+                                io.disconnect();
+                                break;
+                            }
+                        }
+                    }, { threshold: 0.4 });
+                    io.observe(embed);
+                } catch (_) {
+                    runAutoTyper();
+                }
+            } else {
+                runAutoTyper();
+            }
+
+            syncRowState();
+
+            window.__terminalEnhance = {
+                commands: commands,
+                stopCycle: stopCycle,
+                cycle: tickCycle
+            };
+        } catch (err) {
+            // Swallow: enhancement is non-critical
+        }
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', run, { once: true });
+    } else {
+        run();
+    }
+})();
+/* =============================================================================
+ * 08 — Animations script additions
+ * Self-contained IIFE. No globals. No dependencies.
+ *
+ * Responsibilities:
+ *  - Observe sections/hero with data-reveal; add .in-view at 15% visibility
+ *  - Track mouse position over tilt cards; write --mx --my custom properties
+ *    (normalised range -1..1) for CSS-only consumption
+ *  - rAF-throttled mousemove handler
+ *  - Respects prefers-reduced-motion
+ *
+ * =============================================================================
+ * INTEGRATION NOTES (was 08-animations.NOTES.md; inlined due to repo hook).
+ * =============================================================================
+ *
+ * Files in this bundle
+ *   - 08-animations.css                       (all visual rules)
+ *   - 08-animations.script-additions.js       (this file)
+ *
+ * Wiring (manual, when ready to ship)
+ *   Add to index.html <head> after existing stylesheets:
+ *     <link rel="stylesheet" href="enhancements/08-animations.css">
+ *   Add before </body> after existing script.js:
+ *     <script src="enhancements/08-animations.script-additions.js" defer></script>
+ *   No other HTML changes required — this script auto-tags
+ *   <section class="section"> and .hero with data-reveal.
+ *
+ * Existing HTML hooks the CSS already targets
+ *   .section, .hero                              — scroll reveal
+ *   .ai-project-card, .featured-project          — tilt + lift on hover
+ *   .skill-chip                                  — mint ripple
+ *   .filter-btn (+ .active)                      — animated underline
+ *   .hero-content .hero-eyebrow / h1 /
+ *     .hero-subtitle / .hero-actions /
+ *     .hero-stats                                — page-load cascade
+ *   #experience .timeline-item:first-child       — pulse on current-role dot
+ *
+ * Optional HTML hooks (no markup change required if absent)
+ *   - Add class "counter-animate" inside .hero-stat numbers for scale-in
+ *     when hero reveals.
+ *   - Timeline pulse targets .timeline-dot, .timeline-marker, or .dot on
+ *     first .timeline-item. Add one of those classes to the marker
+ *     element if the current markup uses none of them.
+ *
+ * Performance
+ *   - Animates transform + opacity only. No layout/paint thrash. 60fps.
+ *   - will-change set only where animation actually runs.
+ *   - IntersectionObserver unobserves after first reveal — zero idle cost.
+ *   - mousemove throttled to one rAF per frame; listeners are passive.
+ *   - Tilt gated to (hover: hover) and (pointer: fine) — off on touch.
+ *
+ * Accessibility / reduced motion
+ *   - prefers-reduced-motion: reduce cancels all animations and reveals
+ *     all sections instantly (no flash of invisible content).
+ *   - Hover effects gated to (hover: hover) and (pointer: fine).
+ *
+ * Cascade order
+ *   Load 08-animations.css AFTER style.css and all other enhancements/*.css
+ *   so this stylesheet wins on shared selectors (.filter-btn::before,
+ *   .skill-chip::after).
+ *
+ * Known overlap with style.css
+ *   .ai-project-card / .featured-project already have :hover transforms
+ *   in style.css. The tilt rule replaces those when this stylesheet loads
+ *   last. To preserve the original lift only, drop translateY(-4px) from
+ *   the .ai-project-card:hover / .featured-project:hover rule and/or
+ *   reduce --tilt-strength to 3deg.
+ *
+ * Rollback
+ *   Remove the single <link> and the single <script> tag. Done.
+ * =============================================================================
+ */
+
+(function () {
+    "use strict";
+
+    var supportsIO = typeof window.IntersectionObserver === "function";
+    var prefersReduced = window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function markAllVisible() {
+        var nodes = document.querySelectorAll("[data-reveal]");
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].classList.add("in-view");
+        }
+    }
+
+    if (prefersReduced) {
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", markAllVisible, { once: true });
+        } else {
+            markAllVisible();
+        }
+        return;
+    }
+
+    /* ---------------------------------------------------------------------
+       1. Scroll reveal — auto-tag every <section> + .hero with data-reveal
+       --------------------------------------------------------------------- */
+
+    function tagRevealTargets() {
+        var targets = document.querySelectorAll("section.section, section.hero, .hero");
+        for (var i = 0; i < targets.length; i++) {
+            if (!targets[i].hasAttribute("data-reveal")) {
+                targets[i].setAttribute("data-reveal", "");
+            }
+        }
+        return targets;
+    }
+
+    function initRevealObserver() {
+        var targets = tagRevealTargets();
+        if (!targets.length) return;
+
+        if (!supportsIO) {
+            for (var j = 0; j < targets.length; j++) {
+                targets[j].classList.add("in-view");
+            }
+            return;
+        }
+
+        var io = new IntersectionObserver(function (entries) {
+            for (var i = 0; i < entries.length; i++) {
+                var entry = entries[i];
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("in-view");
+                    io.unobserve(entry.target);
+                }
+            }
+        }, {
+            threshold: 0.15,
+            rootMargin: "0px 0px -5% 0px"
+        });
+
+        for (var k = 0; k < targets.length; k++) {
+            io.observe(targets[k]);
+        }
+    }
+
+    /* ---------------------------------------------------------------------
+       2. Card tilt — mousemove sets --mx / --my (range -1..1)
+       --------------------------------------------------------------------- */
+
+    function initCardTilt() {
+        var cards = document.querySelectorAll(".ai-project-card, .featured-project");
+        if (!cards.length) return;
+        if (!("requestAnimationFrame" in window)) return;
+
+        var hoverable = window.matchMedia &&
+            window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        if (!hoverable) return;
+
+        var rafId = null;
+        var pending = null;
+
+        function applyTilt() {
+            rafId = null;
+            if (!pending) return;
+            var card = pending.card;
+            var rect = pending.rect;
+
+            var relX = (pending.x - rect.left) / rect.width;
+            var relY = (pending.y - rect.top) / rect.height;
+            var mx = (relX - 0.5) * 2;
+            var my = (relY - 0.5) * 2;
+
+            if (mx < -1) mx = -1; else if (mx > 1) mx = 1;
+            if (my < -1) my = -1; else if (my > 1) my = 1;
+
+            card.style.setProperty("--mx", mx.toFixed(3));
+            card.style.setProperty("--my", my.toFixed(3));
+            pending = null;
+        }
+
+        function onMove(e) {
+            var card = e.currentTarget;
+            pending = {
+                card: card,
+                rect: card.getBoundingClientRect(),
+                x: e.clientX,
+                y: e.clientY
+            };
+            if (rafId === null) {
+                rafId = window.requestAnimationFrame(applyTilt);
+            }
+        }
+
+        function onLeave(e) {
+            var card = e.currentTarget;
+            if (rafId !== null) {
+                window.cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+            pending = null;
+            card.style.setProperty("--mx", "0");
+            card.style.setProperty("--my", "0");
+        }
+
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].addEventListener("mousemove", onMove, { passive: true });
+            cards[i].addEventListener("mouseleave", onLeave, { passive: true });
+        }
+    }
+
+    /* ---------------------------------------------------------------------
+       Boot
+       --------------------------------------------------------------------- */
+
+    function boot() {
+        try { initRevealObserver(); } catch (e) { /* non-critical */ }
+        try { initCardTilt(); } catch (e) { /* non-critical */ }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot, { once: true });
+    } else {
+        boot();
+    }
+})();
+/* =========================================================================
+   10-projects.script-additions.js
+   Filter UX enhancement — smooth collapse via class, no display:none flash.
+   Load AFTER script.js. Self-contained IIFE. Bewerkt geen bestaande code.
+   ========================================================================= */
+(function () {
+    'use strict';
+
+    function init() {
+        var buttons = document.querySelectorAll('.project-filters .filter-btn');
+        var cards = document.querySelectorAll('.ai-project-card[data-category]');
+
+        if (!buttons.length || !cards.length) return;
+
+        // Strip any inline display:none left by the legacy filter handler in
+        // script.js so the CSS .is-filtered-out transition can take over.
+        function clearInlineDisplay() {
+            for (var i = 0; i < cards.length; i++) {
+                if (cards[i].style.display === 'none') {
+                    cards[i].style.display = '';
+                }
+                cards[i].classList.remove('hidden');
+            }
+        }
+
+        function applyFilter(filter) {
+            if (!filter) return;
+
+            for (var i = 0; i < cards.length; i++) {
+                var card = cards[i];
+                var categories = (card.getAttribute('data-category') || '').split(/\s+/);
+                var matches = filter === 'all' || categories.indexOf(filter) !== -1;
+
+                if (matches) {
+                    card.classList.remove('is-filtered-out');
+                    card.removeAttribute('aria-hidden');
+                } else {
+                    card.classList.add('is-filtered-out');
+                    card.setAttribute('aria-hidden', 'true');
+                }
+            }
+        }
+
+        function setActive(target) {
+            for (var i = 0; i < buttons.length; i++) {
+                var btn = buttons[i];
+                var isActive = btn === target;
+                btn.classList.toggle('is-active', isActive);
+                btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            }
+        }
+
+        // Initialise aria-pressed + locate the initially active button.
+        var initialActive = null;
+        for (var i = 0; i < buttons.length; i++) {
+            var btn = buttons[i];
+            if (btn.classList.contains('active') || btn.classList.contains('is-active')) {
+                initialActive = btn;
+            }
+        }
+        if (!initialActive) initialActive = buttons[0];
+        setActive(initialActive);
+
+        // Click handler — runs AFTER the legacy handler in script.js (event
+        // listeners fire in registration order). Defer one frame so the
+        // legacy handler's inline styles land first, then override them with
+        // class-based transitions.
+        for (var j = 0; j < buttons.length; j++) {
+            buttons[j].addEventListener('click', function (e) {
+                var btn = e.currentTarget;
+                var filter = btn.getAttribute('data-filter');
+
+                requestAnimationFrame(function () {
+                    clearInlineDisplay();
+                    applyFilter(filter);
+                    setActive(btn);
+                });
+            });
+        }
+
+        // First paint — apply initial filter so card states match the active
+        // button without waiting for a click.
+        requestAnimationFrame(function () {
+            clearInlineDisplay();
+            applyFilter(initialActive.getAttribute('data-filter'));
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+/* =============================================================
+   15 — Footer / CTA script additions
+   - Scroll-to-top toggle + smooth scroll
+   - Optional GitHub repos rendering when [data-github-repos] exists
+   IIFE, idempotent, no-throw.
+   ============================================================= */
+
+(function () {
+    'use strict';
+
+    if (window.__rb_footerCtaInit) return;
+    window.__rb_footerCtaInit = true;
+
+    function safe(fn) {
+        try { fn(); } catch (e) { /* swallow */ }
+    }
+
+    /* ---------- Scroll-to-top ---------- */
+
+    function initScrollToTop() {
+        var btn = document.querySelector('.scroll-to-top');
+        if (!btn) return;
+
+        var threshold = 600;
+        var ticking = false;
+
+        function update() {
+            var y = window.scrollY || window.pageYOffset || 0;
+            btn.classList.toggle('is-visible', y > threshold);
+            ticking = false;
+        }
+
+        function onScroll() {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(update);
+        }
+
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+        });
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        update();
+    }
+
+    /* ---------- GitHub repos ---------- */
+
+    function escapeHtml(str) {
+        return String(str == null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function renderRepos(container, repos) {
+        if (!repos || !repos.length) {
+            container.innerHTML = '<div class="gh-repos__empty">Geen publieke repos beschikbaar.</div>';
+            return;
+        }
+
+        var html = repos.map(function (repo) {
+            var name = escapeHtml(repo.name || '');
+            var url = escapeHtml(repo.html_url || '#');
+            var desc = escapeHtml(repo.description || 'Geen omschrijving.');
+            var stars = typeof repo.stargazers_count === 'number' ? repo.stargazers_count : 0;
+            return '' +
+                '<a class="gh-repo" href="' + url + '" target="_blank" rel="noopener noreferrer">' +
+                '  <div class="gh-repo__head">' +
+                '    <span class="gh-repo__name">' + name + '</span>' +
+                '    <span class="gh-repo__stars"><i data-lucide="star"></i>' + stars + '</span>' +
+                '  </div>' +
+                '  <p class="gh-repo__desc">' + desc + '</p>' +
+                '</a>';
+        }).join('');
+
+        container.innerHTML = html;
+
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            safe(function () { window.lucide.createIcons(); });
+        }
+    }
+
+    function hideContainer(container) {
+        if (!container) return;
+        container.style.display = 'none';
+    }
+
+    function initGithubRepos() {
+        var container = document.querySelector('[data-github-repos]');
+        if (!container) return;
+
+        var user = container.getAttribute('data-github-repos') || 'robinbril';
+        var url = 'https://api.github.com/users/' +
+            encodeURIComponent(user) +
+            '/repos?sort=updated&per_page=3';
+
+        if (typeof fetch !== 'function') {
+            hideContainer(container);
+            return;
+        }
+
+        fetch(url, { headers: { 'Accept': 'application/vnd.github+json' } })
+            .then(function (res) {
+                if (!res || !res.ok) throw new Error('gh-api-' + (res && res.status));
+                return res.json();
+            })
+            .then(function (data) {
+                if (!Array.isArray(data)) { hideContainer(container); return; }
+                var repos = data.filter(function (r) { return r && !r.fork; }).slice(0, 3);
+                renderRepos(container, repos);
+            })
+            .catch(function () {
+                hideContainer(container);
+            });
+    }
+
+    function init() {
+        safe(initScrollToTop);
+        safe(initGithubRepos);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+        init();
     }
 })();

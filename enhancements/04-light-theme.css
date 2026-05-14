@@ -1,0 +1,689 @@
+/* ==========================================
+   04 — LIGHT THEME CONTRAST + READABILITY (WCAG AA)
+   Loaded after all other CSS. Only touches `body.light-theme`.
+   Dark theme: untouched.
+   ========================================== */
+
+/* ------------------------------------------------------------------
+   1. CORE TOKENS — repaint the light palette toward teal/emerald
+   The dark theme keeps its mint (#00ff9d). Light theme switches the
+   "accent" semantics to a darker teal so glow rgba() rules across the
+   codebase stop producing pastel-on-white washouts.
+   ------------------------------------------------------------------ */
+body.light-theme {
+    --bg-color: #f6f8fb;
+    --card-bg: #ffffff;
+    --text-primary: #0c1422;
+    --text-secondary: #334155;
+
+    --accent-primary: #0d9488;          /* teal-600, replaces neon mint */
+    --accent-secondary: #047857;        /* forest-700 */
+    --accent-strong: #0d9488;           /* unified, was blue #3b82f6 */
+    --accent-rgb: 13, 148, 136;
+    --accent-secondary-rgb: 4, 120, 87;
+    --accent-strong-rgb: 13, 148, 136;
+
+    --border-color: #cbd5e1;            /* was #e2e8f0 — bumped for 3:1 */
+    --nav-bg: rgba(246, 248, 251, 0.95);
+    --btn-primary-bg: #0d9488;
+    --btn-primary-text: #ffffff;
+
+    --case-accent: #0d9488;
+    --case-accent-rgb: 13, 148, 136;
+}
+
+/* Body text default + heading punch-up */
+body.light-theme {
+    color: #1a2332;
+    background-color: #f6f8fb;
+}
+
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme h4,
+body.light-theme h5,
+body.light-theme h6 {
+    color: #0c1422;
+}
+
+/* Secondary text floor — keep ~7:1 ratio with white */
+body.light-theme .text-secondary,
+body.light-theme .company,
+body.light-theme .role-description,
+body.light-theme .about-text p,
+body.light-theme .contact-availability,
+body.light-theme .feature-item,
+body.light-theme .cta-content > p,
+body.light-theme .timeline-content p {
+    color: #334155;
+}
+
+/* ------------------------------------------------------------------
+   2. SURFACES — kill glassmorphism, give cards real depth
+   ------------------------------------------------------------------ */
+body.light-theme .ai-project-card {
+    background: #ffffff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 1px solid #e2e8f0;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .ai-project-card:hover {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    border-left-width: 4px;
+    border-left-color: #0d9488;
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.08),
+        0 12px 28px rgba(15, 23, 42, 0.10);
+}
+
+body.light-theme .ai-project-card::before,
+body.light-theme .ai-project-card::after {
+    background: transparent;
+}
+
+body.light-theme .ai-project-card p {
+    color: #334155;
+}
+
+body.light-theme .ai-project-card p strong {
+    color: #0c1422;
+}
+
+body.light-theme .ai-project-card h3 {
+    color: #0c1422;
+}
+
+/* Featured project — solid surface */
+body.light-theme .featured-project {
+    background:
+        radial-gradient(circle at 18% 0%, rgba(13, 148, 136, 0.06), transparent 38%),
+        #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow:
+        0 2px 8px rgba(15, 23, 42, 0.06),
+        0 12px 32px rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .featured-project::before {
+    background-image:
+        linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+}
+
+body.light-theme .featured-content h3 {
+    color: #0c1422;
+}
+
+body.light-theme .featured-content p,
+body.light-theme .featured-project .featured-content p {
+    color: #1a2332;
+}
+
+body.light-theme .project-kicker {
+    color: #475569;
+}
+
+body.light-theme .featured-stack span,
+body.light-theme .secure-rail summary,
+body.light-theme .metric {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0c1422;
+}
+
+body.light-theme .secure-rail details p {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+}
+
+body.light-theme .secure-rail {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+body.light-theme .metric-label,
+body.light-theme .card-metric-label {
+    color: #475569;
+}
+
+body.light-theme .metric-number {
+    color: #0d9488;
+}
+
+body.light-theme .card-metric {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+body.light-theme .card-metric-value {
+    color: #0c1422;
+}
+
+/* Contact card — solid */
+body.light-theme .contact-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow:
+        0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+body.light-theme .contact-card .secondary-options {
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Cert badges — readable */
+body.light-theme .cert-badge {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+body.light-theme .cert-item h4 {
+    color: #0c1422;
+}
+
+/* ------------------------------------------------------------------
+   3. STATUS DOTS / BADGES — emerald, not neon mint
+   ------------------------------------------------------------------ */
+body.light-theme .status-dot {
+    background: #059669;
+    box-shadow: 0 0 8px rgba(5, 150, 105, 0.5);
+}
+
+body.light-theme .whatsapp-status {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #0c1422;
+}
+
+body.light-theme .whatsapp-status::after {
+    background: transparent;
+}
+
+body.light-theme .availability-badge .status-text,
+body.light-theme .status-text {
+    color: #0c1422;
+}
+
+body.light-theme .featured-project .card-status {
+    color: #047857;
+    background: rgba(5, 150, 105, 0.08);
+    border: 1px solid rgba(5, 150, 105, 0.32);
+}
+
+body.light-theme .featured-project .card-status .status-dot {
+    background: #047857;
+    box-shadow: 0 0 8px rgba(4, 120, 87, 0.45);
+}
+
+body.light-theme .featured-project .card-company {
+    color: #047857;
+    background: rgba(5, 150, 105, 0.08);
+    border: 1px solid rgba(5, 150, 105, 0.32);
+}
+
+body.light-theme .featured-project .card-metric-label {
+    color: #475569;
+}
+
+body.light-theme .featured-project .card-metric-value {
+    color: #0c1422;
+}
+
+body.light-theme .card-id {
+    color: #047857;
+}
+
+/* ------------------------------------------------------------------
+   4. ROLE / TIMELINE BULLETS + DOTS
+   ------------------------------------------------------------------ */
+body.light-theme .timeline {
+    border-left: 2px solid #cbd5e1;
+}
+
+body.light-theme .timeline-item::before {
+    background: #ffffff;
+    border: 3px solid #0d9488;
+    box-shadow: 0 0 8px rgba(13, 148, 136, 0.35);
+}
+
+body.light-theme .timeline-date {
+    color: #047857;
+}
+
+body.light-theme .role-description li::before {
+    background: #0d9488;
+    box-shadow: 0 0 6px rgba(13, 148, 136, 0.3);
+}
+
+body.light-theme .timeline-content.glow-card:hover {
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.08),
+        0 0 18px rgba(13, 148, 136, 0.10);
+}
+
+/* ------------------------------------------------------------------
+   5. BUTTONS — primary teal solid, secondary outline
+   ------------------------------------------------------------------ */
+body.light-theme .btn-primary,
+body.light-theme .cta-primary-btn {
+    background: linear-gradient(135deg, #0d9488, #047857);
+    color: #ffffff;
+    border: 1px solid #047857;
+    box-shadow:
+        0 2px 8px rgba(13, 148, 136, 0.28),
+        0 1px 0 rgba(255, 255, 255, 0.3) inset;
+}
+
+body.light-theme .btn-primary:hover,
+body.light-theme .cta-primary-btn:hover {
+    background: linear-gradient(135deg, #0f766e, #065f46);
+    box-shadow:
+        0 6px 20px rgba(13, 148, 136, 0.35),
+        0 1px 0 rgba(255, 255, 255, 0.3) inset;
+    transform: translateY(-2px);
+}
+
+body.light-theme .btn-primary i,
+body.light-theme .cta-primary-btn i {
+    color: #ffffff;
+}
+
+body.light-theme .nav-links .btn-primary:hover {
+    background: linear-gradient(135deg, #0f766e, #065f46);
+}
+
+/* Calendar/CTA button — same teal gradient */
+body.light-theme .calendar-btn {
+    background: linear-gradient(135deg, #0d9488, #047857);
+    color: #ffffff;
+}
+
+body.light-theme .calendar-btn:hover {
+    background: linear-gradient(135deg, #0f766e, #065f46);
+    box-shadow: 0 12px 28px rgba(13, 148, 136, 0.3);
+}
+
+/* Secondary: outline */
+body.light-theme .cv-download-btn {
+    color: #047857;
+    border: 1px solid #0d9488;
+    background: #ffffff;
+}
+
+body.light-theme .cv-download-btn:hover {
+    background: #f1f5f9;
+    border-color: #047857;
+    color: #047857;
+}
+
+/* WhatsApp CTA — keep brand green but readable */
+body.light-theme .whatsapp-cta {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0c1422;
+}
+
+body.light-theme .whatsapp-cta:hover {
+    background: rgba(37, 211, 102, 0.08);
+    border-color: #25D366;
+    color: #128C7E;
+}
+
+body.light-theme .whatsapp-cta i {
+    color: #128C7E;
+}
+
+/* ------------------------------------------------------------------
+   6. PROJECT FILTER BUTTONS — fix unreadable pastel-active state
+   ------------------------------------------------------------------ */
+body.light-theme .filter-btn {
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    background: #ffffff;
+}
+
+body.light-theme .filter-btn:hover {
+    border-color: #0d9488;
+    color: #047857;
+    background: #f1f5f9;
+}
+
+body.light-theme .filter-btn.active {
+    background: #0d9488;
+    border-color: #047857;
+    color: #ffffff;
+}
+
+/* ------------------------------------------------------------------
+   7. TAGS / CHIPS / BADGES — readable, no rgba(0,0,0,0.5) ghosts
+   ------------------------------------------------------------------ */
+body.light-theme .tags span {
+    background: rgba(13, 148, 136, 0.08);
+    border: 1px solid rgba(13, 148, 136, 0.32);
+    color: #047857;
+}
+
+body.light-theme .tags span:hover {
+    background: rgba(13, 148, 136, 0.14);
+    border-color: #0d9488;
+    color: #065f46;
+}
+
+body.light-theme .tech-badge,
+body.light-theme .skill-tags span,
+body.light-theme .contact-item {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #1a2332;
+}
+
+body.light-theme .tech-badge:hover,
+body.light-theme .skill-tags span:hover,
+body.light-theme .contact-item:hover {
+    background: #f1f5f9;
+    border-color: #0d9488;
+    color: #047857;
+}
+
+body.light-theme .stat-pill {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0c1422;
+}
+
+/* Color-coded project tags: standardized readable foundation */
+body.light-theme .tag-violet,
+body.light-theme .tag-emerald,
+body.light-theme .tag-blue,
+body.light-theme .tag-amber,
+body.light-theme .tag-rose,
+body.light-theme .tag-indigo,
+body.light-theme .tag-teal,
+body.light-theme .tag-pink,
+body.light-theme .tag-cyan,
+body.light-theme .tag-purple,
+body.light-theme .tag-slate,
+body.light-theme .tag-orange,
+body.light-theme .tag-red,
+body.light-theme .tag-lime,
+body.light-theme .tag-green,
+body.light-theme .tag-yellow,
+body.light-theme .tag-magenta {
+    background: #f1f5f9;
+    color: #1a2332;
+    border: 1px solid #cbd5e1;
+}
+
+/* CTA badge */
+body.light-theme .cta-badge {
+    background: rgba(13, 148, 136, 0.10);
+    border: 1px solid #0d9488;
+    color: #047857;
+}
+
+/* ------------------------------------------------------------------
+   8. FORM INPUTS (modal contact form in ai-styles.css)
+   ------------------------------------------------------------------ */
+body.light-theme .form-group input,
+body.light-theme .form-group textarea {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0c1422;
+}
+
+body.light-theme .form-group input::placeholder,
+body.light-theme .form-group textarea::placeholder {
+    color: #64748b;
+}
+
+body.light-theme .form-group input:focus,
+body.light-theme .form-group textarea:focus {
+    background: #ffffff;
+    border-color: #0d9488;
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
+}
+
+body.light-theme .form-group label {
+    color: #334155;
+}
+
+/* ------------------------------------------------------------------
+   9. TERMINAL CONTACT — readable teal/emerald instead of mint
+   Monospace font stays per terminal CSS; we only lift contrast.
+   ------------------------------------------------------------------ */
+body.light-theme .terminal-window {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    box-shadow:
+        0 2px 8px rgba(15, 23, 42, 0.06),
+        0 12px 32px rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .terminal-titlebar {
+    background: #f1f5f9;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+body.light-theme .terminal-body {
+    background: #ffffff;
+    color: #1a2332;
+}
+
+body.light-theme .terminal-line--system { color: #047857; }
+body.light-theme .terminal-line--system::before { color: #0d9488; }
+body.light-theme .terminal-line--user { color: #0c1422; }
+body.light-theme .terminal-line--user::before { color: #475569; }
+body.light-theme .terminal-line--link { color: #047857; }
+body.light-theme .terminal-line--link a { color: #047857; }
+body.light-theme .terminal-line--link a:hover { color: #065f46; }
+body.light-theme .terminal-line--muted { color: #475569; }
+
+body.light-theme .terminal-chips {
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+}
+
+body.light-theme .terminal-chip {
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    background: #ffffff;
+}
+
+body.light-theme .terminal-chip:hover {
+    border-color: #0d9488;
+    color: #047857;
+    background: #f1f5f9;
+}
+
+body.light-theme .terminal-input-row {
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+}
+
+body.light-theme .terminal-input { color: #0c1422; }
+body.light-theme .terminal-input::placeholder { color: #64748b; }
+body.light-theme .terminal-input-prompt { color: #047857; }
+body.light-theme .terminal-submit { color: #475569; }
+body.light-theme .terminal-submit:hover { color: #047857; }
+body.light-theme .terminal-cursor { background: #0d9488; }
+body.light-theme .terminal-line--typing::after { color: #0d9488; }
+body.light-theme .terminal-title { color: #475569; }
+body.light-theme .terminal-close { color: #334155; }
+
+body.light-theme .terminal-path {
+    color: #047857;
+}
+
+/* ------------------------------------------------------------------
+   10. NAV / HERO TRIM
+   ------------------------------------------------------------------ */
+body.light-theme .hero-eyebrow {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #047857;
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 2px 8px rgba(13, 148, 136, 0.10);
+}
+
+body.light-theme .hero-pulse {
+    background: #059669;
+    box-shadow: 0 0 8px rgba(5, 150, 105, 0.55);
+}
+
+@keyframes hero-pulse-light-teal {
+    0%, 100% { box-shadow: 0 0 6px #059669, 0 0 0 0 rgba(5, 150, 105, 0.5); }
+    70%      { box-shadow: 0 0 10px #059669, 0 0 0 7px rgba(5, 150, 105, 0); }
+}
+
+body.light-theme .hero-pulse {
+    animation-name: hero-pulse-light-teal;
+}
+
+body.light-theme .hero-subtitle {
+    color: #0c1422;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+body.light-theme .hero-stat strong,
+body.light-theme .stat-number {
+    color: #047857;
+}
+
+body.light-theme .nav-links a:not(.btn-primary) {
+    color: #1a2332;
+}
+
+body.light-theme .nav-links a.is-active:not(.btn-primary) {
+    color: #047857;
+}
+
+body.light-theme .nav-links a.is-active:not(.btn-primary)::after {
+    background: #0d9488;
+    box-shadow: 0 0 8px rgba(13, 148, 136, 0.4);
+}
+
+/* ------------------------------------------------------------------
+   11. PROGRESS BAR — pull saturation down on light bg
+   ------------------------------------------------------------------ */
+body.light-theme .progress-bar {
+    background: linear-gradient(90deg, #0d9488, #047857);
+    box-shadow:
+        0 4px 12px rgba(13, 148, 136, 0.25),
+        0 0 16px rgba(13, 148, 136, 0.12);
+}
+
+body.light-theme .progress-bar::after {
+    box-shadow:
+        0 6px 16px rgba(13, 148, 136, 0.3),
+        0 0 24px rgba(13, 148, 136, 0.2);
+}
+
+/* ------------------------------------------------------------------
+   12. PROJECT ICONS — neutral surface, teal icon
+   ------------------------------------------------------------------ */
+body.light-theme .project-icon-wrapper,
+body.light-theme .icon-violet,
+body.light-theme .icon-emerald,
+body.light-theme .icon-blue,
+body.light-theme .icon-amber,
+body.light-theme .icon-rose,
+body.light-theme .icon-indigo,
+body.light-theme .icon-teal,
+body.light-theme .icon-pink,
+body.light-theme .icon-cyan,
+body.light-theme .icon-purple,
+body.light-theme .icon-slate,
+body.light-theme .icon-orange,
+body.light-theme .icon-red,
+body.light-theme .icon-lime,
+body.light-theme .icon-green {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+}
+
+body.light-theme .project-icon-wrapper i {
+    color: #047857 !important;
+}
+
+/* ------------------------------------------------------------------
+   13. CARD DIAGRAM (SVG) — readable on white
+   ------------------------------------------------------------------ */
+body.light-theme .card-diagram {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+body.light-theme .card-diagram svg text {
+    fill: #0c1422 !important;
+}
+
+body.light-theme .card-diagram svg rect[stroke*="46,242,160"] {
+    stroke: #0d9488 !important;
+}
+
+/* ------------------------------------------------------------------
+   14. SCROLLBAR / SELECTION
+   ------------------------------------------------------------------ */
+body.light-theme ::-webkit-scrollbar-thumb {
+    background: rgba(13, 148, 136, 0.35);
+}
+
+body.light-theme ::-webkit-scrollbar-thumb:hover {
+    background: rgba(13, 148, 136, 0.55);
+}
+
+body.light-theme ::selection {
+    background: rgba(13, 148, 136, 0.25);
+    color: #0c1422;
+}
+
+/* ------------------------------------------------------------------
+   15. XRAY HINTS / KBD chrome
+   ------------------------------------------------------------------ */
+body.light-theme .xray-hint {
+    color: #334155;
+}
+
+body.light-theme .xray-hint i {
+    color: #047857;
+}
+
+body.light-theme .xray-hint kbd {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0c1422;
+}
+
+/* ------------------------------------------------------------------
+   16. EMAIL REVEAL
+   ------------------------------------------------------------------ */
+body.light-theme .email-reveal {
+    background: #f8fafc;
+    border: 1px solid #0d9488;
+}
+
+body.light-theme .email-reveal p {
+    color: #0c1422;
+}
+
+body.light-theme .email-reveal .text-small {
+    color: #475569;
+}
+
+/* ------------------------------------------------------------------
+   17. CARD CORNER DECOR
+   ------------------------------------------------------------------ */
+body.light-theme .card-corner {
+    border-color: rgba(13, 148, 136, 0.35);
+}

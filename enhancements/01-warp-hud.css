@@ -1,0 +1,660 @@
+/* COCKPIT FRAME — overrides style.css 5979-6172. Loads AFTER style.css.
+
+   Replaces the two floating panels with a full-viewport cockpit:
+   side struts, top HUD strip, bottom dashboard, pilot silhouette,
+   glass canopy reflection.
+
+   Keeps the existing JS API intact:
+     - #warp-canvas                background starfield
+     - .warp-hud                   root overlay
+     - #hud-big-destination        destination text
+     - .warp-stop[data-section]    route stops with .is-active / .is-past
+     - #hud-velocity / #hud-status velocity + drive readouts
+     - #hud-destination            legacy hidden node, repurposed as
+                                   pilot-info card region
+
+   HTML structure to use is documented in enhancements/README.md
+   under "## 01-cockpit (UPDATED)".
+*/
+
+:root {
+    --cp-mint:        #2EF2A0;
+    --cp-mint-soft:   rgba(46, 242, 160, 0.55);
+    --cp-mint-faint:  rgba(46, 242, 160, 0.18);
+    --cp-mint-edge:   rgba(46, 242, 160, 0.42);
+    --cp-ink:         rgba(2, 8, 18, 0.94);
+    --cp-text:        #f4faff;
+    --cp-text-dim:    rgba(244, 250, 255, 0.55);
+
+    --cp-strut-w:     86px;
+    --cp-top-h:       58px;
+    --cp-dash-h:      164px;
+}
+
+/* ============================================================
+   ROOT — fixed full-viewport overlay, never blocks clicks.
+   ============================================================ */
+
+.warp-hud {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 40;          /* above #warp-canvas (~30), below site nav (~100) */
+    overflow: hidden;
+}
+
+/* Neutralise legacy panel markup if it ever renders alongside the new frame. */
+.warp-hud .warp-stage,
+.warp-hud .warp-bottom,
+.warp-hud .rocket-cockpit { display: none !important; }
+
+/* ============================================================
+   GLASS CANOPY — soft top highlight, soft bottom darkening,
+   very faint scanlines. Keeps the starfield vivid.
+   ============================================================ */
+
+.warp-hud::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 140% 60% at 50% -10%,
+            rgba(255, 255, 255, 0.045) 0%,
+            rgba(255, 255, 255, 0) 55%),
+        radial-gradient(ellipse 120% 50% at 50% 110%,
+            rgba(0, 0, 0, 0.32) 0%,
+            rgba(0, 0, 0, 0) 60%),
+        repeating-linear-gradient(180deg,
+            rgba(255, 255, 255, 0.022) 0px,
+            rgba(255, 255, 255, 0.022) 1px,
+            rgba(0, 0, 0, 0) 1px,
+            rgba(0, 0, 0, 0) 3px);
+}
+
+/* ============================================================
+   SIDE STRUTS — vertical bars left + right, mint LED inside-edge.
+   Drawn as a single multi-layer background on .warp-hud.
+   Plus the pilot silhouette sits in the same stack at bottom-centre.
+   ============================================================ */
+
+.warp-hud {
+    background-image:
+        /* 1: pilot silhouette */
+        url("../cockpit-pilot.svg"),
+        /* 2: left strut body */
+        linear-gradient(180deg,
+            rgba(8, 14, 24, 0.96) 0%,
+            rgba(6, 10, 18, 0.88) 60%,
+            rgba(4, 8, 14, 0.96) 100%),
+        /* 3: left LED edge */
+        linear-gradient(180deg,
+            rgba(46, 242, 160, 0.0) 0%,
+            rgba(46, 242, 160, 0.65) 22%,
+            rgba(46, 242, 160, 0.85) 50%,
+            rgba(46, 242, 160, 0.65) 78%,
+            rgba(46, 242, 160, 0.0) 100%),
+        /* 4: right strut body */
+        linear-gradient(180deg,
+            rgba(8, 14, 24, 0.96) 0%,
+            rgba(6, 10, 18, 0.88) 60%,
+            rgba(4, 8, 14, 0.96) 100%),
+        /* 5: right LED edge */
+        linear-gradient(180deg,
+            rgba(46, 242, 160, 0.0) 0%,
+            rgba(46, 242, 160, 0.65) 22%,
+            rgba(46, 242, 160, 0.85) 50%,
+            rgba(46, 242, 160, 0.65) 78%,
+            rgba(46, 242, 160, 0.0) 100%);
+    background-repeat: no-repeat;
+    background-position:
+        center calc(100% - 6px),
+        left top,
+        calc(var(--cp-strut-w) - 1px) top,
+        right top,
+        calc(100% - var(--cp-strut-w)) top;
+    background-size:
+        220px 198px,
+        var(--cp-strut-w) 100%,
+        1px 100%,
+        var(--cp-strut-w) 100%,
+        1px 100%;
+    animation:
+        cp-pilot-bob   3.4s ease-in-out infinite,
+        cp-led-breathe 3.6s ease-in-out infinite;
+}
+
+@keyframes cp-pilot-bob {
+    0%, 100% { background-position-y: calc(100% - 6px), 0, 0, 0, 0; }
+    50%      { background-position-y: calc(100% - 8px), 0, 0, 0, 0; }
+}
+
+@keyframes cp-led-breathe {
+    0%, 100% { filter: none; }
+    50%      { filter: brightness(1.06) saturate(1.04); }
+}
+
+/* ============================================================
+   TOP HUD STRIP — destination, with "NEXT STOP" left and
+   "RELEASE SPACE TO LAND" right. Spans the viewport (between struts).
+   ============================================================ */
+
+#hud-big-destination {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--cp-top-h);
+    margin: 0;
+    padding: 0 calc(var(--cp-strut-w) + 24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(28px, 3vw, 48px);
+    font-weight: 900;
+    color: var(--cp-text);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    text-align: center;
+    text-shadow:
+        0 0 18px rgba(46, 242, 160, 0.55),
+        0 0 38px rgba(46, 242, 160, 0.25);
+    background:
+        linear-gradient(180deg,
+            rgba(4, 10, 20, 0.92) 0%,
+            rgba(4, 10, 20, 0.82) 60%,
+            rgba(4, 10, 20, 0.0) 100%);
+    border-bottom: 1px solid var(--cp-mint-edge);
+    box-shadow:
+        0 1px 0 rgba(46, 242, 160, 0.18) inset,
+        0 18px 32px -22px rgba(0, 0, 0, 0.8);
+    transition: opacity 0.18s ease-out;
+}
+
+#hud-big-destination::before {
+    content: 'NEXT STOP';
+    position: absolute;
+    left: calc(var(--cp-strut-w) + 24px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    color: var(--cp-mint);
+    text-shadow: 0 0 12px rgba(46, 242, 160, 0.55);
+    opacity: 0.9;
+}
+
+#hud-big-destination::after {
+    content: 'RELEASE\00A0\00A0SPACE\00A0\00A0TO\00A0\00A0LAND';
+    position: absolute;
+    right: calc(var(--cp-strut-w) + 24px);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.42em;
+    color: var(--cp-text-dim);
+    text-shadow: none;
+}
+
+/* ============================================================
+   BOTTOM DASHBOARD — 3-column grid spanning between struts.
+   Column 1: pilot card (drawn on the repurposed #hud-destination)
+   Column 2-6: 5 route stops
+   Column 7: velocity + status readouts
+   ============================================================ */
+
+#warp-route {
+    list-style: none;
+    margin: 0;
+    padding: 22px 32px 22px;
+    position: absolute;
+    left: var(--cp-strut-w);
+    right: var(--cp-strut-w);
+    bottom: 0;
+    height: var(--cp-dash-h);
+    z-index: 5;
+    display: grid;
+    grid-template-columns:
+        minmax(200px, 1fr)
+        repeat(5, minmax(0, 1fr))
+        minmax(220px, 1fr);
+    align-items: end;
+    column-gap: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    background: linear-gradient(180deg,
+        rgba(4, 10, 20, 0.0)  0%,
+        rgba(4, 10, 20, 0.78) 28%,
+        rgba(4, 10, 20, 0.94) 60%,
+        rgba(2,  6, 12, 0.98) 100%);
+    border-top: 1px solid var(--cp-mint-edge);
+    box-shadow:
+        0 -1px 0 rgba(46, 242, 160, 0.18) inset,
+        0 -32px 60px -36px rgba(0, 0, 0, 0.85);
+    --cp-progress: 0;
+}
+
+/* Dashboard top edge — glowing hairline */
+#warp-route::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: -1px;
+    height: 1px;
+    background: linear-gradient(90deg,
+        rgba(46, 242, 160, 0),
+        rgba(46, 242, 160, 0.85) 18%,
+        rgba(46, 242, 160, 0.85) 82%,
+        rgba(46, 242, 160, 0));
+    box-shadow: 0 0 18px rgba(46, 242, 160, 0.6);
+    pointer-events: none;
+}
+
+/* Secondary scan line under top edge */
+#warp-route::after {
+    content: '';
+    position: absolute;
+    left: 22%; right: 22%;
+    top: 8px;
+    height: 1px;
+    background: linear-gradient(90deg,
+        rgba(46, 242, 160, 0),
+        rgba(46, 242, 160, 0.35),
+        rgba(46, 242, 160, 0));
+    pointer-events: none;
+}
+
+/* ---------- Route stops (centre 5 columns) ---------- */
+
+#warp-route > li.warp-stop {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 12px;
+}
+
+#warp-route > li.warp-stop:nth-child(1) { grid-column: 2; }
+#warp-route > li.warp-stop:nth-child(2) { grid-column: 3; }
+#warp-route > li.warp-stop:nth-child(3) { grid-column: 4; }
+#warp-route > li.warp-stop:nth-child(4) { grid-column: 5; }
+#warp-route > li.warp-stop:nth-child(5) { grid-column: 6; }
+
+/* Rail under stops, drawn from the OL itself with a positioned pseudo so
+   it spans the full centre track. Anchored to stop 1's top. */
+#warp-route > li.warp-stop:nth-child(1)::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: calc(400% + 72px);
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg,
+        rgba(46, 242, 160, 0.08),
+        rgba(46, 242, 160, 0.22) 50%,
+        rgba(46, 242, 160, 0.08));
+    z-index: 0;
+    pointer-events: none;
+}
+
+#warp-route:has(.warp-stop:nth-child(1).is-active) { --cp-progress: 0; }
+#warp-route:has(.warp-stop:nth-child(2).is-active) { --cp-progress: 0.25; }
+#warp-route:has(.warp-stop:nth-child(3).is-active) { --cp-progress: 0.5; }
+#warp-route:has(.warp-stop:nth-child(4).is-active) { --cp-progress: 0.75; }
+#warp-route:has(.warp-stop:nth-child(5).is-active) { --cp-progress: 1; }
+
+#warp-route > li.warp-stop:nth-child(1)::after {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: calc((400% + 72px) * var(--cp-progress, 0));
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg,
+        rgba(46, 242, 160, 0.9),
+        rgba(232, 255, 246, 1));
+    box-shadow: 0 0 10px rgba(46, 242, 160, 0.7);
+    transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.warp-stop-dot {
+    position: relative;
+    z-index: 2;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1.5px solid rgba(46, 242, 160, 0.55);
+    box-shadow: 0 0 0 3px rgba(2, 8, 18, 0.96);
+    transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.4s ease,
+        width 0.3s ease,
+        height 0.3s ease;
+}
+
+.warp-stop-label {
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--cp-text-dim);
+    white-space: nowrap;
+    transition:
+        color 0.3s ease,
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        text-shadow 0.3s ease;
+}
+
+.warp-stop.is-past .warp-stop-dot {
+    background: rgba(46, 242, 160, 0.78);
+    border-color: rgba(46, 242, 160, 0.95);
+    box-shadow:
+        0 0 0 3px rgba(2, 8, 18, 0.96),
+        0 0 8px rgba(46, 242, 160, 0.45);
+}
+.warp-stop.is-past .warp-stop-label { color: rgba(46, 242, 160, 0.78); }
+
+.warp-stop.is-active .warp-stop-dot {
+    width: 18px;
+    height: 18px;
+    background: var(--cp-mint);
+    border-color: #E8FFF6;
+    transform: translateY(-3px);
+    box-shadow:
+        0 0 0 3px rgba(2, 8, 18, 0.96),
+        0 0 0 6px rgba(46, 242, 160, 0.28),
+        0 0 22px rgba(46, 242, 160, 0.85),
+        0 0 40px rgba(46, 242, 160, 0.5);
+    animation: cp-stop-pulse 1.6s ease-in-out infinite;
+}
+.warp-stop.is-active .warp-stop-label {
+    color: #ffffff;
+    transform: translateY(-1px) scale(1.05);
+    text-shadow:
+        0 0 12px rgba(46, 242, 160, 0.7),
+        0 0 22px rgba(46, 242, 160, 0.35);
+}
+
+@keyframes cp-stop-pulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0 3px rgba(2, 8, 18, 0.96),
+            0 0 0 6px rgba(46, 242, 160, 0.28),
+            0 0 22px rgba(46, 242, 160, 0.85),
+            0 0 40px rgba(46, 242, 160, 0.5);
+    }
+    50% {
+        box-shadow:
+            0 0 0 3px rgba(2, 8, 18, 0.96),
+            0 0 0 10px rgba(46, 242, 160, 0.14),
+            0 0 32px rgba(46, 242, 160, 1),
+            0 0 58px rgba(46, 242, 160, 0.65);
+    }
+}
+
+/* ============================================================
+   PILOT CARD — left dashboard column.
+   We repurpose the existing #hud-destination span (hidden by [hidden])
+   into a visible, decorative card. JS never writes to it during warp.
+   ============================================================ */
+
+#hud-destination {
+    display: block !important;
+    visibility: visible !important;
+    position: absolute;
+    left: var(--cp-strut-w);
+    bottom: 0;
+    width: 260px;
+    height: var(--cp-dash-h);
+    margin: 0;
+    padding: 26px 0 22px 32px;
+    z-index: 6;
+    pointer-events: none;
+
+    /* hide native text */
+    font-size: 0;
+    line-height: 0;
+    color: transparent;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+
+#hud-destination::before {
+    content: 'PILOT';
+    position: absolute;
+    top: 28px; left: 32px;
+    font: 600 0.6rem/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.42em;
+    color: var(--cp-text-dim);
+    text-indent: 0;
+}
+
+#hud-destination::after {
+    content: 'RB-01';
+    position: absolute;
+    top: 46px; left: 32px;
+    font: 800 1.55rem/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+    color: var(--cp-mint);
+    text-shadow: 0 0 14px rgba(46, 242, 160, 0.7);
+    text-indent: 0;
+}
+
+/* Second info row drawn as an inline SVG background */
+#hud-destination {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='52' viewBox='0 0 220 52'><style>.t{font:600 9px monospace;letter-spacing:2.6px;fill:rgba(244,250,255,0.55)}.v{font:700 10px monospace;letter-spacing:2.2px;fill:%232EF2A0}</style><text class='t' x='0' y='12'>CALLSIGN</text><text class='v' x='0' y='28'>ROBIN BRIL</text><text class='t' x='0' y='44'>STATUS</text></svg>");
+    background-repeat: no-repeat;
+    background-position: 32px 84px;
+    background-size: 220px 52px;
+}
+
+/* ============================================================
+   RIGHT BLOCK — velocity readout + drive status, anchored to
+   the right strut edge.
+   ============================================================ */
+
+#hud-velocity,
+#hud-status {
+    position: absolute;
+    right: var(--cp-strut-w);
+    z-index: 6;
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+    padding-right: 32px;
+    text-align: right;
+    pointer-events: none;
+}
+
+#hud-velocity {
+    bottom: 74px;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--cp-mint);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    text-shadow:
+        0 0 14px rgba(46, 242, 160, 0.6),
+        0 0 30px rgba(46, 242, 160, 0.28);
+}
+
+#hud-velocity::before {
+    content: 'VELOCITY';
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.42em;
+    color: var(--cp-text-dim);
+    text-shadow: none;
+}
+
+#hud-status {
+    bottom: 26px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(244, 250, 255, 0.72);
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5em;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+#hud-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cp-mint);
+    box-shadow: 0 0 8px var(--cp-mint);
+    animation: cp-blink-1 1.4s ease-in-out infinite;
+}
+
+/* ============================================================
+   WARNING BLINKERS — 3 dots near the dashboard centre-right edge.
+   Painted on #hud-velocity::after with three staggered animations
+   via a layered radial-gradient.
+   ============================================================ */
+
+#hud-velocity::after {
+    content: '';
+    position: absolute;
+    right: 32px;
+    bottom: -22px;
+    width: 80px;
+    height: 6px;
+    background:
+        radial-gradient(circle at 8px 3px, var(--cp-mint) 0 2.4px, transparent 3px),
+        radial-gradient(circle at 40px 3px, var(--cp-mint) 0 2.4px, transparent 3px),
+        radial-gradient(circle at 72px 3px, var(--cp-mint) 0 2.4px, transparent 3px);
+    filter: drop-shadow(0 0 4px rgba(46, 242, 160, 0.8));
+    animation: cp-blink-2 1.8s ease-in-out infinite;
+    opacity: 0.85;
+}
+
+@keyframes cp-blink-1 {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.35; }
+}
+
+@keyframes cp-blink-2 {
+    0%, 100% { opacity: 0.85; }
+    33%      { opacity: 0.35; }
+    66%      { opacity: 0.7; }
+}
+
+/* ============================================================
+   MOBILE — drop the struts, stack dashboard, shrink the pilot.
+   ============================================================ */
+
+@media (max-width: 768px) {
+    :root {
+        --cp-strut-w: 0px;
+        --cp-top-h:  52px;
+        --cp-dash-h: 200px;
+    }
+
+    .warp-hud {
+        background-size:
+            150px 138px,
+            0 0,
+            0 0,
+            0 0,
+            0 0;
+    }
+
+    #hud-big-destination {
+        font-size: clamp(22px, 6vw, 32px);
+        padding: 0 14px;
+    }
+    #hud-big-destination::before {
+        left: 14px;
+        font-size: 0.55rem;
+        letter-spacing: 0.32em;
+    }
+    #hud-big-destination::after { display: none; }
+
+    #warp-route {
+        left: 0;
+        right: 0;
+        padding: 16px 14px 18px;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        column-gap: 10px;
+        height: var(--cp-dash-h);
+        align-items: start;
+    }
+
+    #warp-route > li.warp-stop:nth-child(1) { grid-column: 1; }
+    #warp-route > li.warp-stop:nth-child(2) { grid-column: 2; }
+    #warp-route > li.warp-stop:nth-child(3) { grid-column: 3; }
+    #warp-route > li.warp-stop:nth-child(4) { grid-column: 4; }
+    #warp-route > li.warp-stop:nth-child(5) { grid-column: 5; }
+
+    /* Rail spans 5 cells now — recompute width relative to cell 1 */
+    #warp-route > li.warp-stop:nth-child(1)::before {
+        width: calc(400% + 40px);
+    }
+    #warp-route > li.warp-stop:nth-child(1)::after {
+        width: calc((400% + 40px) * var(--cp-progress, 0));
+    }
+
+    .warp-stop-label { font-size: 0.5rem; letter-spacing: 0.16em; }
+
+    #hud-destination {
+        left: 0;
+        width: 100%;
+        height: 36px;
+        padding: 6px 14px;
+        bottom: calc(var(--cp-dash-h) - 36px);
+    }
+    #hud-destination::before { top: 10px; left: 14px; }
+    #hud-destination::after  { top: 6px;  left: 90px; font-size: 0.95rem; }
+    #hud-destination {
+        background-position: 14px 24px;
+        background-size: 180px 18px;
+    }
+
+    #hud-velocity {
+        right: 14px;
+        bottom: 56px;
+        padding-right: 0;
+        font-size: 1.4rem;
+    }
+    #hud-velocity::before { letter-spacing: 0.3em; }
+    #hud-velocity::after  { display: none; }
+
+    #hud-status {
+        right: 14px;
+        bottom: 22px;
+        padding-right: 0;
+        font-size: 0.55rem;
+        letter-spacing: 0.22em;
+    }
+}
+
+/* ============================================================
+   REDUCED MOTION — cancel bobs, pulses, blinks, transitions.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .warp-hud { animation: none; }
+    .warp-stop.is-active .warp-stop-dot { animation: none; }
+    #hud-status::before { animation: none; }
+    #hud-velocity::after { animation: none; }
+    #warp-route > li.warp-stop:nth-child(1)::after { transition: none; }
+}

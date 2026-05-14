@@ -1,0 +1,367 @@
+/* =========================================================
+   11 — Accessibility (WCAG 2.2 AA)
+   Layer: enhancement (load LAST, after style.css + ai-styles + apple-premium)
+   Scope: focus-visible, sr-only, skip-link, focus-within, contrast,
+          forced-colors, reduced-motion guards. No layout changes.
+   ========================================================= */
+
+:root {
+    --a11y-ring: 3px;
+    --a11y-ring-offset: 2px;
+    --a11y-ring-color: #5eead4;            /* mint */
+    --a11y-ring-color-strong: #2dd4bf;     /* mint for high-contrast */
+    --a11y-ring-shadow: 0 0 0 6px rgba(94, 234, 212, 0.18);
+    --a11y-skip-bg: rgba(10, 14, 20, 0.96);
+    --a11y-skip-fg: #f1f5f9;
+    --a11y-skip-border: rgba(94, 234, 212, 0.45);
+}
+
+/* ---------------------------------------------------------
+   1. Focus-visible ring — strong, consistent, 3px mint
+   Overrides the 2px outline in style.css for all interactive
+   elements. Inherits border-radius from the element.
+   --------------------------------------------------------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[role="button"]:focus-visible,
+[role="link"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="menuitem"]:focus-visible,
+[tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: var(--a11y-ring) solid var(--a11y-ring-color);
+    outline-offset: var(--a11y-ring-offset);
+    box-shadow: var(--a11y-ring-shadow);
+    border-radius: inherit;
+    transition: outline-color 120ms ease, box-shadow 120ms ease;
+}
+
+/* Cards keep their corner radius */
+.ai-project-card:focus-visible,
+.featured-project:focus-visible,
+.timeline-content:focus-visible,
+.cert-item:focus-visible,
+.quote-box:focus-visible {
+    outline: var(--a11y-ring) solid var(--a11y-ring-color);
+    outline-offset: var(--a11y-ring-offset);
+    border-radius: 16px;
+    box-shadow: var(--a11y-ring-shadow);
+}
+
+/* Filter buttons and chips: pill radius */
+.filter-btn:focus-visible,
+.terminal-chip:focus-visible,
+.show-more-btn:focus-visible {
+    border-radius: 999px;
+}
+
+/* Form fields: ring stays tight to the rounded input */
+.ai-form input:focus-visible,
+.ai-form textarea:focus-visible,
+.terminal-input:focus-visible {
+    outline: var(--a11y-ring) solid var(--a11y-ring-color);
+    outline-offset: var(--a11y-ring-offset);
+    box-shadow: var(--a11y-ring-shadow);
+    border-radius: 8px;
+}
+
+/* Suppress sticky focus rings after pointer click on cards */
+.ai-project-card:focus:not(:focus-visible),
+.featured-project:focus:not(:focus-visible),
+.cert-item:focus:not(:focus-visible),
+.timeline-content:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+/* ---------------------------------------------------------
+   2. .sr-only — visually hidden, available to screenreaders
+   Use for icon-only buttons/links: <span class="sr-only">Label</span>
+   --------------------------------------------------------- */
+.sr-only,
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* sr-only-focusable: reveal when focused (for skip-links etc.) */
+.sr-only-focusable:focus,
+.sr-only-focusable:focus-visible,
+.sr-only:focus,
+.sr-only:focus-visible {
+    position: fixed !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0.75rem 1.25rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    clip-path: none !important;
+    white-space: normal !important;
+}
+
+/* ---------------------------------------------------------
+   3. Skip-link — hidden by default, slides in on focus
+   HTML: <a href="#home" class="skip-link">Spring naar inhoud</a>
+   Must be the first focusable element inside <body>.
+   --------------------------------------------------------- */
+.skip-link {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -120%);
+    z-index: 99999;
+    padding: 0.85rem 1.4rem;
+    font: 600 0.95rem/1 "Inter", system-ui, sans-serif;
+    color: var(--a11y-skip-fg);
+    background: var(--a11y-skip-bg);
+    border: 1px solid var(--a11y-skip-border);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+    transform: translate(-50%, 0);
+    outline: var(--a11y-ring) solid var(--a11y-ring-color);
+    outline-offset: var(--a11y-ring-offset);
+    box-shadow: var(--a11y-ring-shadow), 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------------------------------------------------------
+   4. Focus-within on cards — keyboard nav reveals card affordance
+   Mirrors hover state when an interactive descendant has focus.
+   --------------------------------------------------------- */
+.ai-project-card:focus-within,
+.featured-project:focus-within,
+.cert-item:focus-within,
+.quote-box:focus-within,
+.timeline-content:focus-within {
+    border-color: rgba(94, 234, 212, 0.35);
+}
+
+.contact-card:focus-within {
+    border-color: rgba(94, 234, 212, 0.28);
+}
+
+/* Form group highlights its label when input has focus */
+.form-group:focus-within label {
+    color: var(--a11y-ring-color);
+}
+
+/* ---------------------------------------------------------
+   5. High-contrast preference — increase borders, text contrast
+   --------------------------------------------------------- */
+@media (prefers-contrast: more) {
+    :root {
+        --a11y-ring-color: var(--a11y-ring-color-strong);
+        --a11y-ring-shadow: 0 0 0 6px rgba(45, 212, 191, 0.32);
+    }
+
+    body,
+    p,
+    li,
+    .hero-subtitle,
+    .role-description,
+    .quote-text {
+        color: #f5f7fa;
+    }
+
+    .ai-project-card,
+    .featured-project,
+    .timeline-content,
+    .cert-item,
+    .quote-box,
+    .contact-card,
+    .skill-category,
+    .terminal-window {
+        border-color: rgba(255, 255, 255, 0.55) !important;
+    }
+
+    .filter-btn,
+    .terminal-chip,
+    .show-more-btn,
+    .btn-primary,
+    .btn-secondary,
+    .cta-primary-btn,
+    .cv-download-btn,
+    .secondary-link {
+        border-color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    .ai-form input,
+    .ai-form textarea,
+    .terminal-input {
+        border-color: rgba(255, 255, 255, 0.65) !important;
+        color: #fff !important;
+    }
+
+    a {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+}
+
+/* ---------------------------------------------------------
+   6. Forced-colors (Windows High Contrast) — use system tokens
+   Disables gradients/backgrounds, relies on OS theme.
+   --------------------------------------------------------- */
+@media (forced-colors: active) {
+    *,
+    *::before,
+    *::after {
+        forced-color-adjust: auto;
+    }
+
+    .ai-project-card,
+    .featured-project,
+    .timeline-content,
+    .cert-item,
+    .quote-box,
+    .contact-card,
+    .skill-category,
+    .terminal-window,
+    .glow-card {
+        background: Canvas !important;
+        color: CanvasText !important;
+        border: 1px solid CanvasText !important;
+        box-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        color: LinkText !important;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    [tabindex]:not([tabindex="-1"]):focus-visible {
+        outline: 3px solid Highlight !important;
+        outline-offset: 2px;
+        box-shadow: none !important;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .filter-btn,
+    .show-more-btn,
+    .cta-primary-btn,
+    .cv-download-btn,
+    .terminal-chip,
+    button {
+        background: ButtonFace !important;
+        color: ButtonText !important;
+        border: 1px solid ButtonText !important;
+    }
+
+    .filter-btn.active,
+    .terminal-chip[aria-pressed="true"] {
+        background: Highlight !important;
+        color: HighlightText !important;
+    }
+
+    .skip-link {
+        background: Canvas !important;
+        color: CanvasText !important;
+        border: 2px solid CanvasText !important;
+    }
+
+    /* Decorative layers off in forced-colors */
+    .hero-deco,
+    .hero-orb,
+    .cursor-glow,
+    .warp-hud,
+    #warp-canvas,
+    .modal-bg-animation,
+    .ai-orb {
+        display: none !important;
+    }
+}
+
+/* ---------------------------------------------------------
+   7. Reduced-motion guard — covers enhancement-layer animations
+   style.css already handles most; this is safety for additions.
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .skip-link {
+        transition: none !important;
+    }
+
+    .hero-video,
+    #warp-canvas,
+    .ai-pulse,
+    .status-dot,
+    .hero-pulse {
+        animation: none !important;
+    }
+
+    .cursor-glow {
+        display: none !important;
+    }
+}
+
+/* ---------------------------------------------------------
+   8. Color-only state hints — add non-color cues
+   Status dots and active filter rely on color only. Reinforce
+   with a ring/underline so colorblind users get the signal too.
+   --------------------------------------------------------- */
+.filter-btn.active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+}
+
+.card-status--live .status-dot,
+.card-status--restricted .status-dot {
+    outline: 1px solid currentColor;
+    outline-offset: 1px;
+}
+
+/* ---------------------------------------------------------
+   9. Minimum target size (WCAG 2.2 — 2.5.8, 24x24 CSS px min)
+   Bring tight icon buttons up to spec without resizing the
+   visible glyph.
+   --------------------------------------------------------- */
+.theme-toggle-btn,
+.mobile-menu-btn,
+.modal-close,
+.terminal-submit,
+.source-link {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------------------------------------------------------
+   10. Link underline policy — always underline inline links in
+   prose. Nav/CTA/cards opt out via :not() guards.
+   --------------------------------------------------------- */
+.about-text a,
+.role-description a,
+.quote-text a,
+p a:not(.btn-primary):not(.btn-secondary):not(.cta-primary-btn):not(.cv-download-btn):not(.secondary-link):not(.logo) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+}

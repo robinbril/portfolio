@@ -1,0 +1,108 @@
+/* ============================================================================
+   12-perf.css — performance layer
+   Drop-in, additive only. No selector overrides beyond perf hints.
+   Load LAST so contain/content-visibility apply after layout rules.
+============================================================================ */
+
+/* ---------- 1. Below-the-fold sections: skip rendering when offscreen ----
+   content-visibility:auto lets the browser skip layout/paint for offscreen
+   sections. contain-intrinsic-size reserves space so the scrollbar and
+   anchor scroll positions stay stable.
+
+   NOT applied to #home (hero, above the fold) or #contact (form interactive,
+   keep it always rendered to avoid focus jank).
+------------------------------------------------------------------------- */
+#about,
+#projects,
+#experience,
+#skills,
+#education,
+#certifications {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1200px;
+}
+
+/* ---------- 2. Card containment: isolate layout/paint per card -------- */
+.featured-project,
+.ai-project-card,
+.quote-card,
+.timeline-item,
+.skill-card {
+    contain: layout style paint;
+}
+
+/* ---------- 3. will-change only during interaction --------------------- */
+/* Default off: will-change forever bloats GPU memory.                    */
+.featured-project,
+.ai-project-card {
+    will-change: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .featured-project:hover,
+    .featured-project:focus-within,
+    .ai-project-card:hover,
+    .ai-project-card:focus-within {
+        will-change: transform;
+    }
+}
+
+/* ---------- 4. Hero video: hint compositor it will animate ------------- */
+.hero-video {
+    transform: translateZ(0);
+    will-change: auto;
+}
+
+/* ---------- 5. Mobile: kill backdrop-filter (drops frames on low-end) -- */
+@media (max-width: 480px) {
+    .glass,
+    .nav,
+    .nav-container,
+    .modal-content,
+    .quote-source,
+    .ai-portfolio-section .filter-bar,
+    .warp-hud,
+    .warp-stage,
+    .warp-bottom {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: rgba(11, 13, 17, 0.92) !important;
+    }
+}
+
+/* ---------- 6. Reduced motion: cancel heavy filters and animations ----- */
+@media (prefers-reduced-motion: reduce) {
+    .hero-orb,
+    .hero-orb--solo,
+    .ai-orb,
+    .cursor-glow {
+        filter: none !important;
+        animation: none !important;
+        opacity: 0.3;
+    }
+
+    .hero-video {
+        display: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* ---------- 7. Print: drop everything decorative ----------------------- */
+@media print {
+    .preloader,
+    .cursor-glow,
+    .warp-hud,
+    #warp-canvas,
+    .hero-video,
+    .hero-deco,
+    .xray-hint {
+        display: none !important;
+    }
+}

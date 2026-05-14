@@ -151,6 +151,33 @@ body.light-theme::after {
     -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
 }
 
+@media (max-width: 768px) {
+    html,
+    body {
+        background: var(--bg-color) !important;
+    }
+
+    body::before,
+    body::after {
+        content: none !important;
+        display: none !important;
+        background: none !important;
+    }
+
+    body.theme-switching,
+    body.theme-switching * {
+        transition: none !important;
+    }
+
+    body.light-theme .section,
+    body.light-theme .about-content,
+    body.light-theme .about-text,
+    body.light-theme .stats-grid,
+    body.light-theme .stat-item {
+        background: transparent !important;
+    }
+}
+
 /* Typography */
 h1,
 h2,
