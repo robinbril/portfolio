@@ -39,8 +39,19 @@
     position: fixed;
     inset: 0;
     pointer-events: none;
-    z-index: 40;          /* above #warp-canvas (~30), below site nav (~100) */
+    z-index: 40;
     overflow: hidden;
+    /* GATING: cockpit alleen zichtbaar tijdens warp (body.xray actief).
+       Zonder gating staat de hele cockpit-frame over de site heen geplakt
+       en zie je geen hero/about/projecten content meer. */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+body.xray .warp-hud {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Neutralise legacy panel markup if it ever renders alongside the new frame. */
