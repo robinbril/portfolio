@@ -94,39 +94,50 @@
    baby-blue palette + bestaande styles in style.css blijven leidend. */
 
 /* ============================================================
-   Hero stat labels - sleeker, niet uppercase + grijs.
-   Robin: 'die tekst in het grijs is meh'.
+   Hero stat labels - clean wit ipv grijs.
+   Robin: 'dat grijs is niet mooi'.
    ============================================================ */
 .hero-stat span,
 .hero-stat-label {
     font-family: 'Inter', system-ui, sans-serif !important;
-    font-size: 0.78rem !important;
-    color: rgba(255, 255, 255, 0.55) !important;
+    font-size: 0.8rem !important;
+    color: rgba(255, 255, 255, 0.88) !important;
     text-transform: none !important;
-    letter-spacing: 0.01em !important;
-    font-weight: 400 !important;
-    margin-top: 0.4rem !important;
+    letter-spacing: 0.005em !important;
+    font-weight: 500 !important;
+    margin-top: 0.5rem !important;
 }
 
 .hero-stat strong {
     font-family: 'Inter', system-ui, sans-serif !important;
-    font-size: 2.25rem !important;
+    font-size: 2.5rem !important;
     font-weight: 800 !important;
-    letter-spacing: -0.03em !important;
+    letter-spacing: -0.04em !important;
     line-height: 1 !important;
     color: #5BD9A1 !important;
 }
 
+/* Hero subtitle - lichter wit ipv grijs */
+.hero-subtitle,
+.hero p {
+    color: rgba(255, 255, 255, 0.82) !important;
+}
+
 body.light-theme .hero-stat span,
 body.light-theme .hero-stat-label {
-    color: rgba(15, 23, 42, 0.55) !important;
+    color: rgba(15, 23, 42, 0.78) !important;
+}
+
+body.light-theme .hero-subtitle,
+body.light-theme .hero p {
+    color: rgba(15, 23, 42, 0.78) !important;
 }
 
 @media (max-width: 768px) {
     .hero-stat strong {
-        font-size: 1.65rem !important;
+        font-size: 1.85rem !important;
     }
     .hero-stat span {
-        font-size: 0.7rem !important;
+        font-size: 0.72rem !important;
     }
 }
