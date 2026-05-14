@@ -722,20 +722,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const NAV_HEIGHT = 80;
 
-    const scrollToContact = () => {
-        const target = document.getElementById('contact');
+    // Roulette destinations in chronological page order
+    const DESTINATIONS = [
+        { id: 'about',      label: 'OVER MIJ' },
+        { id: 'projects',   label: 'PROJECTEN' },
+        { id: 'experience', label: 'ERVARING' },
+        { id: 'skills',     label: 'SKILLS' },
+        { id: 'contact',    label: 'CONTACT' }
+    ];
+    const CYCLE_MS = 900;
+    const FADE_MS = 180;
+
+    let cycleTimer = null;
+    let currentDestIdx = 0;
+
+    const scrollToSection = (id) => {
+        const target = document.getElementById(id);
         if (!target) return;
         const y = target.getBoundingClientRect().top + window.pageYOffset - NAV_HEIGHT - 16;
         window.scrollTo({ top: y, behavior: 'smooth' });
+    };
+
+    const showDestination = (idx, instant) => {
+        const dest = DESTINATIONS[idx];
+        const big = document.getElementById('hud-big-destination');
+        const small = document.getElementById('hud-destination');
+        if (small) small.textContent = dest.label;
+        if (!big) return;
+        const setLabel = () => {
+            big.textContent = dest.label;
+            big.setAttribute('opacity', '0.95');
+        };
+        if (instant) {
+            setLabel();
+        } else {
+            big.setAttribute('opacity', '0');
+            setTimeout(setLabel, FADE_MS);
+        }
+    };
+
+    const startCycle = () => {
+        currentDestIdx = 0;
+        showDestination(currentDestIdx, true);
+        clearInterval(cycleTimer);
+        cycleTimer = setInterval(() => {
+            currentDestIdx = (currentDestIdx + 1) % DESTINATIONS.length;
+            showDestination(currentDestIdx, false);
+        }, CYCLE_MS);
+    };
+
+    const stopCycle = () => {
+        clearInterval(cycleTimer);
+        cycleTimer = null;
+    };
+
+    const hideBigDest = () => {
+        const big = document.getElementById('hud-big-destination');
+        if (big) big.setAttribute('opacity', '0');
     };
 
     const activate = () => {
         if (warpActive) return;
         warpActive = true;
         document.body.classList.add('xray');
-
-        const hudDest = document.getElementById('hud-destination');
-        if (hudDest) hudDest.textContent = 'CONTACT';
 
         speed = 8;
         seedStars();
@@ -744,20 +793,23 @@ document.addEventListener('DOMContentLoaded', () => {
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(tick);
 
-        clearTimeout(scanTimer);
-        scanTimer = setTimeout(() => {
-            if (!warpActive) return;
-            scrollToContact();
-            if (hudStatus) hudStatus.textContent = 'ARRIVAL: CONTACT';
-        }, 1200);
+        startCycle();
     };
 
     const deactivate = () => {
-        clearTimeout(scanTimer);
         if (!warpActive) return;
         warpActive = false;
+
+        const dest = DESTINATIONS[currentDestIdx];
+        stopCycle();
+        hideBigDest();
+
         document.body.classList.remove('xray');
         cancelAnimationFrame(raf);
+
+        if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + dest.label;
+        scrollToSection(dest.id);
+
         // Quick black fade so the canvas exits cleanly
         let n = 0;
         const decay = () => {

@@ -233,19 +233,15 @@
             <path d="M 0,900 L 0,660 C 360,830 1240,830 1600,660 L 1600,900 Z" fill="url(#hullSheen)" />
             <path d="M 0,660 C 360,830 1240,830 1600,660" stroke="rgba(46,242,160,0.28)" stroke-width="1.2" fill="none" />
 
-            <!-- Subtle glass micro-grid -->
-            <g opacity="0.025" stroke="#2EF2A0" stroke-width="0.5">
-                <line x1="400" y1="0" x2="400" y2="900" /><line x1="600" y1="0" x2="600" y2="900" />
-                <line x1="800" y1="0" x2="800" y2="900" /><line x1="1000" y1="0" x2="1000" y2="900" />
-                <line x1="1200" y1="0" x2="1200" y2="900" />
-                <line x1="0" y1="225" x2="1600" y2="225" /><line x1="0" y1="450" x2="1600" y2="450" />
-                <line x1="0" y1="675" x2="1600" y2="675" />
-            </g>
-
-            <!-- Subtle crosshair, minimal -->
-            <g stroke="rgba(46,242,160,0.25)" stroke-width="1" fill="none">
-                <circle cx="800" cy="415" r="22" opacity="0.5" />
-                <circle cx="800" cy="415" r="1.5" fill="rgba(232,255,246,0.85)" stroke="none" />
+            <!-- Big roulette destination text — cycles while warping -->
+            <g text-anchor="middle" font-family="JetBrains Mono, monospace">
+                <text id="hud-big-destination" x="800" y="440"
+                    font-size="78" font-weight="800"
+                    fill="#E8FFF6" opacity="0">DESTINATION</text>
+                <text id="hud-big-hint" x="800" y="490"
+                    font-size="13" font-weight="600"
+                    fill="#2EF2A0" opacity="0.55"
+                    letter-spacing="0.35em">RELEASE TO LAND</text>
             </g>
 
             <!-- Rivets -->
@@ -328,17 +324,9 @@
                 <source src="hero-bg.mp4" type="video/mp4">
             </video>
 
-            <!-- Animated decorative layer: grid + floating dots -->
+            <!-- Subtle decorative layer: one soft orb only -->
             <div class="hero-deco" aria-hidden="true">
-                <div class="hero-grid"></div>
-                <div class="hero-orb hero-orb--1"></div>
-                <div class="hero-orb hero-orb--2"></div>
-                <div class="hero-orb hero-orb--3"></div>
-                <svg class="hero-rings" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="300" cy="300" r="120" fill="none" stroke="rgba(46,242,160,0.12)" stroke-width="0.8"/>
-                    <circle cx="300" cy="300" r="200" fill="none" stroke="rgba(46,242,160,0.08)" stroke-width="0.6"/>
-                    <circle cx="300" cy="300" r="280" fill="none" stroke="rgba(46,242,160,0.04)" stroke-width="0.5"/>
-                </svg>
+                <div class="hero-orb hero-orb--solo"></div>
             </div>
 
             <div class="hero-content">
@@ -381,10 +369,6 @@
                 </div>
             </div>
 
-            <a href="#about" class="hero-scroll-cue" aria-label="Scroll naar verder">
-                <span class="hero-scroll-line"></span>
-                <span class="hero-scroll-label">SCROLL</span>
-            </a>
         </section>
 
         <!-- About Section -->

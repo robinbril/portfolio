@@ -1544,7 +1544,7 @@ body.xray::before {
 }
 
 body.xray::after {
-    content: "WARP ENGAGED  —  release SPACE";
+    content: "RELEASE SPACE TO LAND AT YOUR DESTINATION";
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -5683,4 +5683,52 @@ body.light-theme .card-diagram svg rect[stroke*="46,242,160"] {
     .hero-stat span {
         font-size: 0.55rem;
     }
+}
+
+/* ==========================================
+   HERO CALM-DOWN — remove busy decoration
+   Replaces hero-rings + 3 orbs + grid + scroll cue
+   ========================================== */
+.hero-grid,
+.hero-rings,
+.hero-orb--1,
+.hero-orb--2,
+.hero-orb--3,
+.hero-scroll-cue {
+    display: none !important;
+}
+
+.hero-orb--solo {
+    position: absolute;
+    width: 560px;
+    height: 560px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(46, 242, 160, 0.16), transparent 65%);
+    filter: blur(40px);
+    opacity: 0.55;
+    pointer-events: none;
+    will-change: opacity;
+    animation: hero-orb-solo-breathe 8s ease-in-out infinite;
+}
+
+@keyframes hero-orb-solo-breathe {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 0.7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-orb--solo { animation: none; }
+}
+
+/* ==========================================
+   WARP ROULETTE BIG DESTINATION TEXT
+   ========================================== */
+#hud-big-destination,
+#hud-big-hint {
+    transition: opacity 0.18s ease-out;
+    text-shadow:
+        0 0 24px rgba(46, 242, 160, 0.45),
+        0 0 8px rgba(232, 255, 246, 0.6);
 }
