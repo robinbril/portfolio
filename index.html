@@ -481,46 +481,54 @@
                             Hive AI-platform, met toepassingen in sales, logistiek, een AI-gedreven
                             kennisbank voor de juridische afdeling en voice-driven knowledge search.</p>
                     </div>
-                    <!-- Architecture diagram: 4 agents fed by MCP servers, deployed on AKS -->
+                    <!-- Architecture diagram: agents <- Hive -> MCP servers -->
                     <div class="card-diagram" aria-hidden="true">
-                        <svg viewBox="0 0 320 110" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 320 134" xmlns="http://www.w3.org/2000/svg">
                             <defs>
-                                <linearGradient id="dia-flow" x1="0" y1="0" x2="1" y2="0">
-                                    <stop offset="0%" stop-color="rgba(46,242,160,0.5)"/>
-                                    <stop offset="100%" stop-color="rgba(46,242,160,0.05)"/>
+                                <linearGradient id="dia-flow-l" x1="1" y1="0" x2="0" y2="0">
+                                    <stop offset="0%" stop-color="rgba(46,242,160,0.55)"/>
+                                    <stop offset="100%" stop-color="rgba(46,242,160,0.08)"/>
+                                </linearGradient>
+                                <linearGradient id="dia-flow-r" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0%" stop-color="rgba(46,242,160,0.55)"/>
+                                    <stop offset="100%" stop-color="rgba(46,242,160,0.08)"/>
                                 </linearGradient>
                             </defs>
+
                             <!-- Connection lines: hub to spokes -->
-                            <g stroke="url(#dia-flow)" stroke-width="1" fill="none">
-                                <path d="M 160 55 L 40 22"/>
-                                <path d="M 160 55 L 40 55"/>
-                                <path d="M 160 55 L 40 88"/>
-                                <path d="M 160 55 L 280 22"/>
-                                <path d="M 160 55 L 280 55"/>
-                                <path d="M 160 55 L 280 88"/>
+                            <g stroke-width="1" fill="none">
+                                <path d="M 160 58 L 90 22" stroke="url(#dia-flow-l)"/>
+                                <path d="M 160 58 L 90 58" stroke="url(#dia-flow-l)"/>
+                                <path d="M 160 58 L 90 94" stroke="url(#dia-flow-l)"/>
+                                <path d="M 160 58 L 230 22" stroke="url(#dia-flow-r)"/>
+                                <path d="M 160 58 L 230 58" stroke="url(#dia-flow-r)"/>
+                                <path d="M 160 58 L 230 94" stroke="url(#dia-flow-r)"/>
                             </g>
-                            <!-- Spoke nodes left (agents) -->
+
+                            <!-- Left column: agents -->
                             <g>
-                                <rect x="10" y="14" width="60" height="16" rx="3" fill="rgba(46,242,160,0.1)" stroke="rgba(46,242,160,0.4)"/>
-                                <text x="40" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0">SALES</text>
-                                <rect x="10" y="47" width="60" height="16" rx="3" fill="rgba(46,242,160,0.1)" stroke="rgba(46,242,160,0.4)"/>
-                                <text x="40" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0">LOGISTICS</text>
-                                <rect x="10" y="80" width="60" height="16" rx="3" fill="rgba(46,242,160,0.1)" stroke="rgba(46,242,160,0.4)"/>
-                                <text x="40" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0">LEGAL</text>
+                                <rect x="14" y="14" width="76" height="16" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.45)"/>
+                                <text x="52" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" fill="#2EF2A0">SALES</text>
+                                <rect x="14" y="50" width="76" height="16" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.45)"/>
+                                <text x="52" y="61" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" fill="#2EF2A0">LOGISTICS</text>
+                                <rect x="14" y="86" width="76" height="16" rx="3" fill="rgba(46,242,160,0.12)" stroke="rgba(46,242,160,0.45)"/>
+                                <text x="52" y="97" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" fill="#2EF2A0">LEGAL</text>
                             </g>
-                            <!-- Spoke nodes right (MCP / infra) -->
+
+                            <!-- Right column: MCP servers -->
                             <g>
-                                <rect x="250" y="14" width="60" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.28)"/>
-                                <text x="280" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.85">D365 MCP</text>
-                                <rect x="250" y="47" width="60" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.28)"/>
-                                <text x="280" y="58" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.85">GRAPH MCP</text>
-                                <rect x="250" y="80" width="60" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.28)"/>
-                                <text x="280" y="91" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.85">VOICE MCP</text>
+                                <rect x="230" y="14" width="76" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.3)"/>
+                                <text x="268" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.9">D365 MCP</text>
+                                <rect x="230" y="50" width="76" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.3)"/>
+                                <text x="268" y="61" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.9">GRAPH MCP</text>
+                                <rect x="230" y="86" width="76" height="16" rx="3" fill="rgba(46,242,160,0.06)" stroke="rgba(46,242,160,0.3)"/>
+                                <text x="268" y="97" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#2EF2A0" opacity="0.9">VOICE MCP</text>
                             </g>
-                            <!-- Central hub: Hive orchestrator -->
-                            <circle cx="160" cy="55" r="22" fill="rgba(46,242,160,0.15)" stroke="rgba(46,242,160,0.6)" stroke-width="1.2"/>
-                            <text x="160" y="53" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" font-weight="700" fill="#E8FFF6">HIVE</text>
-                            <text x="160" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6" fill="#2EF2A0" opacity="0.7">ORCHESTRATOR</text>
+
+                            <!-- Central hub: HIVE only (bigger circle, label below) -->
+                            <circle cx="160" cy="58" r="26" fill="rgba(46,242,160,0.16)" stroke="rgba(46,242,160,0.7)" stroke-width="1.4"/>
+                            <text x="160" y="62" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" font-weight="800" fill="#E8FFF6">HIVE</text>
+                            <text x="160" y="124" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="6.5" font-weight="600" fill="#2EF2A0" opacity="0.55" letter-spacing="0.2em">ORCHESTRATOR</text>
                         </svg>
                     </div>
                     <div class="secure-rail">
