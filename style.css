@@ -5864,17 +5864,19 @@ body.light-theme .hero-orb--solo {
    HERO LESS NEON — softer saturation
    ========================================== */
 
-/* H1 ends in softer mint instead of full saturation */
-.hero h1 {
+/* H1 ends in softer mint instead of full saturation (DARK THEME ONLY) */
+body.dark-theme .hero h1,
+body:not(.light-theme) .hero h1 {
     background: linear-gradient(
         180deg,
         #ffffff 0%,
         #E8FFF6 55%,
         #7FEDC3 100%
-    ) !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 }
 
 /* CTA primary button: softer mint to muted indigo, less arcade */
