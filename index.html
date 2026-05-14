@@ -80,7 +80,21 @@
     <link rel="stylesheet" href="enhancements/cockpit-destination.css">
     <link rel="stylesheet" href="enhancements/cockpit-pitstops.css">
     <link rel="stylesheet" href="enhancements/cockpit-ambient.css">
-    <link rel="stylesheet" href="enhancements/cockpit-motion.css">
+    <!-- cockpit-motion.css disabled - animatie kan visibility blokkeren bij sommige browsers -->
+    <!-- <link rel="stylesheet" href="enhancements/cockpit-motion.css"> -->
+
+    <style>
+        /* Force cockpit visibility - debug hardening */
+        body.xray .cockpit-canopy,
+        body.xray .cockpit-ambient {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        body.xray .cockpit-canopy > *,
+        body.xray .cockpit-ambient > * {
+            opacity: 1 !important;
+        }
+    </style>
 
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -376,12 +390,11 @@
         <!-- AI Tools Portfolio Section -->
         <section id="projects" class="section ai-portfolio-section">
             <div class="section-header contact-header">
-                <h2 class="terminal-heading" aria-label="What I build">
-                    <span class="terminal-prompt">&gt;</span><span class="terminal-typed">what_i_build</span><span class="terminal-caret" aria-hidden="true"></span>
+                <h2 class="typing-heading" aria-label="What I Build">
+                    <span class="typing-text">What I Build</span><span class="typing-caret" aria-hidden="true"></span>
                 </h2>
             </div>
-            <p class="portfolio-subtitle">Agents, MCP-servers, automatiseringen en websites
-                — alles wat ik bouw, op één plek.</p>
+            <p class="portfolio-subtitle">Visualizing the architecture of high-impact AI systems.</p>
 
             <!-- Featured Projects -->
             <div class="featured-projects-grid">
