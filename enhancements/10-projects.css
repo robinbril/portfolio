@@ -284,12 +284,14 @@ body.light-theme .ai-project-card {
                 box-shadow 0.35s ease;
     display: flex !important;
     flex-direction: column;
-    align-self: start;
+    align-self: stretch;
+    height: 100%;
 }
 
-/* Tags onderaan zonder onnodige lege ruimte tussen description en tags */
+/* Tags pinned naar bottom via auto-margin zodat cards in rij gelijke
+   hoogte hebben (stretch) zonder visuele lege ruimte tussen text en tags. */
 .ai-project-card .project-tags {
-    margin-top: 1rem !important;
+    margin-top: auto !important;
 }
 
 .ai-project-card:hover {
