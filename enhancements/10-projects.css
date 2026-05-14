@@ -281,6 +281,14 @@ body.light-theme .ai-project-card {
     transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
                 border-color 0.35s ease,
                 box-shadow 0.35s ease;
+    display: flex !important;
+    flex-direction: column;
+    align-self: start;
+}
+
+/* Tags onderaan zonder onnodige lege ruimte tussen description en tags */
+.ai-project-card .project-tags {
+    margin-top: 1rem !important;
 }
 
 .ai-project-card:hover {
