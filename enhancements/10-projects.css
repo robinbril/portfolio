@@ -3,6 +3,19 @@
    Non-destructive overlay. Load AFTER style.css. Bewerkt geen bestaande regels.
    ========================================================================= */
 
+/* Forceer dat verborgen cards (legacy pagination + filter) GEEN ruimte pakken.
+   Gaf grote lege gaten in projects sectie tussen laatste zichtbare card en
+   de Werkervaring sectie. */
+.ai-project-card.hidden,
+.ai-project-card.is-filtered-out {
+    display: none !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    opacity: 0 !important;
+}
+
 /* ---------- Filter bar: dark glass pill container ---------- */
 .project-filters {
     position: relative;
