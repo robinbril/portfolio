@@ -723,7 +723,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
 
     const NAV_HEIGHT = 80;
-    const WARP_DESTINATION = { id: 'contact', label: 'CONTACT' };
+
+    // Bus-route stops in chronological page order
+    const STOPS = [
+        { id: 'about',      label: 'OVER MIJ' },
+        { id: 'projects',   label: 'PROJECTEN' },
+        { id: 'experience', label: 'ERVARING' },
+        { id: 'skills',     label: 'SKILLS' },
+        { id: 'contact',    label: 'CONTACT' }
+    ];
+    const STOP_MS = 1100;
+    const FADE_MS = 180;
+    let stopTimer = null;
+    let stopIdx = 0;
+
+    const renderStop = (idx, instant) => {
+        const stops = document.querySelectorAll('.warp-stop');
+        stops.forEach((el, i) => {
+            el.classList.remove('is-active', 'is-past');
+            if (i < idx) el.classList.add('is-past');
+            if (i === idx) el.classList.add('is-active');
+        });
+        const big = document.getElementById('hud-big-destination');
+        if (!big) return;
+        const paint = () => {
+            big.textContent = STOPS[idx].label;
+            big.style.opacity = '1';
+        };
+        if (instant) {
+            paint();
+        } else {
+            big.style.opacity = '0';
+            setTimeout(paint, FADE_MS);
+        }
+    };
 
     const scrollToSection = (id) => {
         const target = document.getElementById(id);
@@ -744,17 +777,28 @@ document.addEventListener('DOMContentLoaded', () => {
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(tick);
 
+        stopIdx = 0;
+        renderStop(0, true);
+        clearInterval(stopTimer);
+        stopTimer = setInterval(() => {
+            stopIdx = (stopIdx + 1) % STOPS.length;
+            renderStop(stopIdx, false);
+        }, STOP_MS);
     };
 
     const deactivate = () => {
         if (!warpActive) return;
         warpActive = false;
 
+        const dest = STOPS[stopIdx];
+        clearInterval(stopTimer);
+        stopTimer = null;
+
         document.body.classList.remove('xray');
         cancelAnimationFrame(raf);
 
-        if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + WARP_DESTINATION.label;
-        scrollToSection(WARP_DESTINATION.id);
+        if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + dest.label;
+        scrollToSection(dest.id);
 
         // Quick black fade so the canvas exits cleanly
         let n = 0;

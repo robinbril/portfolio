@@ -5995,6 +5995,151 @@ body.xray .warp-hud {
     opacity: 1;
 }
 
+/* Central stage with eyebrow + big label + hint */
+.warp-stage {
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.warp-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.45em;
+    color: #2EF2A0;
+    opacity: 0.55;
+    margin-bottom: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Route — bus-stop timeline */
+.warp-route {
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding: 0 2rem;
+    margin: 0;
+    list-style: none;
+    width: min(900px, 80vw);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Track line connecting all stops */
+.warp-route::before {
+    content: '';
+    position: absolute;
+    top: 11px;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        rgba(46, 242, 160, 0) 0%,
+        rgba(46, 242, 160, 0.35) 12%,
+        rgba(46, 242, 160, 0.55) 50%,
+        rgba(46, 242, 160, 0.35) 88%,
+        rgba(46, 242, 160, 0) 100%);
+}
+
+.warp-stop {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    cursor: default;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.warp-stop-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(7, 17, 31, 0.95);
+    border: 1.5px solid rgba(46, 242, 160, 0.4);
+    margin-top: 4px;
+    transition:
+        width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.4s ease;
+}
+
+.warp-stop-label {
+    margin-top: 0.85rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(232, 240, 250, 0.4);
+    transition: color 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+}
+
+/* Active stop — glowing, larger */
+.warp-stop.is-active .warp-stop-dot {
+    width: 22px;
+    height: 22px;
+    margin-top: 0;
+    background: #2EF2A0;
+    border-color: #E8FFF6;
+    box-shadow:
+        0 0 0 4px rgba(46, 242, 160, 0.18),
+        0 0 18px rgba(46, 242, 160, 0.6),
+        0 0 32px rgba(46, 242, 160, 0.35);
+    animation: warp-stop-pulse 1.6s ease-in-out infinite;
+}
+
+.warp-stop.is-active .warp-stop-label {
+    color: #E8FFF6;
+    transform: translateY(2px) scale(1.08);
+    text-shadow: 0 0 12px rgba(46, 242, 160, 0.4);
+}
+
+/* Stops that have already cycled past (lit history) */
+.warp-stop.is-past .warp-stop-dot {
+    background: rgba(46, 242, 160, 0.5);
+    border-color: rgba(46, 242, 160, 0.7);
+}
+
+.warp-stop.is-past .warp-stop-label {
+    color: rgba(46, 242, 160, 0.55);
+}
+
+@keyframes warp-stop-pulse {
+    0%, 100% {
+        box-shadow:
+            0 0 0 4px rgba(46, 242, 160, 0.18),
+            0 0 18px rgba(46, 242, 160, 0.6),
+            0 0 32px rgba(46, 242, 160, 0.35);
+    }
+    50% {
+        box-shadow:
+            0 0 0 8px rgba(46, 242, 160, 0.1),
+            0 0 26px rgba(46, 242, 160, 0.85),
+            0 0 48px rgba(46, 242, 160, 0.5);
+    }
+}
+
+@media (max-width: 700px) {
+    .warp-route {
+        bottom: 170px;
+        gap: 0;
+        padding: 0 0.5rem;
+    }
+    .warp-stop-label { font-size: 0.55rem; }
+    .warp-stop-dot { width: 10px; height: 10px; }
+    .warp-stop.is-active .warp-stop-dot { width: 16px; height: 16px; }
+}
+
 .warp-velocity {
     position: absolute;
     bottom: 80px;
