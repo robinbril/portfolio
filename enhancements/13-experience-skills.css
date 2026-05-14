@@ -343,11 +343,16 @@ body.light-theme #experience .timeline-content.glow-card:hover {
 #skills .skills-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr) !important;
-    align-items: start;
+    grid-auto-rows: 1fr;
+    align-items: stretch !important;
     gap: 1.25rem;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+}
+
+#skills .skill-category {
+    height: 100% !important;
 }
 
 #skills .skill-category,
