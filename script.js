@@ -139,10 +139,9 @@ if (contactFormTrigger && emailReveal) {
 const themeToggle = document.getElementById('theme-toggle');
 const body = document.body;
 
-// Check for saved theme preference or default to dark.
-const savedTheme = localStorage.getItem('theme') || 'dark-theme';
+// Dark theme is always the default on page load
 body.classList.remove('light-theme', 'dark-theme');
-body.classList.add(savedTheme);
+body.classList.add('dark-theme');
 
 themeToggle.addEventListener('click', () => {
     if (body.classList.contains('dark-theme')) {

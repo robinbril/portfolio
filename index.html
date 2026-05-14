@@ -25,17 +25,15 @@
         content="Productie AI-agents, MCP-koppelingen en enterprise AI op Azure.">
     <meta name="twitter:image" content="https://robinbril.dev/favicon.png">
 
-    <!-- Inline theme bootstrap — prevents flash on reload -->
+    <!-- Inline theme bootstrap — dark is the only default -->
     <script>
         (function () {
             try {
-                var t = localStorage.getItem('theme') || 'dark';
-                document.documentElement.dataset.theme = t;
-                // Apply to body as soon as it exists (before paint, no flash)
+                document.documentElement.dataset.theme = 'dark';
                 new MutationObserver(function (_, obs) {
                     if (document.body) {
                         document.body.classList.remove('dark-theme', 'light-theme');
-                        document.body.classList.add(t + '-theme');
+                        document.body.classList.add('dark-theme');
                         obs.disconnect();
                     }
                 }).observe(document.documentElement, { childList: true });
