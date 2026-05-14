@@ -153,61 +153,88 @@ body.xray .warp-hud {
 
 #hud-big-destination {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--cp-top-h);
+    top: 18%;
+    left: 50%;
+    transform: translateX(-50%);
     margin: 0;
-    padding: 0 calc(var(--cp-strut-w) + 24px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 5;
+    padding: 1.5rem 3rem;
+    z-index: 6;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(28px, 3vw, 48px);
+    font-size: clamp(56px, 7vw, 120px);
     font-weight: 900;
-    color: var(--cp-text);
-    letter-spacing: -0.01em;
+    color: #ffffff;
+    letter-spacing: -0.02em;
     line-height: 1;
     text-align: center;
+    white-space: nowrap;
     text-shadow:
-        0 0 18px rgba(46, 242, 160, 0.55),
-        0 0 38px rgba(46, 242, 160, 0.25);
+        0 0 24px rgba(46, 242, 160, 0.9),
+        0 0 60px rgba(46, 242, 160, 0.55),
+        0 0 120px rgba(46, 242, 160, 0.35),
+        0 4px 24px rgba(0, 0, 0, 0.8);
     background:
-        linear-gradient(180deg,
-            rgba(4, 10, 20, 0.92) 0%,
-            rgba(4, 10, 20, 0.82) 60%,
-            rgba(4, 10, 20, 0.0) 100%);
-    border-bottom: 1px solid var(--cp-mint-edge);
-    box-shadow:
-        0 1px 0 rgba(46, 242, 160, 0.18) inset,
-        0 18px 32px -22px rgba(0, 0, 0, 0.8);
-    transition: opacity 0.18s ease-out;
+        radial-gradient(ellipse at center,
+            rgba(4, 10, 20, 0.7) 0%,
+            rgba(4, 10, 20, 0.4) 60%,
+            rgba(4, 10, 20, 0) 100%);
+    border: none;
+    box-shadow: none;
+    animation: hud-dest-pulse 0.76s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hud-dest-pulse {
+    0% {
+        opacity: 0.4;
+        transform: translateX(-50%) scale(0.92);
+        filter: brightness(0.85);
+    }
+    25% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+        filter: brightness(1.15);
+    }
+    100% {
+        opacity: 0.95;
+        transform: translateX(-50%) scale(1);
+        filter: brightness(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #hud-big-destination {
+        animation: none;
+        opacity: 1;
+    }
 }
 
 #hud-big-destination::before {
     content: 'NEXT STOP';
     position: absolute;
-    left: calc(var(--cp-strut-w) + 24px);
+    top: -1.8rem;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.66rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.5em;
-    color: var(--cp-mint);
-    text-shadow: 0 0 12px rgba(46, 242, 160, 0.55);
-    opacity: 0.9;
+    letter-spacing: 0.6em;
+    color: rgba(46, 242, 160, 0.95);
+    text-shadow: 0 0 16px rgba(46, 242, 160, 0.7);
+    white-space: nowrap;
 }
 
 #hud-big-destination::after {
-    content: 'RELEASE\00A0\00A0SPACE\00A0\00A0TO\00A0\00A0LAND';
+    content: 'RELEASE SPACE TO LAND';
     position: absolute;
-    right: calc(var(--cp-strut-w) + 24px);
+    bottom: -1.6rem;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.66rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.42em;
-    color: var(--cp-text-dim);
-    text-shadow: none;
+    letter-spacing: 0.4em;
+    color: rgba(255, 255, 255, 0.55);
+    text-shadow: 0 0 12px rgba(46, 242, 160, 0.35);
+    white-space: nowrap;
 }
 
 /* ============================================================

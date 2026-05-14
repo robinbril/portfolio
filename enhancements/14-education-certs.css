@@ -441,9 +441,19 @@ body.light-theme .testimonials-compact .quote-box:hover::before {
     color: rgba(5, 150, 105, 0.32);
 }
 
-/* Re-order: quote first, author bottom */
-.testimonials-compact .quote-text {
+/* Volgorde: auteur bovenaan, quote eronder (Robin's verzoek) */
+.testimonials-compact .quote-author {
     order: 1;
+    padding-bottom: 1rem;
+    padding-top: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: none;
+    align-items: center;
+}
+
+.testimonials-compact .quote-text {
+    order: 2;
     font-size: clamp(0.95rem, 1.5vw, 1.02rem);
     line-height: 1.6;
     font-style: italic;
@@ -451,18 +461,9 @@ body.light-theme .testimonials-compact .quote-box:hover::before {
     margin: 0;
 }
 
-.testimonials-compact .quote-author {
-    order: 2;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    padding-top: 1rem;
-    border-bottom: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    align-items: center;
-}
-
 body.light-theme .testimonials-compact .quote-author {
-    border-top-color: rgba(15, 23, 42, 0.08);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+    border-top-color: transparent;
 }
 
 .testimonials-compact .quote-avatar {
