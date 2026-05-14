@@ -14,18 +14,18 @@
     opacity: 0 !important;
 }
 
-/* Clean 'Mijn Projecten' typing heading - sans-serif white met mint caret */
+/* Clean 'Mijn Projecten' heading - sans-serif white met strakke mint caret */
 .typing-heading {
-    font-family: 'Inter', system-ui, sans-serif !important;
+    font-family: 'Inter', 'Helvetica Neue', system-ui, sans-serif !important;
     font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
     font-weight: 700 !important;
     color: #ffffff !important;
     background: none !important;
     -webkit-text-fill-color: #ffffff !important;
-    letter-spacing: -0.02em !important;
-    line-height: 1.1;
+    letter-spacing: -0.025em !important;
+    line-height: 1;
     display: inline-flex;
-    align-items: baseline;
+    align-items: center;
     gap: 0;
     margin: 0 auto !important;
     text-align: left;
@@ -37,26 +37,22 @@
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 100%;
-    width: 0;
-    animation: typingReveal 1.4s steps(14, end) 0.2s forwards;
+    width: max-content;
+    /* Animation uitgezet - was rommelig met de width:0 -> 14ch transitie.
+       Statisch maar mooi. */
 }
 
 .typing-heading .typing-caret {
     display: inline-block;
     width: 2px;
-    height: 0.85em;
+    height: 0.75em;
     background: #2ef2a0;
-    box-shadow: 0 0 6px rgba(46, 242, 160, 0.55);
-    animation: typingCaret 0.85s steps(2, jump-none) infinite;
-    margin-left: 0.08em;
+    box-shadow: 0 0 6px rgba(46, 242, 160, 0.5);
+    animation: typingCaret 1s steps(2, jump-none) infinite;
+    margin-left: 0.12em;
+    border-radius: 1px;
     align-self: center;
-    transform: translateY(0.04em);
-}
-
-@keyframes typingReveal {
-    from { width: 0; }
-    to { width: 14ch; }
+    transform: translateY(0.02em);
 }
 
 @keyframes typingCaret {
@@ -64,13 +60,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .typing-heading .typing-text {
-        animation: none;
-        width: auto;
-    }
     .typing-heading .typing-caret {
         animation: none;
-        opacity: 0.85;
+        opacity: 0.7;
     }
 }
 
@@ -95,13 +87,21 @@
 }
 
 .ai-project-card p {
-    font-size: 0.85rem !important;
-    line-height: 1.5 !important;
-    margin-bottom: 0.75rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 0 !important;
+    color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .ai-project-card .project-tags {
-    margin-top: 0.5rem !important;
+    margin-top: 1rem !important;
+    padding-top: 1rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Grid gap iets compacter zodat cards visueel als groep aanvoelen */
+.ai-projects-grid {
+    gap: 1.25rem !important;
 }
 
 /* ---------- Filter bar: dark glass pill container ---------- */

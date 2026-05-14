@@ -1769,12 +1769,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })();
 /* =========================================================================
-   10-projects.script-additions.js
-   Filter UX enhancement — smooth collapse via class, no display:none flash.
-   Load AFTER script.js. Self-contained IIFE. Bewerkt geen bestaande code.
+   10-projects.script-additions.js - DISABLED
+   Brak de pagination cap (alle 10 cards bleven open ipv 6 default).
+   Legacy script.js regelt het beter. Wrapped in early-return.
    ========================================================================= */
 (function () {
     'use strict';
+    return; // Disabled - was breaking VISIBLE_LIMIT pagination
 
     function init() {
         var buttons = document.querySelectorAll('.project-filters .filter-btn');
