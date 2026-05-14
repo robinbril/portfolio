@@ -207,29 +207,10 @@ body.xray .warp-hud {
    VELOCITY readout — rechtsonder discreet
    ============================================================ */
 
+/* Velocity + status readout weggehaald op Robin's verzoek */
 #hud-velocity,
 #hud-status {
-    position: absolute;
-    right: 2.5rem;
-    z-index: 10;
-    font-family: 'JetBrains Mono', monospace;
-    color: rgba(46, 242, 160, 0.85);
-    text-shadow: 0 0 10px rgba(46, 242, 160, 0.5);
-}
-
-#hud-velocity {
-    bottom: 4%;
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-}
-
-#hud-status {
-    bottom: 8.5%;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.3em;
-    color: rgba(255, 255, 255, 0.4);
+    display: none !important;
 }
 
 /* Legacy hidden span - blijft hidden */
