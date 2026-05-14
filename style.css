@@ -5861,3 +5861,64 @@ body.light-theme .hero-orb--solo {
     flex: 0 0 auto;
     margin-top: auto !important;
 }
+
+/* ==========================================
+   HERO LESS NEON — softer saturation
+   ========================================== */
+
+/* H1 ends in softer mint instead of full saturation */
+.hero h1 {
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #E8FFF6 55%,
+        #7FEDC3 100%
+    ) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* CTA primary button: softer mint to muted indigo, less arcade */
+body:not(.light-theme) .hero .btn-primary,
+body.dark-theme .hero .btn-primary {
+    background: linear-gradient(135deg, #4EDDAE 0%, #6E63D6 100%);
+    color: #07111F;
+    box-shadow: 0 6px 22px -8px rgba(78, 221, 174, 0.45);
+}
+
+body:not(.light-theme) .hero .btn-primary:hover,
+body.dark-theme .hero .btn-primary:hover {
+    box-shadow: 0 12px 32px -10px rgba(78, 221, 174, 0.55);
+    filter: brightness(1.06);
+}
+
+body:not(.light-theme) .hero .btn-primary i {
+    color: #07111F;
+}
+
+/* Hero stats: tone down the mint */
+.hero-stat strong {
+    color: #5BD9A1;
+}
+
+/* Eyebrow: dim color slightly */
+.hero-eyebrow {
+    color: rgba(91, 217, 161, 0.85);
+    border-color: rgba(91, 217, 161, 0.28);
+}
+
+.hero-pulse {
+    background: #5BD9A1;
+    box-shadow: 0 0 10px #5BD9A1;
+}
+
+@keyframes hero-pulse {
+    0%, 100% { box-shadow: 0 0 8px #5BD9A1, 0 0 0 0 rgba(91, 217, 161, 0.55); }
+    70% { box-shadow: 0 0 12px #5BD9A1, 0 0 0 8px rgba(91, 217, 161, 0); }
+}
+
+/* Solo background orb: softer */
+.hero-orb--solo {
+    background: radial-gradient(circle, rgba(91, 217, 161, 0.12), transparent 65%);
+}
