@@ -382,9 +382,26 @@ body.light-theme .ai-project-card {
 
 .ai-project-card .project-icon-wrapper i,
 .ai-project-card .project-icon-wrapper svg {
-    width: 18px;
-    height: 18px;
-    color: var(--accent-primary, #5eead4);
+    width: 20px !important;
+    height: 20px !important;
+    color: #2ef2a0 !important;
+    stroke: #2ef2a0 !important;
+    fill: none !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    flex-shrink: 0;
+}
+
+body.light-theme .ai-project-card .project-icon-wrapper i,
+body.light-theme .ai-project-card .project-icon-wrapper svg {
+    color: #0d9488 !important;
+    stroke: #0d9488 !important;
+}
+
+.ai-project-card .project-icon-wrapper {
+    flex-shrink: 0 !important;
+    overflow: visible !important;
 }
 
 .ai-project-card:hover .project-icon-wrapper {
