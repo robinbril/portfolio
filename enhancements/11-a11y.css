@@ -343,10 +343,19 @@ summary:focus-visible,
    --------------------------------------------------------- */
 .theme-toggle-btn,
 .modal-close,
-.terminal-submit,
-.source-link {
+.terminal-submit {
     min-width: 44px;
     min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Source-link (info button) compacter dan a11y 44px standaard - de
+   testimonial info-buttons zijn decoratief en mogen subtieler ogen. */
+.source-link {
+    min-width: 28px;
+    min-height: 28px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
