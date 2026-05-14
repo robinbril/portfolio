@@ -5759,12 +5759,34 @@ body.light-theme .cta-primary-btn i {
     color: #ffffff;
 }
 
-/* Eyebrow chip: crisper border, stronger contrast */
+/* Eyebrow chip light theme — refined */
 body.light-theme .hero-eyebrow {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(59, 130, 246, 0.35);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(59, 130, 246, 0.18);
     color: var(--accent-strong);
-    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.06);
+    box-shadow:
+        0 1px 2px rgba(15, 23, 42, 0.04),
+        0 4px 16px rgba(59, 130, 246, 0.08);
+    padding: 0.4rem 0.95rem 0.4rem 0.85rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    gap: 0.55rem;
+}
+
+body.light-theme .hero-pulse {
+    width: 6px;
+    height: 6px;
+    background: #16a34a;
+    box-shadow: 0 0 8px rgba(22, 163, 74, 0.55);
+}
+
+@keyframes hero-pulse-light {
+    0%, 100% { box-shadow: 0 0 6px #16a34a, 0 0 0 0 rgba(22, 163, 74, 0.5); }
+    70%      { box-shadow: 0 0 10px #16a34a, 0 0 0 7px rgba(22, 163, 74, 0); }
+}
+
+body.light-theme .hero-pulse {
+    animation-name: hero-pulse-light;
 }
 
 /* Subtitle slightly darker for better readability */

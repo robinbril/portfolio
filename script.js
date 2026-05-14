@@ -724,23 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
 
     const NAV_HEIGHT = 80;
-    const DESTINATIONS = [
-        { id: 'about',      label: 'OVER MIJ' },
-        { id: 'projects',   label: 'PROJECTEN' },
-        { id: 'experience', label: 'ERVARING' },
-        { id: 'skills',     label: 'SKILLS' },
-        { id: 'contact',    label: 'CONTACT' }
-    ];
-    let cycleTimer = null;
-    let destIdx = 0;
-    const bigEl = () => document.getElementById('hud-big-destination');
-
-    const paintDest = (label) => {
-        const b = bigEl();
-        if (!b) return;
-        b.textContent = label;
-        b.style.opacity = '0.95';
-    };
+    const WARP_DESTINATION = { id: 'contact', label: 'CONTACT' };
 
     const scrollToSection = (id) => {
         const target = document.getElementById(id);
@@ -761,34 +745,17 @@ document.addEventListener('DOMContentLoaded', () => {
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(tick);
 
-        destIdx = 0;
-        paintDest(DESTINATIONS[0].label);
-        clearInterval(cycleTimer);
-        cycleTimer = setInterval(() => {
-            destIdx = (destIdx + 1) % DESTINATIONS.length;
-            const b = bigEl();
-            if (b) {
-                b.style.opacity = '0';
-                setTimeout(() => paintDest(DESTINATIONS[destIdx].label), 160);
-            }
-        }, 900);
     };
 
     const deactivate = () => {
         if (!warpActive) return;
         warpActive = false;
-        clearInterval(cycleTimer);
-        cycleTimer = null;
-
-        const dest = DESTINATIONS[destIdx];
-        const b = bigEl();
-        if (b) b.style.opacity = '0';
 
         document.body.classList.remove('xray');
         cancelAnimationFrame(raf);
 
-        if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + dest.label;
-        scrollToSection(dest.id);
+        if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + WARP_DESTINATION.label;
+        scrollToSection(WARP_DESTINATION.id);
 
         // Quick black fade so the canvas exits cleanly
         let n = 0;
