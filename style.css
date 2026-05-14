@@ -3761,7 +3761,8 @@ body.light-theme .contact-card .secondary-options {
     }
 
     .cta-primary-btn {
-        padding: 1.5rem 2rem;
+        padding: 0.85rem 1.5rem;
+        flex-direction: row;
     }
 
     .cta-title {
@@ -4170,11 +4171,13 @@ body.light-theme .progress-bar::after {
         font-size: 2rem;
     }
 
-    /* Contact Mobile */
+    /* Contact Mobile - keep CTA as pill, not circle */
     .cta-primary-btn {
-        flex-direction: column;
+        flex-direction: row;
         text-align: center;
-        padding: 1.5rem;
+        padding: 0.85rem 1.5rem;
+        width: auto;
+        max-width: 100%;
     }
 
     .cta-content {
@@ -5590,4 +5593,94 @@ body.light-theme .card-diagram svg rect[stroke*="46,242,160"] {
 
 @media (max-width: 768px) {
     .card-diagram { display: none; }
+}
+
+/* ==========================================
+   MOBILE POLISH FIXES
+   ========================================== */
+@media (max-width: 768px) {
+    /* CTA button must stay a pill, not turn into a circle */
+    .cta-primary-btn,
+    .contact-card .primary-cta a.cta-primary-btn {
+        flex-direction: row !important;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        max-width: 100%;
+        padding: 0.9rem 1.6rem !important;
+        border-radius: 999px !important;
+        white-space: nowrap;
+    }
+
+    /* Stats grid: vertical stack with clear separation */
+    .stats-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+        align-items: center;
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .stat-item {
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        gap: 0.25rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        max-width: none;
+    }
+
+    /* Contact header centered + breathing room */
+    #contact .section-header,
+    #contact .contact-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    #contact .section-header h2,
+    #contact .contact-header h2 {
+        text-align: center;
+        display: block;
+        font-size: 1.85rem;
+        margin: 0 auto;
+    }
+
+    /* Hero on mobile: tighter spacing */
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: 1rem 1.25rem;
+        justify-content: center;
+    }
+    .hero-stat-divider {
+        display: none;
+    }
+    .hero-stat {
+        min-width: 28%;
+    }
+
+    /* Hide architecture diagrams - they don't scale well */
+    .card-diagram {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-number {
+        font-size: 2.2rem;
+    }
+    .hero-stat strong {
+        font-size: 1rem;
+    }
+    .hero-stat span {
+        font-size: 0.55rem;
+    }
 }
