@@ -617,7 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cx = w / 2 + parallaxX;
         const cy = h * 0.46 + parallaxY;
 
-        ctx.fillStyle = 'rgba(7, 17, 31, 0.2)';
+        ctx.fillStyle = 'rgba(7, 17, 31, 0.14)';
         ctx.fillRect(0, 0, w, h);
 
         const intensity = Math.min(1, (speed - 8) / 34);
@@ -625,15 +625,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const pulse = 0.5 + 0.5 * Math.sin(pulsePhase * 2.1);
         const coreStr = intensity * (0.85 + pulse * 0.15);
 
-        // Cover the FULL viewport diagonal so no dark vertical bands remain
-        // on the left/right edges of wide screens
-        const coreR = Math.hypot(w, h) * 0.65;
+        // Cover viewport diagonal + boost mid-stops so no dark "rectangle"
+        // emerges in the mid-band between bright center and edge star-streaks.
+        const coreR = Math.hypot(w, h) * 0.72;
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
         grad.addColorStop(0, `rgba(255, 255, 255, ${0.18 + coreStr * 0.32})`);
-        grad.addColorStop(0.08, `rgba(232, 255, 246, ${0.14 + coreStr * 0.26})`);
-        grad.addColorStop(0.2, `rgba(46, 242, 160, ${0.1 + coreStr * 0.24})`);
-        grad.addColorStop(0.5, `rgba(76, 201, 176, ${0.05 + coreStr * 0.1})`);
-        grad.addColorStop(0.8, `rgba(46, 242, 160, ${0.02 + coreStr * 0.04})`);
+        grad.addColorStop(0.08, `rgba(232, 255, 246, ${0.16 + coreStr * 0.26})`);
+        grad.addColorStop(0.25, `rgba(180, 220, 230, ${0.14 + coreStr * 0.2})`);
+        grad.addColorStop(0.5, `rgba(140, 180, 210, ${0.1 + coreStr * 0.14})`);
+        grad.addColorStop(0.8, `rgba(120, 160, 200, ${0.06 + coreStr * 0.08})`);
         grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
@@ -674,14 +674,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const alpha = Math.min(1, (t * 1.8 + 0.1) * farFade);
             const lw = (t * 2.6 + 0.3) * s.size * dpr * farFade;
 
-            if (s.tint < 0.65) {
-                ctx.strokeStyle = `rgba(232, 255, 246, ${alpha})`;
-            } else if (s.tint < 0.82) {
-                ctx.strokeStyle = `rgba(46, 242, 160, ${alpha})`;
-            } else if (s.tint < 0.93) {
-                ctx.strokeStyle = `rgba(76, 201, 176, ${alpha * 0.85})`;
+            // Distribution: mostly white-ish with subtle accent stars
+            if (s.tint < 0.84) {
+                ctx.strokeStyle = `rgba(232, 240, 250, ${alpha})`;
+            } else if (s.tint < 0.92) {
+                ctx.strokeStyle = `rgba(180, 210, 235, ${alpha * 0.95})`;
+            } else if (s.tint < 0.97) {
+                ctx.strokeStyle = `rgba(120, 200, 180, ${alpha * 0.85})`;
             } else {
-                ctx.strokeStyle = `rgba(138, 124, 255, ${alpha * 0.9})`;
+                ctx.strokeStyle = `rgba(138, 124, 255, ${alpha * 0.85})`;
             }
             ctx.lineWidth = lw;
 
