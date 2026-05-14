@@ -614,7 +614,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const parallaxX = mouseX * 18 * dpr;
         const parallaxY = mouseY * 14 * dpr;
         const cx = w / 2 + parallaxX;
-        const cy = h * 0.46 + parallaxY;
+        const cy = h * 0.5 + parallaxY;
 
         ctx.fillStyle = 'rgba(7, 17, 31, 0.14)';
         ctx.fillRect(0, 0, w, h);

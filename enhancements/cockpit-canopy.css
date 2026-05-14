@@ -168,10 +168,10 @@ body.xray .cockpit-canopy {
    no layout work).
    ============================================================ */
 .cockpit-canopy__reticle {
-    /* Canvas convergence point zit op cy = h * 0.46, niet 50%.
+    /* Canvas convergence point zit nu op cy = h * 0.5 (exact center).
        Reticle volgt dat zodat de pointer exact in het midden van de
-       starfield-glow zit. */
-    top: 46%;
+       starfield-glow zit, ongeacht theme. */
+    top: 50%;
     left: 50%;
     width: 72px;
     height: 72px;
