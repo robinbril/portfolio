@@ -342,10 +342,10 @@ body.light-theme #experience .timeline-content.glow-card:hover {
    ───────────────────────────────────────────────────────────────────── */
 #skills .skills-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr) !important;
     align-items: start;
     gap: 1.25rem;
-    max-width: 1000px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -353,26 +353,23 @@ body.light-theme #experience .timeline-content.glow-card:hover {
 #skills .skill-category,
 #skills .skill-category:nth-child(4),
 #skills .skill-category:nth-child(5) {
-    grid-column: auto;
+    grid-column: auto !important;
     height: auto;
+    max-width: none;
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
 }
 
-/* 5e card: spreid over volle breedte als laatste rij maar 1 child heeft */
-#skills .skill-category:nth-child(5):last-child {
-    grid-column: 1 / -1;
-    max-width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
+@media (max-width: 1024px) {
+    #skills .skills-container {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
 }
 
 @media (max-width: 640px) {
     #skills .skills-container {
-        grid-template-columns: 1fr;
-    }
-    #skills .skill-category:nth-child(5):last-child {
-        grid-column: auto;
-        max-width: none;
+        grid-template-columns: 1fr !important;
     }
 }
 
