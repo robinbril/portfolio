@@ -5823,3 +5823,35 @@ body.light-theme .hero::after {
 body.light-theme .hero-orb--solo {
     background: radial-gradient(circle, rgba(59, 130, 246, 0.18), transparent 65%);
 }
+
+/* ==========================================
+   FEATURED CARDS — guaranteed alignment
+   Three zones: card-top / featured-content / card-metrics
+   All cards equal height via grid stretch + metrics pinned bottom.
+   ========================================== */
+.featured-projects-grid {
+    align-items: stretch;
+}
+
+.featured-project {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100%;
+}
+
+.featured-project .featured-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+}
+
+.featured-project .featured-content p {
+    flex: 1 1 auto;
+    margin-top: 0.4rem;
+}
+
+.featured-project .card-metrics {
+    flex: 0 0 auto;
+    margin-top: auto !important;
+}
