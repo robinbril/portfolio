@@ -48,15 +48,8 @@
                 box-shadow 400ms var(--ease-out-soft);
 }
 
-@media (hover: hover) and (pointer: fine) {
-    .ai-project-card:hover,
-    .featured-project:hover {
-        transform: perspective(1000px)
-                   rotateX(calc(var(--my) * var(--tilt-strength) * -1))
-                   rotateY(calc(var(--mx) * var(--tilt-strength)))
-                   translateY(-4px);
-    }
-}
+/* Mouse-tilt op cards disabled - voelt rommelig samen met andere hover states.
+   Cleaner hover wordt nu door 10-projects.css gehanteerd. */
 
 /* ==========================================================================
    3. Magnetic CTAs — subtle lift, scale, deeper shadow

@@ -1,0 +1,274 @@
+/* =========================================================
+   COCKPIT PITSTOPS — warp route indicator
+   Premium glass pill HUD shown during body.xray warp phase.
+   Hardware-accelerated, pointer-inert overlay.
+   ========================================================= */
+
+:root {
+  --pit-mint: #2EF2A0;
+  --pit-mint-soft: rgba(46, 242, 160, 0.55);
+  --pit-mint-faint: rgba(46, 242, 160, 0.18);
+  --pit-shell-bg: rgba(4, 10, 18, 0.55);
+  --pit-shell-border: rgba(255, 255, 255, 0.08);
+  --pit-shell-highlight: rgba(255, 255, 255, 0.14);
+  --pit-track: rgba(255, 255, 255, 0.06);
+  --pit-track-active: linear-gradient(90deg,
+    rgba(46, 242, 160, 0.65) 0%,
+    rgba(46, 242, 160, 0.85) 50%,
+    rgba(46, 242, 160, 0.65) 100%);
+  --pit-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Container -------------------------------------------------- */
+#warp-route {
+  position: fixed;
+  left: 50%;
+  bottom: 14vh;
+  transform: translate3d(-50%, 0, 0);
+  z-index: 60;
+
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2.75rem;
+
+  width: auto;
+  max-width: min(92vw, 720px);
+  margin: 0;
+  padding: 1.25rem 2.75rem;
+  list-style: none;
+
+  background: var(--pit-shell-bg);
+  border: 1px solid var(--pit-shell-border);
+  border-radius: 9999px;
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  box-shadow:
+    0 24px 60px -20px rgba(0, 0, 0, 0.55),
+    0 8px 24px -8px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 0 var(--pit-shell-highlight),
+    inset 0 -1px 0 0 rgba(46, 242, 160, 0.10),
+    inset 0 -10px 28px -18px rgba(46, 242, 160, 0.45);
+
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 520ms var(--pit-ease) 80ms,
+    transform 620ms var(--pit-ease);
+  will-change: opacity, transform;
+}
+
+/* Faint base rail spanning all stops. Uses ::after to avoid collisions
+   with sibling agents that may target #warp-route::before. */
+#warp-route::after {
+  content: "";
+  position: absolute;
+  top: calc(1.25rem + 7px);            /* aligns with center of 14px active dot */
+  left: 2.75rem;
+  right: 2.75rem;
+  height: 1px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.10) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Reveal during warp */
+body.xray #warp-route {
+  opacity: 1;
+  transform: translate3d(-50%, -4px, 0);
+}
+
+/* ---------- Stop column ------------------------------------------------ */
+.warp-stop {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  pointer-events: none;
+}
+
+/* Mini connector segment between this stop and the previous one.
+   Drawn from each non-first stop so the segment can light up
+   when the preceding stop is past. */
+.warp-stop + .warp-stop::before {
+  content: "";
+  position: absolute;
+  top: 7px;                              /* center of 14px slot */
+  right: calc(100% + 0.25rem);
+  width: calc(2.75rem - 0.5rem);         /* gap minus breathing room */
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.04)
+  );
+  transition: background 520ms var(--pit-ease),
+              box-shadow 520ms var(--pit-ease);
+}
+
+/* Filled connector when the previous stop is past */
+.warp-stop.is-past + .warp-stop::before {
+  background: var(--pit-track-active);
+  box-shadow: 0 0 8px rgba(46, 242, 160, 0.35);
+}
+
+/* ---------- Dot -------------------------------------------------------- */
+.warp-stop-dot {
+  position: relative;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1.5px solid rgba(46, 242, 160, 0.35);
+  box-shadow: 0 0 0 0 rgba(46, 242, 160, 0);
+  transition:
+    width 420ms var(--pit-ease),
+    height 420ms var(--pit-ease),
+    background-color 420ms var(--pit-ease),
+    border-color 420ms var(--pit-ease),
+    box-shadow 420ms var(--pit-ease),
+    transform 420ms var(--pit-ease);
+}
+
+/* Past — solid mint, soft glow */
+.warp-stop.is-past .warp-stop-dot {
+  width: 10px;
+  height: 10px;
+  background: rgba(46, 242, 160, 0.60);
+  border-color: rgba(46, 242, 160, 0.65);
+  box-shadow:
+    0 0 6px rgba(46, 242, 160, 0.35),
+    0 0 14px rgba(46, 242, 160, 0.15);
+}
+
+/* Active — 14px filled, triple halo, pulse */
+.warp-stop.is-active .warp-stop-dot {
+  width: 14px;
+  height: 14px;
+  background: var(--pit-mint);
+  border-color: var(--pit-mint);
+  margin-top: -2px;
+  margin-bottom: -2px;
+  box-shadow:
+    0 0 0 3px rgba(46, 242, 160, 0.30),
+    0 0 12px 0 rgba(46, 242, 160, 0.55),
+    0 0 24px 0 rgba(46, 242, 160, 0.30);
+  animation: pit-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pit-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 3px rgba(46, 242, 160, 0.30),
+      0 0 12px 0 rgba(46, 242, 160, 0.55),
+      0 0 24px 0 rgba(46, 242, 160, 0.30);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow:
+      0 0 0 4px rgba(46, 242, 160, 0.22),
+      0 0 18px 0 rgba(46, 242, 160, 0.70),
+      0 0 34px 0 rgba(46, 242, 160, 0.40);
+  }
+}
+
+/* ---------- Label ------------------------------------------------------ */
+.warp-stop-label {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 0.65rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.35);
+  text-shadow: none;
+  transition:
+    color 420ms var(--pit-ease),
+    text-shadow 420ms var(--pit-ease),
+    transform 420ms var(--pit-ease);
+}
+
+.warp-stop.is-past .warp-stop-label {
+  color: rgba(46, 242, 160, 0.55);
+}
+
+.warp-stop.is-active .warp-stop-label {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow:
+    0 0 8px rgba(46, 242, 160, 0.55),
+    0 0 18px rgba(46, 242, 160, 0.25);
+}
+
+/* ---------- Reduced motion -------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #warp-route,
+  .warp-stop-dot,
+  .warp-stop-label,
+  .warp-stop + .warp-stop::before {
+    transition-duration: 1ms !important;
+  }
+  .warp-stop.is-active .warp-stop-dot {
+    animation: none;
+  }
+}
+
+/* ---------- Tablet ----------------------------------------------------- */
+@media (max-width: 768px) {
+  #warp-route {
+    bottom: 18vh;
+    gap: 1.25rem;
+    padding: 0.875rem 1.5rem;
+    max-width: 92vw;
+  }
+  #warp-route::after {
+    top: calc(0.875rem + 7px);
+    left: 1.5rem;
+    right: 1.5rem;
+  }
+  .warp-stop + .warp-stop::before {
+    width: calc(1.25rem - 0.4rem);
+    right: calc(100% + 0.2rem);
+  }
+  .warp-stop-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ---------- Phone — dots only ----------------------------------------- */
+@media (max-width: 480px) {
+  #warp-route {
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    bottom: 16vh;
+  }
+  #warp-route::after {
+    top: calc(0.75rem + 7px);
+    left: 1.25rem;
+    right: 1.25rem;
+  }
+  .warp-stop + .warp-stop::before {
+    width: calc(0.75rem - 0.25rem);
+    right: calc(100% + 0.125rem);
+  }
+  .warp-stop-label {
+    display: none;
+  }
+  .warp-stop {
+    gap: 0;
+  }
+}

@@ -1,0 +1,298 @@
+/* =============================================================================
+   cockpit-motion.css
+   Cinematic entry/exit motion for the warp HUD cockpit.
+   Triggered by body.xray (spacebar hold).
+   GPU-only transforms + opacity. Reduced-motion safe.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   KEYFRAMES
+   ----------------------------------------------------------------------------- */
+
+/* Canopy vignette: fade-in the outer atmosphere of the cockpit. */
+@keyframes cockpitCanopyEnter {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes cockpitCanopyExit {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Corner brackets: slide in from center-edge toward each corner.
+   Direction is overridden per-bracket via custom properties below. */
+@keyframes cockpitBracketsEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--bracket-from-x, -20px), var(--bracket-from-y, -20px), 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes cockpitBracketsExit {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--bracket-from-x, -20px), var(--bracket-from-y, -20px), 0);
+  }
+}
+
+/* Side struts: vertical scale-in from center. */
+@keyframes cockpitStrutsEnter {
+  0% {
+    opacity: 0;
+    transform: scale3d(1, 0, 1);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes cockpitStrutsExit {
+  0% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale3d(1, 0, 1);
+  }
+}
+
+/* Destination announcement: rises 3px on fade-in. */
+@keyframes cockpitDestEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes cockpitDestExit {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 3px, 0);
+  }
+}
+
+/* Pitstop pill: scale-up + fade. */
+@keyframes cockpitPillEnter {
+  0% {
+    opacity: 0;
+    transform: scale3d(0.96, 0.96, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes cockpitPillExit {
+  0% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale3d(0.96, 0.96, 1);
+  }
+}
+
+/* Ambient rumble: micro engine vibration. ~0.5px amplitude. */
+@keyframes cockpitRumble {
+  0%   { transform: translate3d(0, 0, 0); }
+  20%  { transform: translate3d(0, -0.4px, 0); }
+  40%  { transform: translate3d(0.3px, 0.3px, 0); }
+  60%  { transform: translate3d(-0.3px, 0.4px, 0); }
+  80%  { transform: translate3d(0.2px, -0.3px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+/* One-shot CRT boot flicker: three quick blinks. */
+@keyframes cockpitCRTFlicker {
+  0%   { opacity: 0; }
+  8%   { opacity: 0.85; }
+  12%  { opacity: 0.1; }
+  20%  { opacity: 0.95; }
+  28%  { opacity: 0.2; }
+  38%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Hyperspace canvas brightness/saturation surge. */
+@keyframes cockpitHyperspaceSurge {
+  0% {
+    filter: brightness(1) saturate(1);
+  }
+  35% {
+    filter: brightness(1.3) saturate(1.2);
+  }
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   ENTRY HOOKS — body.xray
+   ----------------------------------------------------------------------------- */
+
+/* Promote relevant elements to their own compositor layer. */
+body.xray .warp-hud::before,
+body.xray .cockpit-bracket,
+body.xray .cockpit-strut,
+body.xray #hud-big-destination,
+body.xray #warp-route {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Canopy vignette (uses warp-hud::before, assumed styled by canopy agent). */
+body.xray .warp-hud::before {
+  animation: cockpitCanopyEnter 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* CRT boot flicker overlay — rides on ::after as a scanline blink.
+   Canopy agent owns ::before for the vignette. */
+body.xray .warp-hud::after {
+  animation: cockpitCRTFlicker 200ms steps(8, end) both;
+  animation-delay: 0ms;
+  pointer-events: none;
+}
+
+/* Corner brackets — staggered slide from each respective edge.
+   Other agents define `.cockpit-bracket` with positional modifier classes:
+   .cockpit-bracket--tl, --tr, --bl, --br */
+body.xray .cockpit-bracket {
+  animation: cockpitBracketsEnter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 100ms;
+}
+
+body.xray .cockpit-bracket--tl { --bracket-from-x: -20px; --bracket-from-y: -20px; }
+body.xray .cockpit-bracket--tr { --bracket-from-x:  20px; --bracket-from-y: -20px; }
+body.xray .cockpit-bracket--bl { --bracket-from-x: -20px; --bracket-from-y:  20px; }
+body.xray .cockpit-bracket--br { --bracket-from-x:  20px; --bracket-from-y:  20px; }
+
+/* Side struts — vertical scale from center. */
+body.xray .cockpit-strut {
+  transform-origin: center center;
+  animation: cockpitStrutsEnter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 200ms;
+}
+
+/* Destination announcement — fade + rise. */
+body.xray #hud-big-destination {
+  animation: cockpitDestEnter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 300ms;
+}
+
+/* Pitstop pill — fade + subtle scale. */
+body.xray #warp-route {
+  transform-origin: center center;
+  animation: cockpitPillEnter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 400ms;
+}
+
+/* Ambient engine rumble on the body itself. Kicks in after entry sequence. */
+body.xray {
+  animation: cockpitRumble 3s ease-in-out 600ms infinite;
+}
+
+/* Hyperspace surge on the starfield canvas. */
+body.xray #warp-canvas,
+body.xray canvas.warp-canvas {
+  animation: cockpitHyperspaceSurge 400ms ease-out both;
+}
+
+/* -----------------------------------------------------------------------------
+   EXIT HOOKS — body.xray-exit (mirror, faster ~200ms)
+   Other agents toggle .xray-exit during the unwind, then remove both classes.
+   If only .xray is removed without .xray-exit, elements snap back via default
+   styling — keep that path silent to avoid jank.
+   ----------------------------------------------------------------------------- */
+
+body.xray-exit .warp-hud::before {
+  animation: cockpitCanopyExit 200ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  animation-delay: 100ms;
+}
+
+body.xray-exit .cockpit-bracket {
+  animation: cockpitBracketsExit 180ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  animation-delay: 80ms;
+}
+
+body.xray-exit .cockpit-bracket--tl { --bracket-from-x: -20px; --bracket-from-y: -20px; }
+body.xray-exit .cockpit-bracket--tr { --bracket-from-x:  20px; --bracket-from-y: -20px; }
+body.xray-exit .cockpit-bracket--bl { --bracket-from-x: -20px; --bracket-from-y:  20px; }
+body.xray-exit .cockpit-bracket--br { --bracket-from-x:  20px; --bracket-from-y:  20px; }
+
+body.xray-exit .cockpit-strut {
+  transform-origin: center center;
+  animation: cockpitStrutsExit 180ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  animation-delay: 40ms;
+}
+
+body.xray-exit #hud-big-destination {
+  animation: cockpitDestExit 180ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  animation-delay: 0ms;
+}
+
+body.xray-exit #warp-route {
+  transform-origin: center center;
+  animation: cockpitPillExit 180ms cubic-bezier(0.5, 0, 0.75, 0) both;
+  animation-delay: 0ms;
+}
+
+/* -----------------------------------------------------------------------------
+   CLEANUP — release will-change once the cockpit is fully retracted
+   ----------------------------------------------------------------------------- */
+body:not(.xray):not(.xray-exit) .warp-hud::before,
+body:not(.xray):not(.xray-exit) .cockpit-bracket,
+body:not(.xray):not(.xray-exit) .cockpit-strut,
+body:not(.xray):not(.xray-exit) #hud-big-destination,
+body:not(.xray):not(.xray-exit) #warp-route {
+  will-change: auto;
+}
+
+/* -----------------------------------------------------------------------------
+   REDUCED MOTION — kill everything, leave final state visible
+   ----------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  body.xray,
+  body.xray-exit,
+  body.xray .warp-hud::before,
+  body.xray .warp-hud::after,
+  body.xray .cockpit-bracket,
+  body.xray .cockpit-strut,
+  body.xray #hud-big-destination,
+  body.xray #warp-route,
+  body.xray #warp-canvas,
+  body.xray canvas.warp-canvas,
+  body.xray-exit .warp-hud::before,
+  body.xray-exit .cockpit-bracket,
+  body.xray-exit .cockpit-strut,
+  body.xray-exit #hud-big-destination,
+  body.xray-exit #warp-route {
+    animation: none !important;
+    opacity: 1;
+    transform: none !important;
+    filter: none !important;
+  }
+}

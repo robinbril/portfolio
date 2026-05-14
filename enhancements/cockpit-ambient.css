@@ -1,0 +1,317 @@
+/* =====================================================================
+   cockpit-ambient.css
+   ---------------------------------------------------------------------
+   Ambient cockpit HUD widgets. Subtle supporting UI that sells the
+   "this is a real cockpit" feel during warp. Not the main focus.
+   Awwwards-tier polish, deliberately quiet.
+
+   Activation gate:  body.xray   (warp mode active)
+   Accent:           #2EF2A0  (mint)
+   Font:             'JetBrains Mono', monospace
+   Pointer events:   none everywhere
+
+   ---------------------------------------------------------------------
+   HTML REQUIREMENT (Robin -> insert into index.html)
+   ---------------------------------------------------------------------
+   Insert the following block as the LAST child inside
+   <div class="warp-hud" id="warp-hud" aria-hidden="true"> ... </div>
+   (i.e. just before its closing </div> around line 202):
+
+       <div class="cockpit-ambient" aria-hidden="true">
+         <i class="ca-coord"></i>
+         <i class="ca-compass"></i>
+         <i class="ca-status"></i>
+         <i class="ca-radar"></i>
+       </div>
+
+   Also add this stylesheet link in <head> alongside 01-warp-hud.css:
+       <link rel="stylesheet" href="enhancements/cockpit-ambient.css">
+
+   The container itself paints the gridlines + corner vignette flare.
+   Each <i> child renders one ambient widget. All decorative, aria-hidden.
+
+   ---------------------------------------------------------------------
+   PSEUDO-ELEMENT MAP (so other agents can avoid collisions)
+   ---------------------------------------------------------------------
+   .cockpit-ambient            -> background grid + corner vignette
+   .cockpit-ambient::before    -> reserved (free for future use)
+   .cockpit-ambient::after     -> reserved (free for future use)
+   .ca-coord                   -> ALT + coordinates readout (top-left)
+   .ca-coord::before           -> "ALT 12,438M"
+   .ca-coord::after            -> "X: 0042  Y: 1180"
+   .ca-compass                 -> HDG / BRG readout (top-right)
+   .ca-compass::before         -> "HDG 270.4"
+   .ca-compass::after          -> "BRG 045"
+   .ca-status                  -> PWR / NAV / COMS / LIFE dots+labels (bottom-left)
+   .ca-status::before          -> 4 status dots (box-shadow trick)
+   .ca-status::after           -> 4 status labels
+   .ca-radar                   -> mini radar circle (bottom-right)
+   .ca-radar::before           -> rotating sweep gradient
+   .ca-radar::after            -> crosshair lines + center dot
+
+   No conflicts with:
+     - body.xray::before / ::after          (taken by style.css)
+     - .warp-hud::before                    (canopy frame agent)
+     - .warp-hud::after                     (warp HUD vignette)
+     - #hud-big-destination::before/::after (destination agent)
+     - .warp-stop::after                    (pitstops agent)
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   Base container: full-viewport, painted only during warp
+   --------------------------------------------------------------------- */
+.cockpit-ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 480ms ease 80ms, visibility 0s linear 560ms;
+
+    /* Sci-fi gridfloor + faint corner vignette flare (top-left & bottom-right) */
+    background-image:
+        radial-gradient(circle at 8% 12%, rgba(46, 242, 160, 0.08) 0%, transparent 28%),
+        radial-gradient(circle at 92% 88%, rgba(46, 242, 160, 0.06) 0%, transparent 32%),
+        repeating-linear-gradient(0deg,
+            rgba(46, 242, 160, 0.035) 0,
+            rgba(46, 242, 160, 0.035) 1px,
+            transparent 1px,
+            transparent 80px),
+        repeating-linear-gradient(90deg,
+            rgba(46, 242, 160, 0.035) 0,
+            rgba(46, 242, 160, 0.035) 1px,
+            transparent 1px,
+            transparent 80px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #2EF2A0;
+}
+
+body.xray .cockpit-ambient {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 520ms ease 120ms, visibility 0s linear 0s;
+}
+
+/* Shared base for the four widget children */
+.cockpit-ambient > i {
+    position: fixed;
+    display: block;
+    font-style: normal;
+    font-family: inherit;
+    color: inherit;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 520ms ease 220ms, transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1) 220ms;
+}
+
+body.xray .cockpit-ambient > i {
+    opacity: 0.78;
+    transform: translateY(0);
+}
+
+/* ---------------------------------------------------------------------
+   1. Altitude / coordinate readout (top-left)
+   --------------------------------------------------------------------- */
+.ca-coord {
+    top: 4%;
+    left: 7%;
+    width: 100px;
+    height: 50px;
+    font-size: 0.6rem;
+    border-left: 1px solid rgba(46, 242, 160, 0.45);
+    padding: 2px 0 2px 8px;
+}
+
+.ca-coord::before,
+.ca-coord::after {
+    display: block;
+    white-space: nowrap;
+}
+
+.ca-coord::before {
+    content: "ALT 12,438M";
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(46, 242, 160, 0.35);
+}
+
+.ca-coord::after {
+    content: "X: 0042  Y: 1180";
+    margin-top: 4px;
+    opacity: 0.65;
+    font-size: 0.55rem;
+}
+
+/* ---------------------------------------------------------------------
+   2. Compass / heading indicator (top-right)
+   --------------------------------------------------------------------- */
+.ca-compass {
+    top: 4%;
+    right: 7%;
+    width: 80px;
+    height: 40px;
+    font-size: 0.6rem;
+    text-align: right;
+    border-right: 1px solid rgba(46, 242, 160, 0.45);
+    padding: 2px 8px 2px 0;
+}
+
+.ca-compass::before,
+.ca-compass::after {
+    display: block;
+    white-space: nowrap;
+}
+
+.ca-compass::before {
+    content: "HDG 270.4";
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(46, 242, 160, 0.35);
+}
+
+.ca-compass::after {
+    content: "BRG 045";
+    margin-top: 4px;
+    opacity: 0.65;
+    font-size: 0.55rem;
+}
+
+/* ---------------------------------------------------------------------
+   3. System status grid (bottom-left)
+   4 dots (PWR / NAV / COMS / LIFE) - all mint = OK
+   --------------------------------------------------------------------- */
+.ca-status {
+    bottom: 22%;
+    left: 7%;
+    width: 100px;
+    height: 60px;
+    font-size: 0.55rem;
+}
+
+.ca-status::before {
+    /* Four dots rendered via a single 5px circle + 3 box-shadows */
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #2EF2A0;
+    box-shadow:
+        0 0 6px rgba(46, 242, 160, 0.6),
+        0 14px 0 0 #2EF2A0,
+        0 14px 6px 0 rgba(46, 242, 160, 0.35),
+        0 28px 0 0 #2EF2A0,
+        0 28px 6px 0 rgba(46, 242, 160, 0.35),
+        0 42px 0 0 #2EF2A0,
+        0 42px 6px 0 rgba(46, 242, 160, 0.35);
+}
+
+.ca-status::after {
+    /* Stacked labels next to the dots */
+    content: "PWR \A NAV \A COMS \A LIFE";
+    white-space: pre;
+    position: absolute;
+    top: 0;
+    left: 14px;
+    line-height: 14px;
+    letter-spacing: 0.12em;
+    opacity: 0.75;
+}
+
+/* ---------------------------------------------------------------------
+   4. Mini radar / sonar (bottom-right)
+   60x60 circle with rotating sweep + crosshair
+   --------------------------------------------------------------------- */
+.ca-radar {
+    bottom: 22%;
+    right: 7%;
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(46, 242, 160, 0.5);
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow:
+        inset 0 0 12px rgba(46, 242, 160, 0.15),
+        0 0 14px rgba(46, 242, 160, 0.12);
+    background:
+        radial-gradient(circle at center, rgba(46, 242, 160, 0.08) 0%, transparent 70%);
+}
+
+.ca-radar::before {
+    /* Rotating sweep - conic gradient simulates the radar arm */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+        rgba(46, 242, 160, 0.55) 0deg,
+        rgba(46, 242, 160, 0.15) 30deg,
+        transparent 80deg,
+        transparent 360deg);
+    animation: ca-radar-sweep 3.4s linear infinite;
+}
+
+.ca-radar::after {
+    /* Crosshair lines + center dot */
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+        linear-gradient(0deg, transparent 49.5%, rgba(46, 242, 160, 0.35) 49.5%, rgba(46, 242, 160, 0.35) 50.5%, transparent 50.5%),
+        linear-gradient(90deg, transparent 49.5%, rgba(46, 242, 160, 0.35) 49.5%, rgba(46, 242, 160, 0.35) 50.5%, transparent 50.5%),
+        radial-gradient(circle at center, #2EF2A0 0, #2EF2A0 1.5px, transparent 2px);
+}
+
+@keyframes ca-radar-sweep {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ---------------------------------------------------------------------
+   Mobile: cockpit gets too busy on small screens.
+   Keep only the compass (most iconic), hide everything else.
+   --------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .cockpit-ambient {
+        /* Drop the gridfloor on mobile, keep only the faint vignette */
+        background-image:
+            radial-gradient(circle at 92% 88%, rgba(46, 242, 160, 0.05) 0%, transparent 38%);
+    }
+
+    .ca-coord,
+    .ca-status,
+    .ca-radar {
+        display: none;
+    }
+
+    .ca-compass {
+        top: 3.5%;
+        right: 5%;
+        width: 72px;
+        height: 36px;
+        font-size: 0.55rem;
+    }
+}
+
+/* ---------------------------------------------------------------------
+   Accessibility: cancel motion for reduced-motion users
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    .ca-radar::before {
+        animation: none;
+        /* Park sweep at a static angle so the radar still reads as a radar */
+        transform: rotate(135deg);
+    }
+
+    .cockpit-ambient,
+    .cockpit-ambient > i {
+        transition: opacity 200ms ease;
+    }
+}

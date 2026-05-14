@@ -75,6 +75,13 @@
     <link rel="stylesheet" href="enhancements/16-hero-mobile-presence.css">
     <link rel="stylesheet" href="enhancements/01-warp-hud.css">
 
+    <!-- Cockpit redesign (5 design-agent files, loaded last so they win) -->
+    <link rel="stylesheet" href="enhancements/cockpit-canopy.css">
+    <link rel="stylesheet" href="enhancements/cockpit-destination.css">
+    <link rel="stylesheet" href="enhancements/cockpit-pitstops.css">
+    <link rel="stylesheet" href="enhancements/cockpit-ambient.css">
+    <link rel="stylesheet" href="enhancements/cockpit-motion.css">
+
     <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -163,10 +170,31 @@
     <!-- Warp starfield canvas (only renders while space is held) -->
     <canvas id="warp-canvas" aria-hidden="true"></canvas>
 
-    <!-- Warp HUD overlay - cockpit frame met struts + canopy + pilot silhouet (3D vibe) -->
+    <!-- Warp HUD overlay - cockpit frame met canopy + pitstops + ambient widgets -->
     <div class="warp-hud" id="warp-hud" aria-hidden="true">
 
-        <!-- Top HUD strip: ingebed in cockpit canopy -->
+        <!-- Canopy frame: vignette + 4 corner brackets + 2 side struts + reticle + scanlines -->
+        <div class="cockpit-canopy" aria-hidden="true">
+            <div class="cockpit-canopy__vignette"></div>
+            <div class="cockpit-canopy__bracket cockpit-canopy__bracket--tl cockpit-bracket cockpit-bracket--tl"></div>
+            <div class="cockpit-canopy__bracket cockpit-canopy__bracket--tr cockpit-bracket cockpit-bracket--tr"></div>
+            <div class="cockpit-canopy__bracket cockpit-canopy__bracket--bl cockpit-bracket cockpit-bracket--bl"></div>
+            <div class="cockpit-canopy__bracket cockpit-canopy__bracket--br cockpit-bracket cockpit-bracket--br"></div>
+            <div class="cockpit-canopy__strut cockpit-canopy__strut--left cockpit-strut"></div>
+            <div class="cockpit-canopy__strut cockpit-canopy__strut--right cockpit-strut"></div>
+            <div class="cockpit-canopy__reticle"></div>
+            <div class="cockpit-canopy__scanlines"></div>
+        </div>
+
+        <!-- Ambient widgets: compass, coord, status grid, radar -->
+        <div class="cockpit-ambient" aria-hidden="true">
+            <i class="ca-coord"></i>
+            <i class="ca-compass"></i>
+            <i class="ca-status"></i>
+            <i class="ca-radar"></i>
+        </div>
+
+        <!-- Destination announcement -->
         <h2 id="hud-big-destination">OVER MIJ</h2>
 
         <!-- Bottom dashboard: pilot card | 5 route stops | velocity stack -->
@@ -348,10 +376,12 @@
         <!-- AI Tools Portfolio Section -->
         <section id="projects" class="section ai-portfolio-section">
             <div class="section-header contact-header">
-                <h2>Agentic Systems Portfolio</h2>
+                <h2 class="terminal-heading" aria-label="What I build">
+                    <span class="terminal-prompt">&gt;</span><span class="terminal-typed">what_i_build</span><span class="terminal-caret" aria-hidden="true"></span>
+                </h2>
             </div>
-            <p class="portfolio-subtitle">Enterprise agents, MCP-servers, multi-agent platforms en AI-infrastructuur
-                voor productieomgevingen.</p>
+            <p class="portfolio-subtitle">Agents, MCP-servers, automatiseringen en websites
+                — alles wat ik bouw, op één plek.</p>
 
             <!-- Featured Projects -->
             <div class="featured-projects-grid">

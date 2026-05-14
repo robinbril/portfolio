@@ -1,0 +1,270 @@
+/* ============================================================
+   Cockpit Canopy Frame
+   ------------------------------------------------------------
+   Renders the "glass canopy" you look through during warp:
+   - Organic dark vignette (curved canopy edges)
+   - 4 HUD corner brackets (mint, L-shape)
+   - Side struts (vertical mint bars)
+   - Center reticle (pulsing crosshair)
+   - CRT scan-lines (full-viewport, ultra-subtle)
+
+   Root element: .warp-hud (index.html line 167)
+   Frame container: .cockpit-canopy (child of .warp-hud)
+
+   Each bracket / strut / reticle gets its OWN container so the
+   cascade stays readable. No multi-bracket gradient hacks.
+
+   Gating: everything is invisible by default. Reveal happens
+   when body.xray is set (space-hold active).
+   ============================================================ */
+
+/* ---------- Tokens ---------- */
+:root {
+    --canopy-mint: #2EF2A0;
+    --canopy-mint-soft: rgba(46, 242, 160, 0.65);
+    --canopy-mint-faint: rgba(46, 242, 160, 0.18);
+    --canopy-glow: 0 0 6px rgba(46, 242, 160, 0.45);
+    --canopy-edge-offset: 24px;
+    --canopy-bracket-arm: 80px;
+    --canopy-bracket-thickness: 2px;
+    --canopy-fade: 0.25s ease;
+}
+
+/* ---------- Frame container ---------- */
+/* Lives inside .warp-hud, covers the viewport, never catches input. */
+.cockpit-canopy {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--canopy-fade);
+    will-change: opacity;
+}
+
+body.xray .cockpit-canopy {
+    opacity: 1;
+}
+
+/* All direct children inherit the non-interactive contract. */
+.cockpit-canopy > * {
+    position: absolute;
+    pointer-events: none;
+}
+
+/* ============================================================
+   1. Canopy vignette
+   Soft elliptical darkening of the viewport corners, suggesting
+   a curved glass surface. The horizontal axis darkens later
+   than the vertical so it reads "taller canopy" not "ring".
+   mix-blend-mode multiplies for natural depth without crushing
+   the warp starfield underneath.
+   ============================================================ */
+.cockpit-canopy__vignette {
+    inset: 0;
+    background:
+        radial-gradient(
+            ellipse 110% 85% at 50% 50%,
+            transparent 55%,
+            rgba(0, 0, 0, 0.35) 78%,
+            rgba(0, 0, 0, 0.72) 100%
+        );
+    mix-blend-mode: multiply;
+}
+
+/* ============================================================
+   2. HUD corner brackets
+   Each bracket is its own element. The L-shape is built from
+   two pseudo-elements (one horizontal arm, one vertical arm).
+   No clip-path, no multi-background; just two clean rectangles
+   per corner with a faint drop-shadow glow.
+   ============================================================ */
+.cockpit-canopy__bracket {
+    width: var(--canopy-bracket-arm);
+    height: var(--canopy-bracket-arm);
+    filter: drop-shadow(var(--canopy-glow));
+}
+
+.cockpit-canopy__bracket::before,
+.cockpit-canopy__bracket::after {
+    content: "";
+    position: absolute;
+    background: var(--canopy-mint-soft);
+}
+
+/* Horizontal arm */
+.cockpit-canopy__bracket::before {
+    width: var(--canopy-bracket-arm);
+    height: var(--canopy-bracket-thickness);
+}
+
+/* Vertical arm */
+.cockpit-canopy__bracket::after {
+    width: var(--canopy-bracket-thickness);
+    height: var(--canopy-bracket-arm);
+}
+
+/* Top-left: arms anchored top + left */
+.cockpit-canopy__bracket--tl {
+    top: var(--canopy-edge-offset);
+    left: var(--canopy-edge-offset);
+}
+.cockpit-canopy__bracket--tl::before { top: 0; left: 0; }
+.cockpit-canopy__bracket--tl::after  { top: 0; left: 0; }
+
+/* Top-right: arms anchored top + right */
+.cockpit-canopy__bracket--tr {
+    top: var(--canopy-edge-offset);
+    right: var(--canopy-edge-offset);
+}
+.cockpit-canopy__bracket--tr::before { top: 0; right: 0; }
+.cockpit-canopy__bracket--tr::after  { top: 0; right: 0; }
+
+/* Bottom-left: arms anchored bottom + left */
+.cockpit-canopy__bracket--bl {
+    bottom: var(--canopy-edge-offset);
+    left: var(--canopy-edge-offset);
+}
+.cockpit-canopy__bracket--bl::before { bottom: 0; left: 0; }
+.cockpit-canopy__bracket--bl::after  { bottom: 0; left: 0; }
+
+/* Bottom-right: arms anchored bottom + right */
+.cockpit-canopy__bracket--br {
+    bottom: var(--canopy-edge-offset);
+    right: var(--canopy-edge-offset);
+}
+.cockpit-canopy__bracket--br::before { bottom: 0; right: 0; }
+.cockpit-canopy__bracket--br::after  { bottom: 0; right: 0; }
+
+/* ============================================================
+   3. Side struts
+   Thin vertical mint bars hugging the left and right canopy
+   edges. 1px wide, 60vh tall, fades at top and bottom so the
+   strut dissolves into the vignette.
+   ============================================================ */
+.cockpit-canopy__strut {
+    top: 50%;
+    width: 1px;
+    height: 60vh;
+    transform: translateY(-50%);
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--canopy-mint-faint) 18%,
+        var(--canopy-mint-soft) 50%,
+        var(--canopy-mint-faint) 82%,
+        transparent 100%
+    );
+    box-shadow: var(--canopy-glow);
+}
+
+.cockpit-canopy__strut--left  { left: 14px; }
+.cockpit-canopy__strut--right { right: 14px; }
+
+/* ============================================================
+   4. Center reticle
+   Subtle circle + center dot + cardinal tick marks. Sits in
+   dead center of viewport, pulses gently (opacity + scale only,
+   no layout work).
+   ============================================================ */
+.cockpit-canopy__reticle {
+    top: 50%;
+    left: 50%;
+    width: 72px;
+    height: 72px;
+    margin: -36px 0 0 -36px;
+    border: 1px solid var(--canopy-mint-soft);
+    border-radius: 50%;
+    box-shadow: var(--canopy-glow), inset 0 0 8px rgba(46, 242, 160, 0.15);
+    animation: canopy-reticle-pulse 3s ease-in-out infinite;
+    will-change: opacity, transform;
+}
+
+/* Center dot */
+.cockpit-canopy__reticle::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    margin: -2px 0 0 -2px;
+    border-radius: 50%;
+    background: var(--canopy-mint);
+    box-shadow: var(--canopy-glow);
+}
+
+/* Cardinal tick marks (N/E/S/W) — four tiny mint dashes pinned
+   just outside the circle. */
+.cockpit-canopy__reticle::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    background:
+        linear-gradient(to bottom, var(--canopy-mint-soft) 0, var(--canopy-mint-soft) 6px, transparent 6px) top center    / 1px 6px no-repeat,
+        linear-gradient(to bottom, var(--canopy-mint-soft) 0, var(--canopy-mint-soft) 6px, transparent 6px) bottom center / 1px 6px no-repeat,
+        linear-gradient(to right,  var(--canopy-mint-soft) 0, var(--canopy-mint-soft) 6px, transparent 6px) center left   / 6px 1px no-repeat,
+        linear-gradient(to right,  var(--canopy-mint-soft) 0, var(--canopy-mint-soft) 6px, transparent 6px) center right  / 6px 1px no-repeat;
+}
+
+@keyframes canopy-reticle-pulse {
+    0%, 100% {
+        opacity: 0.55;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.06);
+    }
+}
+
+/* ============================================================
+   5. CRT scan-lines
+   Full-viewport horizontal lines, 3% mint opacity. Static
+   gradient, no animation, pure decoration to sell the screen
+   feel without hurting fps.
+   ============================================================ */
+.cockpit-canopy__scanlines {
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 2px,
+        rgba(46, 242, 160, 0.03) 2px,
+        rgba(46, 242, 160, 0.03) 3px
+    );
+    mix-blend-mode: screen;
+}
+
+/* ============================================================
+   Mobile tuning
+   Smaller brackets, drop the side struts (too tight on phones),
+   shrink the reticle.
+   ============================================================ */
+@media (max-width: 768px) {
+    .cockpit-canopy {
+        --canopy-bracket-arm: 40px;
+        --canopy-edge-offset: 14px;
+    }
+
+    .cockpit-canopy__strut {
+        display: none;
+    }
+
+    .cockpit-canopy__reticle {
+        width: 52px;
+        height: 52px;
+        margin: -26px 0 0 -26px;
+    }
+}
+
+/* ============================================================
+   Reduced motion
+   Cancel the reticle pulse, hold a steady mid-state.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+    .cockpit-canopy__reticle {
+        animation: none;
+        opacity: 0.75;
+    }
+}
