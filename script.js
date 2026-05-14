@@ -722,20 +722,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const NAV_HEIGHT = 80;
 
-    const scrollToContact = () => {
-        const target = document.getElementById('contact');
+    // Destinations cycled while warping; release picks the visible one
+    const DESTINATIONS = [
+        { id: 'about',      label: 'OVER MIJ' },
+        { id: 'projects',   label: 'PROJECTEN' },
+        { id: 'experience', label: 'ERVARING' },
+        { id: 'skills',     label: 'SKILLS' },
+        { id: 'contact',    label: 'CONTACT' }
+    ];
+    const CYCLE_MS = 900;
+    const FADE_MS = 160;
+
+    let cycleTimer = null;
+    let currentDestIdx = 0;
+
+    const scrollToSection = (id) => {
+        const target = document.getElementById(id);
         if (!target) return;
         const y = target.getBoundingClientRect().top + window.pageYOffset - NAV_HEIGHT - 16;
         window.scrollTo({ top: y, behavior: 'smooth' });
+    };
+
+    const setBigDest = (label, instant) => {
+        const big = document.getElementById('hud-big-destination');
+        const small = document.getElementById('hud-destination');
+        if (small) small.textContent = label;
+        if (!big) return;
+        const paint = () => {
+            big.textContent = label;
+            big.setAttribute('opacity', '0.95');
+        };
+        if (instant) {
+            paint();
+        } else {
+            big.setAttribute('opacity', '0');
+            setTimeout(paint, FADE_MS);
+        }
+    };
+
+    const startCycle = () => {
+        currentDestIdx = 0;
+        setBigDest(DESTINATIONS[0].label, true);
+        clearInterval(cycleTimer);
+        cycleTimer = setInterval(() => {
+            currentDestIdx = (currentDestIdx + 1) % DESTINATIONS.length;
+            setBigDest(DESTINATIONS[currentDestIdx].label, false);
+        }, CYCLE_MS);
+    };
+
+    const stopCycle = () => {
+        clearInterval(cycleTimer);
+        cycleTimer = null;
+        const big = document.getElementById('hud-big-destination');
+        if (big) big.setAttribute('opacity', '0');
     };
 
     const activate = () => {
         if (warpActive) return;
         warpActive = true;
         document.body.classList.add('xray');
-
-        const hudDest = document.getElementById('hud-destination');
-        if (hudDest) hudDest.textContent = 'CONTACT';
 
         speed = 8;
         seedStars();
@@ -744,20 +789,21 @@ document.addEventListener('DOMContentLoaded', () => {
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(tick);
 
-        clearTimeout(scanTimer);
-        scanTimer = setTimeout(() => {
-            if (!warpActive) return;
-            scrollToContact();
-            if (hudStatus) hudStatus.textContent = 'ARRIVAL: CONTACT';
-        }, 1200);
+        startCycle();
     };
 
     const deactivate = () => {
-        clearTimeout(scanTimer);
         if (!warpActive) return;
         warpActive = false;
+
+        const dest = DESTINATIONS[currentDestIdx];
+        stopCycle();
+
         document.body.classList.remove('xray');
         cancelAnimationFrame(raf);
+
+        if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + dest.label;
+        scrollToSection(dest.id);
 
         // Quick black fade so the canvas exits cleanly
         let n = 0;

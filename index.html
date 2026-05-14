@@ -212,34 +212,17 @@
                 <circle cx="0" cy="0" r="32" fill="none" stroke="rgba(232,255,246,0.4)" stroke-width="0.8"/>
             </g>
 
-            <!-- Diagonal light sweep for asymmetry -->
-            <line x1="300" y1="900" x2="560" y2="180" stroke="rgba(46,242,160,0.025)" stroke-width="90" />
-
-            <!-- Vignette -->
-            <rect width="1600" height="900" fill="url(#canopyGlow)" />
-
-            <!-- Curved cockpit canopy -->
-            <path d="M 0,400 C 320,140 1280,140 1600,400 L 1600,0 L 0,0 Z" fill="url(#hullSheen)" />
-            <path d="M 0,400 C 320,140 1280,140 1600,400" stroke="rgba(46,242,160,0.3)" stroke-width="1.5" fill="none" />
-            <!-- Subtle canopy ribs -->
-            <path d="M 420,190 C 510,400 510,640 420,860" stroke="rgba(46,242,160,0.07)" stroke-width="1" fill="none" />
-            <path d="M 1180,190 C 1090,400 1090,640 1180,860" stroke="rgba(46,242,160,0.07)" stroke-width="1" fill="none" />
-
-            <!-- Side hull pillars -->
-            <path d="M 0,0 L 260,0 C 200,300 200,600 260,900 L 0,900 Z" fill="url(#hullSheen)" />
-            <path d="M 1600,0 L 1340,0 C 1400,300 1400,600 1340,900 L 1600,900 Z" fill="url(#hullSheen)" />
-
-            <!-- Bottom dashboard -->
-            <path d="M 0,900 L 0,660 C 360,830 1240,830 1600,660 L 1600,900 Z" fill="url(#hullSheen)" />
-            <path d="M 0,660 C 360,830 1240,830 1600,660" stroke="rgba(46,242,160,0.28)" stroke-width="1.2" fill="none" />
-
-            <!-- Rivets -->
-            <circle cx="228" cy="210" r="3.5" fill="url(#rivet)" />
-            <circle cx="228" cy="440" r="3.5" fill="url(#rivet)" />
-            <circle cx="228" cy="670" r="3.5" fill="url(#rivet)" />
-            <circle cx="1372" cy="210" r="3.5" fill="url(#rivet)" />
-            <circle cx="1372" cy="440" r="3.5" fill="url(#rivet)" />
-            <circle cx="1372" cy="670" r="3.5" fill="url(#rivet)" />
+            <!-- Big roulette destination text — cycles while warping -->
+            <g text-anchor="middle" font-family="Inter, sans-serif">
+                <text id="hud-big-destination" x="800" y="430"
+                    font-size="96" font-weight="800"
+                    fill="#E8FFF6" opacity="0">DESTINATION</text>
+                <text id="hud-big-hint" x="800" y="490"
+                    font-size="13" font-weight="600"
+                    fill="#2EF2A0" opacity="0.65"
+                    font-family="JetBrains Mono, monospace"
+                    letter-spacing="0.35em">RELEASE TO LAND</text>
+            </g>
 
             <!-- HUD text LEFT — pulled inward -->
             <g font-family="JetBrains Mono, monospace" fill="#2EF2A0">

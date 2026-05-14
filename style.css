@@ -1546,7 +1546,7 @@ body.xray::before {
 }
 
 body.xray::after {
-    content: "WARP ENGAGED  —  RELEASE SPACE";
+    content: "RELEASE SPACE TO LAND";
     position: fixed;
     bottom: 20px;
     left: 50%;
