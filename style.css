@@ -1530,42 +1530,14 @@ body.xray header {
     pointer-events: none;
 }
 
-/* Film grain overlay for cinematic warp atmosphere */
 body.xray::before {
-    content: '';
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 9997 !important;
-    pointer-events: none !important;
-    background:
-        url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.8 0 0 0 0 1 0 0 0 0 0.9 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>") !important;
-    background-size: 280px !important;
-    opacity: 0.08 !important;
-    mix-blend-mode: overlay;
-    animation: grain-shift 0.6s steps(4) infinite;
+    content: none !important;
+    display: none !important;
 }
 
 body.xray::after {
-    content: "RELEASE SPACE TO LAND";
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 99999;
-    padding: 0.55rem 1.1rem;
-    background: rgba(7, 17, 31, 0.9);
-    border: 1px solid rgba(46, 242, 160, 0.4);
-    color: #2EF2A0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    border-radius: 4px;
-    pointer-events: none;
-    box-shadow: 0 0 20px rgba(46, 242, 160, 0.2);
-    opacity: 1 !important;
-    animation: warp-hint-pulse 3s ease-in-out infinite;
+    content: none !important;
+    display: none !important;
 }
 
 @keyframes warp-hint-pulse {
@@ -5731,17 +5703,6 @@ body.light-theme .card-diagram svg rect[stroke*="46,242,160"] {
 }
 
 /* ==========================================
-   WARP ROULETTE BIG DESTINATION TEXT
-   ========================================== */
-#hud-big-destination,
-#hud-big-hint {
-    transition: opacity 0.18s ease-out;
-    text-shadow:
-        0 0 24px rgba(46, 242, 160, 0.45),
-        0 0 8px rgba(232, 255, 246, 0.6);
-}
-
-/* ==========================================
    FEATURED CARDS COMPRESSED
    ========================================== */
 .featured-project {
@@ -6023,22 +5984,22 @@ body.xray .warp-hud {
     font-weight: 800;
     color: #E8FFF6;
     letter-spacing: -0.01em;
+    text-align: center;
     opacity: 0;
     transition: opacity 0.18s ease-out;
     text-shadow:
-        0 0 24px rgba(46, 242, 160, 0.45),
-        0 0 6px rgba(232, 255, 246, 0.8);
-    text-align: center;
+        0 0 28px rgba(46, 242, 160, 0.55),
+        0 0 10px rgba(232, 255, 246, 0.85);
 }
 
 .warp-hint {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: #2EF2A0;
-    opacity: 0.55;
+    opacity: 0.6;
     letter-spacing: 0.35em;
-    margin-top: 1rem;
+    margin-top: 1.25rem;
 }
 
 .warp-velocity {
@@ -6071,5 +6032,4 @@ body.xray .warp-hud {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .warp-big { transition: none; }
 }
