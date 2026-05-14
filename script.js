@@ -720,23 +720,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
 
-    const pickDestination = () => {
-        const order = ['projects', 'experience', 'skills', 'contact'];
-        const labels = {
-            projects: 'PROJECTS',
-            experience: 'EXPERIENCE',
-            skills: 'SKILLS',
-            contact: 'CONTACT'
-        };
-        const scrollY = window.scrollY + window.innerHeight * 0.4;
-        for (const id of order) {
-            const el = document.getElementById(id);
-            if (el && el.offsetTop > scrollY) {
-                return { id, label: labels[id] };
-            }
-        }
-        // Already past last section - cycle back to start
-        return { id: 'home', label: 'BASE STATION' };
+    const NAV_HEIGHT = 80;
+
+    const scrollToContact = () => {
+        const target = document.getElementById('contact');
+        if (!target) return;
+        const y = target.getBoundingClientRect().top + window.pageYOffset - NAV_HEIGHT - 16;
+        window.scrollTo({ top: y, behavior: 'smooth' });
     };
 
     const activate = () => {
@@ -744,9 +734,8 @@ document.addEventListener('DOMContentLoaded', () => {
         warpActive = true;
         document.body.classList.add('xray');
 
-        const dest = pickDestination();
         const hudDest = document.getElementById('hud-destination');
-        if (hudDest) hudDest.textContent = dest.label;
+        if (hudDest) hudDest.textContent = 'CONTACT';
 
         speed = 8;
         seedStars();
@@ -758,9 +747,8 @@ document.addEventListener('DOMContentLoaded', () => {
         clearTimeout(scanTimer);
         scanTimer = setTimeout(() => {
             if (!warpActive) return;
-            const target = document.getElementById(dest.id);
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + dest.label;
+            scrollToContact();
+            if (hudStatus) hudStatus.textContent = 'ARRIVAL: CONTACT';
         }, 1200);
     };
 
