@@ -90,55 +90,5 @@
     }
 }
 
-body.light-theme .hero::after {
-    background: linear-gradient(to bottom,
-        transparent 0%,
-        rgba(13, 148, 136, 0.6) 40%,
-        rgba(13, 148, 136, 0.9) 100%);
-}
-
-/* Light theme hero: solid light bg, geen video lekkage meer
-   Robin's critique: "kleurovergang is heel slecht op mobile" — de dark video
-   schijnt door de semi-transparante overlay heen. Maak het volledig solid. */
-body.light-theme .hero {
-    background: var(--bg-color, #f6f8fb);
-}
-
-body.light-theme .hero-video,
-body.light-theme video.hero-video,
-body.light-theme .hero > video {
-    opacity: 0;
-    visibility: hidden;
-}
-
-body.light-theme .hero::after {
-    background: linear-gradient(180deg,
-        rgba(246, 248, 251, 0.00) 0%,
-        rgba(246, 248, 251, 0.85) 50%,
-        rgba(246, 248, 251, 1) 100%) !important;
-}
-
-/* Stats in light mode: subtle teal, geen dark bg meer */
-body.light-theme .hero-stats,
-body.light-theme .stats-grid {
-    background: transparent;
-    border-top-color: rgba(13, 148, 136, 0.18);
-}
-
-body.light-theme .hero-stat strong,
-body.light-theme .stat-number {
-    color: #0d9488 !important;
-}
-
-body.light-theme .hero-stat span,
-body.light-theme .stat-label {
-    color: #475569 !important;
-}
-
-/* Section headings in light mode: gegarandeerd zichtbaar */
-body.light-theme .section-header h2,
-body.light-theme h2:not(.hero h1) {
-    color: #0c1422 !important;
-    background: none !important;
-    -webkit-text-fill-color: #0c1422 !important;
-}
+/* Light-theme overrides verwijderd op Robin's verzoek - originele
+   baby-blue palette + bestaande styles in style.css blijven leidend. */
