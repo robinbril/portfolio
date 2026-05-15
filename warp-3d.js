@@ -325,17 +325,25 @@ export class WormholeEngine {
             : 1 - (this.frame - fadeStart) / fadeDur;
         for (const t of this.tunnelMats) t.mat.opacity = t.baseOpacity * tunnelFade;
 
+        // Camera kijkt EXACT langs de curve-tangent voor consistent
+        // gecentreerde vanishing point (reticle alignment). Vorige
+        // versie gebruikte een toekomstig curve-punt als look-target;
+        // bij hoge curvatuur zorgt dat voor off-center convergence.
         const pos = this.curve.getPoint(this.t);
-        const look = this.curve.getPoint((this.t + LOOKAHEAD) % 1);
+        const tang = this.curve.getTangent(this.t);
         this.cam.position.copy(pos);
 
-        const tang = this.curve.getTangent(this.t);
         const up = new THREE.Vector3(0, 1, 0);
         if (Math.abs(tang.dot(up)) > 0.99) up.set(1, 0, 0);
         const right = new THREE.Vector3().crossVectors(tang, up).normalize();
         const realUp = new THREE.Vector3().crossVectors(right, tang).normalize();
-        look.addScaledVector(right, this.mx * 1.2);
-        look.addScaledVector(realUp, this.my * 1.2);
+
+        // Look point = pos + tangent * lookahead_distance, met subtle
+        // mouse-parallax (was 1.2, nu 0.25 - minimaal zodat reticle
+        // praktisch altijd op het vanishing point zit).
+        const look = pos.clone().addScaledVector(tang, 6);
+        look.addScaledVector(right, this.mx * 0.25);
+        look.addScaledVector(realUp, this.my * 0.25);
         this.cam.lookAt(look);
 
         let maxRingGlow = 0;

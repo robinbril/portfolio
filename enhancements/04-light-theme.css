@@ -5,31 +5,29 @@
    ========================================== */
 
 /* ------------------------------------------------------------------
-   1. CORE TOKENS — repaint the light palette toward teal/emerald
-   The dark theme keeps its mint (#00ff9d). Light theme switches the
-   "accent" semantics to a darker teal so glow rgba() rules across the
-   codebase stop producing pastel-on-white washouts.
+   1. CORE TOKENS — baby blue palette
+   Dark theme keeps mint (#00ff9d). Light theme uses soft blue.
    ------------------------------------------------------------------ */
 body.light-theme {
-    --bg-color: #f6f8fb;
+    --bg-color: #f8fafc;
     --card-bg: #ffffff;
-    --text-primary: #0c1422;
-    --text-secondary: #334155;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
 
-    --accent-primary: #0d9488;          /* teal-600, replaces neon mint */
-    --accent-secondary: #047857;        /* forest-700 */
-    --accent-strong: #0d9488;           /* unified, was blue #3b82f6 */
-    --accent-rgb: 13, 148, 136;
-    --accent-secondary-rgb: 4, 120, 87;
-    --accent-strong-rgb: 13, 148, 136;
+    --accent-primary: #93c5fd;          /* blue-300, soft baby blue */
+    --accent-secondary: #93c5fd;        /* blue-300 */
+    --accent-strong: #3b82f6;           /* blue-500, strong accent */
+    --accent-rgb: 147, 197, 253;
+    --accent-secondary-rgb: 147, 197, 253;
+    --accent-strong-rgb: 59, 130, 246;
 
-    --border-color: #cbd5e1;            /* was #e2e8f0 — bumped for 3:1 */
-    --nav-bg: rgba(246, 248, 251, 0.95);
-    --btn-primary-bg: #0d9488;
+    --border-color: #e2e8f0;
+    --nav-bg: rgba(248, 250, 252, 0.95);
+    --btn-primary-bg: #3b82f6;
     --btn-primary-text: #ffffff;
 
-    --case-accent: #0d9488;
-    --case-accent-rgb: 13, 148, 136;
+    --case-accent: #3b82f6;
+    --case-accent-rgb: 59, 130, 246;
 }
 
 /* Body text default + heading punch-up */
@@ -76,7 +74,7 @@ body.light-theme .ai-project-card:hover {
     background: #ffffff;
     border-color: #cbd5e1;
     border-left-width: 4px;
-    border-left-color: #0d9488;
+    border-left-color: #3b82f6;
     box-shadow:
         0 4px 12px rgba(15, 23, 42, 0.08),
         0 12px 28px rgba(15, 23, 42, 0.10);
@@ -102,7 +100,7 @@ body.light-theme .ai-project-card h3 {
 /* Featured project — solid surface */
 body.light-theme .featured-project {
     background:
-        radial-gradient(circle at 18% 0%, rgba(13, 148, 136, 0.06), transparent 38%),
+        radial-gradient(circle at 18% 0%, rgba(59, 130, 246, 0.06), transparent 38%),
         #ffffff;
     border: 1px solid #e2e8f0;
     box-shadow:
@@ -154,7 +152,7 @@ body.light-theme .card-metric-label {
 }
 
 body.light-theme .metric-number {
-    color: #0d9488;
+    color: #3b82f6;
 }
 
 body.light-theme .card-metric {
@@ -195,8 +193,8 @@ body.light-theme .cert-item h4 {
    3. STATUS DOTS / BADGES — emerald, not neon mint
    ------------------------------------------------------------------ */
 body.light-theme .status-dot {
-    background: #059669;
-    box-shadow: 0 0 8px rgba(5, 150, 105, 0.5);
+    background: #3b82f6;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
 }
 
 body.light-theme .whatsapp-status {
@@ -215,20 +213,20 @@ body.light-theme .status-text {
 }
 
 body.light-theme .featured-project .card-status {
-    color: #047857;
-    background: rgba(5, 150, 105, 0.08);
-    border: 1px solid rgba(5, 150, 105, 0.32);
+    color: #2563eb;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.32);
 }
 
 body.light-theme .featured-project .card-status .status-dot {
-    background: #047857;
-    box-shadow: 0 0 8px rgba(4, 120, 87, 0.45);
+    background: #2563eb;
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.45);
 }
 
 body.light-theme .featured-project .card-company {
-    color: #047857;
-    background: rgba(5, 150, 105, 0.08);
-    border: 1px solid rgba(5, 150, 105, 0.32);
+    color: #2563eb;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.32);
 }
 
 body.light-theme .featured-project .card-metric-label {
@@ -240,7 +238,7 @@ body.light-theme .featured-project .card-metric-value {
 }
 
 body.light-theme .card-id {
-    color: #047857;
+    color: #2563eb;
 }
 
 /* ------------------------------------------------------------------
@@ -252,23 +250,23 @@ body.light-theme .timeline {
 
 body.light-theme .timeline-item::before {
     background: #ffffff;
-    border: 3px solid #0d9488;
-    box-shadow: 0 0 8px rgba(13, 148, 136, 0.35);
+    border: 3px solid #3b82f6;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.35);
 }
 
 body.light-theme .timeline-date {
-    color: #047857;
+    color: #2563eb;
 }
 
 body.light-theme .role-description li::before {
-    background: #0d9488;
-    box-shadow: 0 0 6px rgba(13, 148, 136, 0.3);
+    background: #3b82f6;
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.3);
 }
 
 body.light-theme .timeline-content.glow-card:hover {
     box-shadow:
         0 4px 12px rgba(15, 23, 42, 0.08),
-        0 0 18px rgba(13, 148, 136, 0.10);
+        0 0 18px rgba(59, 130, 246, 0.10);
 }
 
 /* ------------------------------------------------------------------
@@ -276,19 +274,19 @@ body.light-theme .timeline-content.glow-card:hover {
    ------------------------------------------------------------------ */
 body.light-theme .btn-primary,
 body.light-theme .cta-primary-btn {
-    background: linear-gradient(135deg, #0d9488, #047857);
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: #ffffff;
-    border: 1px solid #047857;
+    border: 1px solid #2563eb;
     box-shadow:
-        0 2px 8px rgba(13, 148, 136, 0.28),
+        0 2px 8px rgba(59, 130, 246, 0.28),
         0 1px 0 rgba(255, 255, 255, 0.3) inset;
 }
 
 body.light-theme .btn-primary:hover,
 body.light-theme .cta-primary-btn:hover {
-    background: linear-gradient(135deg, #0f766e, #065f46);
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
     box-shadow:
-        0 6px 20px rgba(13, 148, 136, 0.35),
+        0 6px 20px rgba(59, 130, 246, 0.35),
         0 1px 0 rgba(255, 255, 255, 0.3) inset;
     transform: translateY(-2px);
 }
@@ -299,31 +297,31 @@ body.light-theme .cta-primary-btn i {
 }
 
 body.light-theme .nav-links .btn-primary:hover {
-    background: linear-gradient(135deg, #0f766e, #065f46);
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
 }
 
 /* Calendar/CTA button — same teal gradient */
 body.light-theme .calendar-btn {
-    background: linear-gradient(135deg, #0d9488, #047857);
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: #ffffff;
 }
 
 body.light-theme .calendar-btn:hover {
-    background: linear-gradient(135deg, #0f766e, #065f46);
-    box-shadow: 0 12px 28px rgba(13, 148, 136, 0.3);
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    box-shadow: 0 12px 28px rgba(59, 130, 246, 0.3);
 }
 
 /* Secondary: outline */
 body.light-theme .cv-download-btn {
-    color: #047857;
-    border: 1px solid #0d9488;
+    color: #2563eb;
+    border: 1px solid #3b82f6;
     background: #ffffff;
 }
 
 body.light-theme .cv-download-btn:hover {
     background: #f1f5f9;
-    border-color: #047857;
-    color: #047857;
+    border-color: #2563eb;
+    color: #2563eb;
 }
 
 /* WhatsApp CTA — keep brand green but readable */
@@ -353,14 +351,14 @@ body.light-theme .filter-btn {
 }
 
 body.light-theme .filter-btn:hover {
-    border-color: #0d9488;
-    color: #047857;
+    border-color: #3b82f6;
+    color: #2563eb;
     background: #f1f5f9;
 }
 
 body.light-theme .filter-btn.active {
-    background: #0d9488;
-    border-color: #047857;
+    background: #3b82f6;
+    border-color: #2563eb;
     color: #ffffff;
 }
 
@@ -368,15 +366,15 @@ body.light-theme .filter-btn.active {
    7. TAGS / CHIPS / BADGES — readable, no rgba(0,0,0,0.5) ghosts
    ------------------------------------------------------------------ */
 body.light-theme .tags span {
-    background: rgba(13, 148, 136, 0.08);
-    border: 1px solid rgba(13, 148, 136, 0.32);
-    color: #047857;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.32);
+    color: #2563eb;
 }
 
 body.light-theme .tags span:hover {
-    background: rgba(13, 148, 136, 0.14);
-    border-color: #0d9488;
-    color: #065f46;
+    background: rgba(59, 130, 246, 0.14);
+    border-color: #3b82f6;
+    color: #1d4ed8;
 }
 
 body.light-theme .tech-badge,
@@ -391,8 +389,8 @@ body.light-theme .tech-badge:hover,
 body.light-theme .skill-tags span:hover,
 body.light-theme .contact-item:hover {
     background: #f1f5f9;
-    border-color: #0d9488;
-    color: #047857;
+    border-color: #3b82f6;
+    color: #2563eb;
 }
 
 body.light-theme .stat-pill {
@@ -426,9 +424,9 @@ body.light-theme .tag-magenta {
 
 /* CTA badge */
 body.light-theme .cta-badge {
-    background: rgba(13, 148, 136, 0.10);
-    border: 1px solid #0d9488;
-    color: #047857;
+    background: rgba(59, 130, 246, 0.10);
+    border: 1px solid #3b82f6;
+    color: #2563eb;
 }
 
 /* ------------------------------------------------------------------
@@ -449,8 +447,8 @@ body.light-theme .form-group textarea::placeholder {
 body.light-theme .form-group input:focus,
 body.light-theme .form-group textarea:focus {
     background: #ffffff;
-    border-color: #0d9488;
-    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.18);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
 }
 
 body.light-theme .form-group label {
@@ -479,13 +477,13 @@ body.light-theme .terminal-body {
     color: #1a2332;
 }
 
-body.light-theme .terminal-line--system { color: #047857; }
-body.light-theme .terminal-line--system::before { color: #0d9488; }
+body.light-theme .terminal-line--system { color: #2563eb; }
+body.light-theme .terminal-line--system::before { color: #3b82f6; }
 body.light-theme .terminal-line--user { color: #0c1422; }
 body.light-theme .terminal-line--user::before { color: #475569; }
-body.light-theme .terminal-line--link { color: #047857; }
-body.light-theme .terminal-line--link a { color: #047857; }
-body.light-theme .terminal-line--link a:hover { color: #065f46; }
+body.light-theme .terminal-line--link { color: #2563eb; }
+body.light-theme .terminal-line--link a { color: #2563eb; }
+body.light-theme .terminal-line--link a:hover { color: #1d4ed8; }
 body.light-theme .terminal-line--muted { color: #475569; }
 
 body.light-theme .terminal-chips {
@@ -500,8 +498,8 @@ body.light-theme .terminal-chip {
 }
 
 body.light-theme .terminal-chip:hover {
-    border-color: #0d9488;
-    color: #047857;
+    border-color: #3b82f6;
+    color: #2563eb;
     background: #f1f5f9;
 }
 
@@ -512,16 +510,16 @@ body.light-theme .terminal-input-row {
 
 body.light-theme .terminal-input { color: #0c1422; }
 body.light-theme .terminal-input::placeholder { color: #64748b; }
-body.light-theme .terminal-input-prompt { color: #047857; }
+body.light-theme .terminal-input-prompt { color: #2563eb; }
 body.light-theme .terminal-submit { color: #475569; }
-body.light-theme .terminal-submit:hover { color: #047857; }
-body.light-theme .terminal-cursor { background: #0d9488; }
-body.light-theme .terminal-line--typing::after { color: #0d9488; }
+body.light-theme .terminal-submit:hover { color: #2563eb; }
+body.light-theme .terminal-cursor { background: #3b82f6; }
+body.light-theme .terminal-line--typing::after { color: #3b82f6; }
 body.light-theme .terminal-title { color: #475569; }
 body.light-theme .terminal-close { color: #334155; }
 
 body.light-theme .terminal-path {
-    color: #047857;
+    color: #2563eb;
 }
 
 /* ------------------------------------------------------------------
@@ -530,24 +528,24 @@ body.light-theme .terminal-path {
 body.light-theme .hero-eyebrow {
     background: #ffffff;
     border: 1px solid #cbd5e1;
-    color: #047857;
+    color: #2563eb;
     box-shadow:
         0 1px 2px rgba(15, 23, 42, 0.04),
-        0 2px 8px rgba(13, 148, 136, 0.10);
+        0 2px 8px rgba(59, 130, 246, 0.10);
 }
 
 body.light-theme .hero-pulse {
-    background: #059669;
-    box-shadow: 0 0 8px rgba(5, 150, 105, 0.55);
+    background: #3b82f6;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.55);
 }
 
-@keyframes hero-pulse-light-teal {
-    0%, 100% { box-shadow: 0 0 6px #059669, 0 0 0 0 rgba(5, 150, 105, 0.5); }
-    70%      { box-shadow: 0 0 10px #059669, 0 0 0 7px rgba(5, 150, 105, 0); }
+@keyframes hero-pulse-light-blue {
+    0%, 100% { box-shadow: 0 0 6px #3b82f6, 0 0 0 0 rgba(59, 130, 246, 0.5); }
+    70%      { box-shadow: 0 0 10px #3b82f6, 0 0 0 7px rgba(59, 130, 246, 0); }
 }
 
 body.light-theme .hero-pulse {
-    animation-name: hero-pulse-light-teal;
+    animation-name: hero-pulse-light-blue;
 }
 
 body.light-theme .hero-subtitle {
@@ -557,7 +555,7 @@ body.light-theme .hero-subtitle {
 
 body.light-theme .hero-stat strong,
 body.light-theme .stat-number {
-    color: #047857;
+    color: #2563eb;
 }
 
 body.light-theme .nav-links a:not(.btn-primary) {
@@ -565,28 +563,28 @@ body.light-theme .nav-links a:not(.btn-primary) {
 }
 
 body.light-theme .nav-links a.is-active:not(.btn-primary) {
-    color: #047857;
+    color: #2563eb;
 }
 
 body.light-theme .nav-links a.is-active:not(.btn-primary)::after {
-    background: #0d9488;
-    box-shadow: 0 0 8px rgba(13, 148, 136, 0.4);
+    background: #3b82f6;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
 }
 
 /* ------------------------------------------------------------------
    11. PROGRESS BAR — pull saturation down on light bg
    ------------------------------------------------------------------ */
 body.light-theme .progress-bar {
-    background: linear-gradient(90deg, #0d9488, #047857);
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
     box-shadow:
-        0 4px 12px rgba(13, 148, 136, 0.25),
-        0 0 16px rgba(13, 148, 136, 0.12);
+        0 4px 12px rgba(59, 130, 246, 0.25),
+        0 0 16px rgba(59, 130, 246, 0.12);
 }
 
 body.light-theme .progress-bar::after {
     box-shadow:
-        0 6px 16px rgba(13, 148, 136, 0.3),
-        0 0 24px rgba(13, 148, 136, 0.2);
+        0 6px 16px rgba(59, 130, 246, 0.3),
+        0 0 24px rgba(59, 130, 246, 0.2);
 }
 
 /* ------------------------------------------------------------------
@@ -613,7 +611,7 @@ body.light-theme .icon-green {
 }
 
 body.light-theme .project-icon-wrapper i {
-    color: #047857 !important;
+    color: #2563eb !important;
 }
 
 /* ------------------------------------------------------------------
@@ -629,22 +627,22 @@ body.light-theme .card-diagram svg text {
 }
 
 body.light-theme .card-diagram svg rect[stroke*="46,242,160"] {
-    stroke: #0d9488 !important;
+    stroke: #3b82f6 !important;
 }
 
 /* ------------------------------------------------------------------
    14. SCROLLBAR / SELECTION
    ------------------------------------------------------------------ */
 body.light-theme ::-webkit-scrollbar-thumb {
-    background: rgba(13, 148, 136, 0.35);
+    background: rgba(59, 130, 246, 0.35);
 }
 
 body.light-theme ::-webkit-scrollbar-thumb:hover {
-    background: rgba(13, 148, 136, 0.55);
+    background: rgba(59, 130, 246, 0.55);
 }
 
 body.light-theme ::selection {
-    background: rgba(13, 148, 136, 0.25);
+    background: rgba(59, 130, 246, 0.25);
     color: #0c1422;
 }
 
@@ -656,7 +654,7 @@ body.light-theme .xray-hint {
 }
 
 body.light-theme .xray-hint i {
-    color: #047857;
+    color: #2563eb;
 }
 
 body.light-theme .xray-hint kbd {
@@ -670,7 +668,7 @@ body.light-theme .xray-hint kbd {
    ------------------------------------------------------------------ */
 body.light-theme .email-reveal {
     background: #f8fafc;
-    border: 1px solid #0d9488;
+    border: 1px solid #3b82f6;
 }
 
 body.light-theme .email-reveal p {
@@ -685,5 +683,5 @@ body.light-theme .email-reveal .text-small {
    17. CARD CORNER DECOR
    ------------------------------------------------------------------ */
 body.light-theme .card-corner {
-    border-color: rgba(13, 148, 136, 0.35);
+    border-color: rgba(59, 130, 246, 0.35);
 }

@@ -186,6 +186,39 @@
     }
 }
 
+/* ---------- Light theme: baby blue instead of mint ---------- */
+body.light-theme .terminal-window {
+    --term-mint: #3b82f6;
+    --term-mint-soft: rgba(59, 130, 246, 0.6);
+    --term-mint-ghost: rgba(59, 130, 246, 0.35);
+    --term-mint-muted: rgba(59, 130, 246, 0.18);
+    --term-shadow: 0 0 0 1px rgba(59, 130, 246, 0.15), 0 4px 18px rgba(59, 130, 246, 0.08);
+}
+
+body.light-theme .terminal-prompt-hint {
+    background: #f1f5f9;
+    border-top-color: rgba(59, 130, 246, 0.12);
+}
+
+body.light-theme .terminal-prompt-hint kbd {
+    background: rgba(59, 130, 246, 0.08);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+body.light-theme .terminal-chip:hover {
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.25), 0 4px 14px rgba(59, 130, 246, 0.08);
+}
+
+body.light-theme .terminal-chip:active,
+body.light-theme .terminal-chip.is-active {
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 0 0 1px var(--term-mint), 0 0 18px rgba(59, 130, 246, 0.2);
+}
+
+body.light-theme .terminal-window.is-typing .terminal-input::placeholder {
+    color: rgba(59, 130, 246, 0.75);
+}
+
 /* ---------- Mobile: stack chips in 2-col grid ---------- */
 @media (max-width: 600px) {
     .terminal-chips {
