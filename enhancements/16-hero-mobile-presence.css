@@ -133,6 +133,11 @@ body.light-theme .hero p {
     color: rgba(15, 23, 42, 0.78) !important;
 }
 
+/* Stat numbers blauw in light theme (groen accent botst met blauw thema) */
+body.light-theme .hero-stat strong {
+    color: #2563eb !important;
+}
+
 @media (max-width: 768px) {
     .hero-stat strong {
         font-size: 1.85rem !important;

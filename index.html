@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
     <title>Robin Bril | Senior AI Engineer · Agents, MCP, Enterprise AI</title>
     <meta name="description"
-        content="Robin Bril — Senior AI Engineer met productie-ervaring in agent-systemen, MCP-koppelingen en enterprise AI op Azure. Beschikbaar voor freelance en fulltime opdrachten.">
+        content="Robin Bril, Senior AI Engineer met productie-ervaring in agent-systemen, MCP-koppelingen en enterprise AI op Azure. Beschikbaar voor freelance en fulltime opdrachten.">
     <meta name="author" content="Robin Bril">
     <link rel="canonical" href="https://robinbril.dev/">
 
@@ -60,7 +60,7 @@
     <link rel="stylesheet" href="apple-premium.css">
 
     <!-- Enhancements (load order = cascade order) -->
-    <!-- 04-light-theme.css disabled - Robin wil originele kleuren terug -->
+    <link rel="stylesheet" href="enhancements/04-light-theme.css">
     <link rel="stylesheet" href="enhancements/02-hero.css">
     <link rel="stylesheet" href="enhancements/03-nav-scrollspy.css">
     <link rel="stylesheet" href="enhancements/05-terminal.css">
@@ -96,8 +96,18 @@
         }
     </style>
 
-    <!-- Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Three.js importmap (pinned version, lazy-loaded on SPACE) -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Icons (self-hosted v0.460.0 — no CDN dependency) -->
+    <script src="lucide.min.js"></script>
 
     <!-- Structured data: Person -->
     <script type="application/ld+json">
@@ -182,7 +192,7 @@
     </div>
 
     <!-- Warp starfield canvas (only renders while space is held) -->
-    <canvas id="warp-canvas" aria-hidden="true"></canvas>
+    <div id="warp-canvas" aria-hidden="true"></div>
 
     <!-- Warp HUD overlay - cockpit frame met canopy + pitstops + ambient widgets -->
     <div class="warp-hud" id="warp-hud" aria-hidden="true">
@@ -288,8 +298,7 @@
                 </div>
                 <h1>AI Engineer</h1>
                 <p class="hero-subtitle">
-                    Ik bouw productieklare AI-systemen voor complexe bedrijfsprocessen.<br>
-                    Agents, automatiseringen en integraties die zelfstandig taken uitvoeren.
+                    Robin bouwt productieklare AI-systemen voor complexe bedrijfsprocessen. Agents, automatiseringen en integraties die zelfstandig taken uitvoeren.
                 </p>
 
                 <div class="hero-actions">
@@ -333,14 +342,14 @@
                 <div class="about-content">
                     <div class="about-text">
                         <p>
-                            Ik bouw AI-systemen die zelfstandig taken uitvoeren binnen bedrijven.
+                            AI-systemen die zelfstandig taken uitvoeren binnen bedrijven.
                             Met geheugen, toegang tot bedrijfsdata en duidelijke regels over wat ze
                             wel en niet mogen doen.
                         </p>
                         <p>
-                            Ik leverde <strong>7+ AI-agents</strong> die in productie draaien bij klanten,
-                            werkte mee aan het platform waarop nieuwe agents gebouwd worden en
-                            schreef een open-source tool die andere AI-engineers sneller laat werken.
+                            Tot nu toe <strong>7+ AI-agents</strong> opgeleverd die in productie draaien bij klanten,
+                            meegebouwd aan het platform waarop nieuwe agents ontstaan en
+                            een open-source tool geschreven die andere AI-engineers sneller laat werken.
                         </p>
                         <p>
                             Mijn achtergrond in bedrijfskunde en data-analyse helpt om AI in
@@ -394,7 +403,7 @@
                     <span class="typing-text">Mijn Projecten</span><span class="typing-caret" aria-hidden="true"></span>
                 </h2>
             </div>
-            <p class="portfolio-subtitle">Een selectie van agents, automatiseringen en tools die ik bouwde voor klanten en mezelf.</p>
+            <p class="portfolio-subtitle">Een selectie van agents, automatiseringen en tools, gebouwd voor klanten en eigen gebruik.</p>
 
             <!-- Featured Projects -->
             <div class="featured-projects-grid">
@@ -638,7 +647,7 @@
                     </div>
                     <h3>AI Image Editor</h3>
                     <p>Full-stack webapp met Stable Diffusion + ControlNet. Drag & drop editor met prompt-suggesties en
-                        one-click upscaling. <strong>Actief gebruikt in productie.</strong></p>
+                        one-click upscaling.</p>
                     <div class="project-tags">
                         <span class="tag-violet">Stable Diffusion</span>
                         <span class="tag-blue">Next.js</span>
@@ -839,7 +848,7 @@
                     <span class="project-kicker">Python</span>
                     <h3>pptx-mcp</h3>
                     <p>PowerPoint-generatie vanuit structured specs. <strong>Fellowmind-branded templates</strong>
-                        en master slides — agents leveren spec, MCP rendert presentatie.</p>
+                        en master slides. Agents leveren de spec, MCP rendert de presentatie.</p>
                     <div class="project-tags">
                         <span class="tag-violet">Python</span>
                         <span class="tag-blue">python-pptx</span>
@@ -1139,9 +1148,9 @@
         <!-- Skills Section -->
         <section id="skills" class="section skills-section">
             <div class="section-header skills-header">
-                <span class="section-eyebrow">Stack & praktijk</span>
+                <span class="section-eyebrow">Skills</span>
                 <h2>Technische Expertise</h2>
-                <p>Gebundeld rond het werk dat ik vaak lever: agents, enterprise-integraties en productieklare AI.</p>
+                <p>Gebundeld rond veelvoorkomend werk: agents, enterprise-integraties en productieklare AI.</p>
             </div>
             <div class="skills-container">
                 <div class="skill-category">
@@ -1621,8 +1630,20 @@
 
         <script src="script.js"></script>
         <script>
-            lucide.createIcons();
+            (function initIcons() {
+                try {
+                    if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                        lucide.createIcons();
+                    } else {
+                        document.addEventListener('DOMContentLoaded', function() {
+                            if (typeof lucide !== 'undefined') lucide.createIcons();
+                        });
+                    }
+                } catch(e) { console.warn('Lucide init failed:', e); }
+            })();
         </script>
+        <script defer src="/_vercel/insights/script.js"></script>
+        <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 
 </html>
