@@ -26,6 +26,15 @@
     transform: none;
 }
 
+/* Same fix voor .reveal CLASS (style.css regel 4968 zet die op opacity:0).
+   IntersectionObserver kan op mobiel of slow connections falen, met als
+   gevolg permanent onzichtbare featured cards / stats / sub-blocks =
+   "groot leeg gat" tussen Over Mij en Werkervaring. Force visible. */
+.reveal {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
 .section[data-reveal].in-view > *:nth-child(1) { transition-delay: 60ms; }
 .section[data-reveal].in-view > *:nth-child(2) { transition-delay: 140ms; }
 .section[data-reveal].in-view > *:nth-child(3) { transition-delay: 220ms; }
