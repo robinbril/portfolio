@@ -57,6 +57,8 @@ if (document.readyState === 'loading') {
     startPreloader();
 }
 
+if (window.lucide) lucide.createIcons();
+
 // ==========================================
 // CURSOR GLOW EFFECT
 // ==========================================
@@ -544,6 +546,7 @@ function initNeuralNetwork() {
 
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
+    if (window.lucide) lucide.createIcons();
     initContactModal();
     initShowMoreToggle();
 });
@@ -554,36 +557,83 @@ document.addEventListener('DOMContentLoaded', () => {
 // WARP MODE — hold SPACE to engage hyperspace
 // ==========================================
 (() => {
-    const canvas = document.getElementById('warp-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('warp-canvas');
+    if (!container) return;
 
     let warpActive = false;
-    let raf = null;
-    let scanTimer = null;
-    let stars = [];
-    let speed = 8;
-    let dpr = Math.max(1, window.devicePixelRatio || 1);
-    const hudVel = document.getElementById('hud-velocity');
-    const hudStatus = document.getElementById('hud-status');
+    let engine3d = null;
+    let mode = null;
 
+    let canvas2d = null;
+    let ctx = null;
+    let raf2d = null;
+    let stars = [];
+    let speed2d = 8;
+    let dpr = Math.max(1, window.devicePixelRatio || 1);
     const STAR_COUNT = 1250;
     const Z_FAR = 2000;
     const FOCAL = 340;
-
     let mouseX = 0;
     let mouseY = 0;
     let pulsePhase = 0;
 
-    const resize = () => {
-        dpr = Math.max(1, window.devicePixelRatio || 1);
-        canvas.width = Math.floor(window.innerWidth * dpr);
-        canvas.height = Math.floor(window.innerHeight * dpr);
-        canvas.style.width = window.innerWidth + 'px';
-        canvas.style.height = window.innerHeight + 'px';
+    const hudVel = document.getElementById('hud-velocity');
+    const hudStatus = document.getElementById('hud-status');
+
+    const updateHud = (speedNorm) => {
+        if (hudVel) {
+            const c = speedNorm * 0.96 + 0.03;
+            hudVel.textContent = c.toFixed(2) + ' c';
+        }
+        if (hudStatus) {
+            if (speedNorm < 0.15) hudStatus.textContent = 'SPOOLING DRIVE...';
+            else if (speedNorm < 0.4) hudStatus.textContent = 'ACCELERATION NOMINAL';
+            else if (speedNorm < 0.7) hudStatus.textContent = 'BREAKING ATMOSPHERE';
+            else hudStatus.textContent = 'WARP STABLE — TRAJECTORY LOCKED';
+        }
     };
-    resize();
-    window.addEventListener('resize', resize);
+
+    const detectMode = () => {
+        if (mode) return mode;
+        try {
+            const c = document.createElement('canvas');
+            const gl = c.getContext('webgl2');
+            const desktop = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+            mode = (gl && desktop) ? '3d' : '2d';
+            if (gl) { const ext = gl.getExtension('WEBGL_lose_context'); if (ext) ext.loseContext(); }
+        } catch (e) { mode = '2d'; }
+        return mode;
+    };
+
+    let preloaded = false;
+    const preload = () => {
+        if (preloaded || detectMode() !== '3d') return;
+        preloaded = true;
+        import('./warp-3d.js').then(m => {
+            engine3d = new m.WormholeEngine(container);
+            engine3d.onFrame = updateHud;
+        }).catch(() => { mode = '2d'; });
+    };
+    document.addEventListener('mousemove', preload, { once: true });
+    document.addEventListener('scroll', preload, { once: true });
+
+    const ensure2d = () => {
+        if (canvas2d) return;
+        canvas2d = document.createElement('canvas');
+        canvas2d.style.cssText = 'position:absolute;inset:0';
+        container.appendChild(canvas2d);
+        ctx = canvas2d.getContext('2d');
+    };
+
+    const resize2d = () => {
+        if (!canvas2d) return;
+        dpr = Math.max(1, window.devicePixelRatio || 1);
+        canvas2d.width = Math.floor(window.innerWidth * dpr);
+        canvas2d.height = Math.floor(window.innerHeight * dpr);
+        canvas2d.style.width = window.innerWidth + 'px';
+        canvas2d.style.height = window.innerHeight + 'px';
+    };
+    window.addEventListener('resize', resize2d);
 
     const seedStars = () => {
         stars = [];
@@ -600,17 +650,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-    });
-
-    const tick = (ts) => {
-        if (!warpActive) return;
-        const w = canvas.width;
-        const h = canvas.height;
+    const tick2d = () => {
+        if (!warpActive || !canvas2d) return;
+        const w = canvas2d.width;
+        const h = canvas2d.height;
         const focal = FOCAL * dpr;
-
         const parallaxX = mouseX * 18 * dpr;
         const parallaxY = mouseY * 14 * dpr;
         const cx = w / 2 + parallaxX;
@@ -619,42 +663,36 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = 'rgba(7, 17, 31, 0.14)';
         ctx.fillRect(0, 0, w, h);
 
-        const intensity = Math.min(1, (speed - 8) / 34);
+        const intensity = Math.min(1, (speed2d - 8) / 34);
         pulsePhase += 0.018;
         const pulse = 0.5 + 0.5 * Math.sin(pulsePhase * 2.1);
         const coreStr = intensity * (0.85 + pulse * 0.15);
-
-        // Cover viewport diagonal + boost mid-stops so no dark "rectangle"
-        // emerges in the mid-band between bright center and edge star-streaks.
         const coreR = Math.hypot(w, h) * 0.72;
         const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR);
-        grad.addColorStop(0, `rgba(255, 255, 255, ${0.18 + coreStr * 0.32})`);
-        grad.addColorStop(0.08, `rgba(232, 255, 246, ${0.16 + coreStr * 0.26})`);
-        grad.addColorStop(0.25, `rgba(180, 220, 230, ${0.14 + coreStr * 0.2})`);
-        grad.addColorStop(0.5, `rgba(140, 180, 210, ${0.1 + coreStr * 0.14})`);
-        grad.addColorStop(0.8, `rgba(120, 160, 200, ${0.06 + coreStr * 0.08})`);
-        grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        grad.addColorStop(0, `rgba(255,255,255,${0.18 + coreStr * 0.32})`);
+        grad.addColorStop(0.08, `rgba(232,255,246,${0.16 + coreStr * 0.26})`);
+        grad.addColorStop(0.25, `rgba(180,220,230,${0.14 + coreStr * 0.2})`);
+        grad.addColorStop(0.5, `rgba(140,180,210,${0.1 + coreStr * 0.14})`);
+        grad.addColorStop(0.8, `rgba(120,160,200,${0.06 + coreStr * 0.08})`);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        // Continuous bright center burst (intensifies with speed)
-        const burstStr = Math.min(1, (speed - 8) / 32);
+        const burstStr = Math.min(1, (speed2d - 8) / 32);
         const burstR = (50 + burstStr * 120) * dpr * (0.9 + pulse * 0.15);
         const burst = ctx.createRadialGradient(cx, cy, 0, cx, cy, burstR);
-        burst.addColorStop(0, `rgba(255, 255, 255, ${0.3 + burstStr * 0.5})`);
-        burst.addColorStop(0.25, `rgba(232, 255, 246, ${0.12 + burstStr * 0.3})`);
-        burst.addColorStop(0.6, `rgba(46, 242, 160, ${burstStr * 0.18})`);
-        burst.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        burst.addColorStop(0, `rgba(255,255,255,${0.3 + burstStr * 0.5})`);
+        burst.addColorStop(0.25, `rgba(232,255,246,${0.12 + burstStr * 0.3})`);
+        burst.addColorStop(0.6, `rgba(46,242,160,${burstStr * 0.18})`);
+        burst.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = burst;
         ctx.fillRect(0, 0, w, h);
 
         ctx.lineCap = 'round';
-
         for (let i = 0; i < stars.length; i++) {
             const s = stars[i];
             s.pz = s.z;
-            s.z -= speed;
-
+            s.z -= speed2d;
             if (s.z < 1) {
                 s.x = (Math.random() - 0.5) * 2600;
                 s.y = (Math.random() - 0.5) * 2600;
@@ -662,27 +700,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 s.pz = Z_FAR;
                 continue;
             }
-
             const sx = (s.x / s.z) * focal + cx;
             const sy = (s.y / s.z) * focal + cy;
             const psx = (s.x / s.pz) * focal + cx;
             const psy = (s.y / s.pz) * focal + cy;
-
             const t = 1 - s.z / Z_FAR;
             const farFade = s.layer < 0.3 ? 0.55 : 1;
             const alpha = Math.min(1, (t * 1.8 + 0.1) * farFade);
             const lw = (t * 2.6 + 0.3) * s.size * dpr * farFade;
 
-            // Distribution: mostly white-ish with subtle accent stars
-            if (s.tint < 0.84) {
-                ctx.strokeStyle = `rgba(232, 240, 250, ${alpha})`;
-            } else if (s.tint < 0.92) {
-                ctx.strokeStyle = `rgba(180, 210, 235, ${alpha * 0.95})`;
-            } else if (s.tint < 0.97) {
-                ctx.strokeStyle = `rgba(120, 200, 180, ${alpha * 0.85})`;
-            } else {
-                ctx.strokeStyle = `rgba(138, 124, 255, ${alpha * 0.85})`;
-            }
+            if (s.tint < 0.84) ctx.strokeStyle = `rgba(232,240,250,${alpha})`;
+            else if (s.tint < 0.92) ctx.strokeStyle = `rgba(180,210,235,${alpha * 0.95})`;
+            else if (s.tint < 0.97) ctx.strokeStyle = `rgba(120,200,180,${alpha * 0.85})`;
+            else ctx.strokeStyle = `rgba(138,124,255,${alpha * 0.85})`;
             ctx.lineWidth = lw;
 
             ctx.beginPath();
@@ -698,33 +728,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        speed = Math.min(56, speed + 1.25);
-
-        if (hudVel) {
-            const c = ((speed - 12) / 44) * 0.96 + 0.03;
-            hudVel.textContent = c.toFixed(2) + ' c';
-        }
-        if (hudStatus) {
-            if (speed < 18) hudStatus.textContent = 'SPOOLING DRIVE...';
-            else if (speed < 31) hudStatus.textContent = 'ACCELERATION NOMINAL';
-            else if (speed < 45) hudStatus.textContent = 'BREAKING ATMOSPHERE';
-            else hudStatus.textContent = 'WARP STABLE — TRAJECTORY LOCKED';
-        }
-
-        raf = requestAnimationFrame(tick);
+        speed2d = Math.min(56, speed2d + 1.25);
+        updateHud(Math.min(1, (speed2d - 12) / 44));
+        raf2d = requestAnimationFrame(tick2d);
     };
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        if (engine3d) engine3d.setMouse(mouseX, mouseY);
+    });
 
     const isTypingTarget = (el) => {
         if (!el) return false;
         const tag = el.tagName;
         return tag === 'INPUT' || tag === 'TEXTAREA' || el.isContentEditable;
     };
-
     const isSpace = (e) => e.code === 'Space' || e.key === ' ' || e.keyCode === 32;
-
     const NAV_HEIGHT = 80;
 
-    // Bus-route stops in chronological page order
     const STOPS = [
         { id: 'about',      label: 'OVER MIJ' },
         { id: 'projects',   label: 'PROJECTEN' },
@@ -750,9 +772,8 @@ document.addEventListener('DOMContentLoaded', () => {
             big.textContent = STOPS[idx].label;
             big.style.opacity = '1';
         };
-        if (instant) {
-            paint();
-        } else {
+        if (instant) { paint(); }
+        else {
             big.style.opacity = '0';
             setTimeout(paint, FADE_MS);
         }
@@ -770,13 +791,6 @@ document.addEventListener('DOMContentLoaded', () => {
         warpActive = true;
         document.body.classList.add('xray');
 
-        speed = 12;
-        seedStars();
-        ctx.fillStyle = '#000';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(tick);
-
         stopIdx = 0;
         renderStop(0, true);
         clearInterval(stopTimer);
@@ -784,32 +798,51 @@ document.addEventListener('DOMContentLoaded', () => {
             stopIdx = (stopIdx + 1) % STOPS.length;
             renderStop(stopIdx, false);
         }, STOP_MS);
+
+        if (detectMode() === '3d' && engine3d) {
+            engine3d.activate();
+            return;
+        }
+
+        ensure2d();
+        resize2d();
+        speed2d = 12;
+        seedStars();
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);
+        cancelAnimationFrame(raf2d);
+        raf2d = requestAnimationFrame(tick2d);
+
+        if (detectMode() === '3d' && !engine3d && !preloaded) {
+            preload();
+        }
     };
 
     const deactivate = () => {
         if (!warpActive) return;
         warpActive = false;
-
         const dest = STOPS[stopIdx];
         clearInterval(stopTimer);
         stopTimer = null;
-
         document.body.classList.remove('xray');
-        cancelAnimationFrame(raf);
+
+        if (engine3d) engine3d.deactivate();
+        cancelAnimationFrame(raf2d);
 
         if (hudStatus) hudStatus.textContent = 'ARRIVAL: ' + dest.label;
         scrollToSection(dest.id);
 
-        // Quick black fade so the canvas exits cleanly
-        let n = 0;
-        const decay = () => {
-            n++;
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            if (n < 6) requestAnimationFrame(decay);
-            else ctx.clearRect(0, 0, canvas.width, canvas.height);
-        };
-        decay();
+        if (canvas2d && ctx) {
+            let n = 0;
+            const decay = () => {
+                n++;
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+                ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);
+                if (n < 6) requestAnimationFrame(decay);
+                else ctx.clearRect(0, 0, canvas2d.width, canvas2d.height);
+            };
+            decay();
+        }
     };
 
     document.addEventListener('keydown', (e) => {

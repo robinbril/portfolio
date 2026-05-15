@@ -369,8 +369,8 @@ body.light-theme .nav-links .btn-primary:hover {
 }
 
 .theme-toggle-btn {
-    background: transparent;
-    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     color: var(--text-primary);
     width: 40px;
     height: 40px;
@@ -382,8 +382,13 @@ body.light-theme .nav-links .btn-primary:hover {
     transition: all 0.3s ease;
 }
 
+body.light-theme .theme-toggle-btn {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
 .theme-toggle-btn:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.12);
     border-color: var(--accent-primary);
 }
 
@@ -1583,7 +1588,7 @@ body.xray::after {
     display: none !important;
 }
 
-/* Warp starfield canvas */
+/* Warp container (holds Three.js or 2D fallback canvas) */
 #warp-canvas {
     position: fixed;
     inset: 0;
@@ -1593,10 +1598,17 @@ body.xray::after {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s ease;
+    overflow: hidden;
     background: radial-gradient(ellipse at 50% 46%,
         rgba(7, 17, 31, 0.3) 0%,
         rgba(7, 17, 31, 0.7) 40%,
         #07111F 75%);
+}
+
+#warp-canvas canvas {
+    display: block;
+    position: absolute;
+    inset: 0;
 }
 
 body.xray #warp-canvas {
@@ -2558,6 +2570,7 @@ body.light-theme .tag-magenta {
     color: var(--text-secondary);
     font-size: 1rem;
     line-height: 1.7;
+    text-align: center;
 }
 
 .skills-container {
@@ -3102,13 +3115,13 @@ footer {
     }
 
     .skills-header {
-        text-align: left;
+        text-align: center;
         margin-bottom: 1.75rem;
     }
 
     .skills-header p {
-        margin-left: 0;
-        margin-right: 0;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .skills-container {
@@ -4579,16 +4592,16 @@ body.light-theme .terminal-titlebar {
     border-bottom-color: rgba(15, 23, 42, 0.08);
 }
 body.light-theme .terminal-body {
-    color: #047857;
+    color: #1e293b;
     background: #ffffff;
 }
 body.light-theme .terminal-body::-webkit-scrollbar-thumb { background: rgba(15, 23, 42, 0.15); }
-body.light-theme .terminal-line--system { color: #047857; }
-body.light-theme .terminal-line--system::before { color: rgba(4, 120, 87, 0.5); }
+body.light-theme .terminal-line--system { color: #2563eb; }
+body.light-theme .terminal-line--system::before { color: rgba(59, 130, 246, 0.5); }
 body.light-theme .terminal-line--user { color: #0f172a; }
 body.light-theme .terminal-line--user::before { color: rgba(15, 23, 42, 0.4); }
-body.light-theme .terminal-line--link { color: #047857; }
-body.light-theme .terminal-line--link a:hover { color: #059669; }
+body.light-theme .terminal-line--link { color: #2563eb; }
+body.light-theme .terminal-line--link a:hover { color: #3b82f6; }
 body.light-theme .terminal-line--muted { color: rgba(15, 23, 42, 0.4); }
 body.light-theme .terminal-chips {
     background: #ffffff;
