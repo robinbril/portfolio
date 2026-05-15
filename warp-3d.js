@@ -13,10 +13,10 @@ const GALAXY_RADIUS = 250;
 const GALAXY_ARMS = 4;
 const GALAXY_SPIN = 1.5;
 const RING_COUNT = 40;
-const SPEED_MIN = 0.00008;
-const SPEED_MAX = 0.00038;
-const ACCEL = 0.000002;
-const LOOKAHEAD = 0.008;
+const SPEED_MIN = 0.00018;
+const SPEED_MAX = 0.00085;
+const ACCEL = 0.0000045;
+const LOOKAHEAD = 0.012;
 
 function buildCurve() {
     const pts = [];
@@ -89,16 +89,17 @@ export class WormholeEngine {
     buildTunnel() {
         this.tunnelMats = [];
 
-        // Solid dark backdrop tube (camera ziet de "binnenkant" als donker basisvlak
-        // waar de wireframe op contrast geeft)
+        // Semi-transparante fill tube zodat de galaxy erdoorheen schemert
+        // (atmosferisch dampeffect ipv compleet zwarte tunnel-binnenkant)
         const fillMat = new THREE.MeshBasicMaterial({
             color: 0x041510, side: THREE.BackSide,
-            transparent: false
+            transparent: true, opacity: 0.55
         });
         const fillGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS * 1.02, RADIAL, true);
         this.scene.add(new THREE.Mesh(fillGeo, fillMat));
+        this.tunnelMats.push({ mat: fillMat, baseOpacity: 0.55 });
 
-        // Bright wireframe grid - ALPHA blending, BackSide ALSO since camera is inside
+        // Bright wireframe grid - LineSegments voor crisp visible lines
         const wireMat = new THREE.LineBasicMaterial({
             color: 0x2EF2A0,
             transparent: true, opacity: 0.85
@@ -358,10 +359,11 @@ export class WormholeEngine {
         const norm = (this.speed - SPEED_MIN) / (SPEED_MAX - SPEED_MIN);
         this.bloom.strength = 1.0 + norm * 1.6;
 
+        // Galaxy + stars permanent zichtbaar — fadelt extra in als tunnel weg is
         const galaxyReveal = (1 - tunnelFade) * (1 - maxRingGlow);
-        this.galaxy.material.opacity = galaxyReveal * 0.85;
-        this.farStars.material.opacity = tunnelFade < 1 ? 0.1 + galaxyReveal * 0.8 : 0.1;
-        this.dust.material.opacity = galaxyReveal * 0.2;
+        this.galaxy.material.opacity = 0.45 + galaxyReveal * 0.4;
+        this.farStars.material.opacity = 0.55 + galaxyReveal * 0.35;
+        this.dust.material.opacity = 0.12 + galaxyReveal * 0.18;
 
         this.galaxy.rotation.y += 0.00012;
         this.dust.rotation.y -= 0.00008;
