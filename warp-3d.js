@@ -51,7 +51,8 @@ export class WormholeEngine {
         const h = window.innerHeight;
 
         this.scene = new THREE.Scene();
-        this.scene.fog = new THREE.FogExp2(0x000000, 0.0008);
+        this.scene.background = new THREE.Color(0x020a08);
+        this.scene.fog = new THREE.FogExp2(0x020a08, 0.012);
 
         this.cam = new THREE.PerspectiveCamera(78, w / h, 0.1, 1200);
 
@@ -75,7 +76,7 @@ export class WormholeEngine {
         this.composer = new EffectComposer(this.gl);
         this.composer.addPass(new RenderPass(this.scene, this.cam));
         this.bloom = new UnrealBloomPass(
-            new THREE.Vector2(w, h), 1.2, 0.4, 0.15
+            new THREE.Vector2(w, h), 0.6, 0.4, 0.5
         );
         this.composer.addPass(this.bloom);
 
@@ -88,27 +89,25 @@ export class WormholeEngine {
     buildTunnel() {
         this.tunnelMats = [];
 
-        const outerMat = new THREE.MeshBasicMaterial({
-            color: 0x00ff9d, wireframe: true,
-            transparent: true, opacity: 0.35, side: THREE.DoubleSide
+        // Solid dark backdrop tube (camera ziet de "binnenkant" als donker basisvlak
+        // waar de wireframe op contrast geeft)
+        const fillMat = new THREE.MeshBasicMaterial({
+            color: 0x041510, side: THREE.BackSide,
+            transparent: false
         });
-        const outerGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS, RADIAL, true);
-        this.scene.add(new THREE.Mesh(outerGeo, outerMat));
-        this.tunnelMats.push({ mat: outerMat, baseOpacity: 0.35 });
+        const fillGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS * 1.02, RADIAL, true);
+        this.scene.add(new THREE.Mesh(fillGeo, fillMat));
 
-        const midMat = new THREE.MeshBasicMaterial({
-            color: 0x00ff9d, transparent: true, opacity: 0.1, side: THREE.BackSide
+        // Bright wireframe grid - ALPHA blending, BackSide ALSO since camera is inside
+        const wireMat = new THREE.LineBasicMaterial({
+            color: 0x2EF2A0,
+            transparent: true, opacity: 0.85
         });
-        const midGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS * 0.92, RADIAL, true);
-        this.scene.add(new THREE.Mesh(midGeo, midMat));
-        this.tunnelMats.push({ mat: midMat, baseOpacity: 0.1 });
-
-        const innerMat = new THREE.MeshBasicMaterial({
-            color: 0x00e5ff, transparent: true, opacity: 0.06, side: THREE.BackSide
-        });
-        const innerGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS * 0.84, RADIAL, true);
-        this.scene.add(new THREE.Mesh(innerGeo, innerMat));
-        this.tunnelMats.push({ mat: innerMat, baseOpacity: 0.06 });
+        const wireGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS, RADIAL, true);
+        const wireframeGeo = new THREE.WireframeGeometry(wireGeo);
+        const wireLines = new THREE.LineSegments(wireframeGeo, wireMat);
+        this.scene.add(wireLines);
+        this.tunnelMats.push({ mat: wireMat, baseOpacity: 0.85 });
     }
 
     gaussRand() {
@@ -256,7 +255,7 @@ export class WormholeEngine {
 
     buildRings() {
         this.rings = [];
-        const geo = new THREE.TorusGeometry(RADIUS * 1.08, 0.05, 8, 64);
+        const geo = new THREE.TorusGeometry(RADIUS * 1.08, 0.14, 8, 64);
 
         for (let i = 0; i < RING_COUNT; i++) {
             const t = i / RING_COUNT;
@@ -265,7 +264,7 @@ export class WormholeEngine {
 
             const mat = new THREE.MeshBasicMaterial({
                 color: 0x00ff9d, transparent: true,
-                opacity: 0.08, blending: THREE.AdditiveBlending,
+                opacity: 0.5, blending: THREE.AdditiveBlending,
             });
 
             const mesh = new THREE.Mesh(geo, mat);
