@@ -309,3 +309,17 @@ body.light-theme .hero .hero-actions .btn-secondary:hover {
         padding-right: 1.5rem;
     }
 }
+
+/* Hero role line under the name */
+.hero .hero-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin: 0.4rem 0 1.1rem;
+}
+
+@media (max-width: 640px) {
+    .hero .hero-role { font-size: 0.8rem; letter-spacing: 0.12em; }
+}
