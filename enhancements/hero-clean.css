@@ -1,0 +1,453 @@
+/* =========================================================
+   HERO CLEAN — last-wins override
+   Readable type, solid buttons, one arrow max, real contrast
+   ========================================================= */
+
+/* --- Stage: darken video so white type actually reads --- */
+.hero {
+    position: relative;
+    isolation: isolate;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: clamp(5.5rem, 12vh, 7rem) 1.25rem clamp(3rem, 8vh, 5rem) !important;
+}
+
+.hero .hero-video,
+.hero video.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    /* desaturate + darken the plate so text wins */
+    filter: brightness(0.38) saturate(0.7) contrast(1.05);
+}
+
+/* Strong readable scrim over the video */
+.hero::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 42%,
+            rgba(4, 10, 18, 0.15) 0%,
+            rgba(4, 10, 18, 0.55) 55%,
+            rgba(4, 10, 18, 0.78) 100%),
+        linear-gradient(180deg,
+            rgba(4, 10, 18, 0.55) 0%,
+            rgba(4, 10, 18, 0.25) 40%,
+            rgba(4, 10, 18, 0.7) 100%) !important;
+    opacity: 1 !important;
+    filter: none !important;
+    width: auto !important;
+    height: auto !important;
+    top: 0 !important;
+    left: 0 !important;
+    border-radius: 0 !important;
+    animation: none !important;
+}
+
+/* kill decorative orbs / glows that wash out type */
+.hero .hero-deco,
+.hero .hero-orb {
+    display: none !important;
+}
+
+.hero .hero-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* --- Eyebrow --- */
+.hero .hero-eyebrow,
+.hero .hero-status-chip {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem !important;
+    margin: 0 auto 1.35rem !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-family: Inter, system-ui, sans-serif !important;
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.88) !important;
+    box-shadow: none !important;
+}
+
+.hero .hero-pulse,
+.hero .hero-status-chip__dot {
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50%;
+    background: #34d399 !important;
+    box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.22) !important;
+    animation: none !important;
+}
+
+/* --- Name: solid white, no gradient clip, no shimmer --- */
+.hero h1,
+section.hero h1,
+#home h1 {
+    font-family: Inter, system-ui, -apple-system, sans-serif !important;
+    font-weight: 650 !important;
+    font-size: clamp(2.6rem, 8vw, 4.5rem) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.03em !important;
+    margin: 0 0 0.75rem !important;
+    padding: 0 !important;
+    color: #ffffff !important;
+    background: none !important;
+    background-image: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    text-fill-color: #ffffff !important;
+    animation: none !important;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+    white-space: normal !important;
+    max-width: 100%;
+}
+
+/* --- Role --- */
+.hero .hero-role {
+    font-family: Inter, system-ui, sans-serif !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase;
+    color: rgba(167, 243, 208, 0.95) !important;
+    margin: 0 0 1.1rem !important;
+}
+
+/* --- Subtitle: high contrast, calmer measure --- */
+.hero .hero-subtitle {
+    font-family: Inter, system-ui, sans-serif !important;
+    font-size: clamp(0.98rem, 2.2vw, 1.1rem) !important;
+    font-weight: 400 !important;
+    line-height: 1.6 !important;
+    color: rgba(226, 232, 240, 0.9) !important;
+    opacity: 1 !important;
+    max-width: 34rem !important;
+    margin: 0 auto 1.75rem !important;
+    text-wrap: balance;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* --- Buttons: solid, quiet, NO gradients, ONE affordance --- */
+.hero .hero-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    margin: 0 0 2rem !important;
+    width: 100%;
+}
+
+/* Base hero button */
+.hero .hero-actions .hero-btn,
+.hero .hero-actions a.hero-btn {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    min-height: 48px !important;
+    padding: 0.8rem 1.5rem !important;
+    border-radius: 10px !important;
+    font-family: Inter, system-ui, sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    box-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease !important;
+    width: auto !important;
+    max-width: none !important;
+    position: relative;
+}
+
+/* Kill every pseudo-arrow / icon remnant on hero CTAs */
+.hero .hero-actions .hero-btn::before,
+.hero .hero-actions .hero-btn::after,
+.hero .hero-actions a.btn-primary::before,
+.hero .hero-actions a.btn-primary::after,
+.hero .hero-actions a.btn-secondary::before,
+.hero .hero-actions a.btn-secondary::after,
+.hero .hero-actions .btn-primary::before,
+.hero .hero-actions .btn-primary::after,
+.hero .hero-actions .btn-secondary::before,
+.hero .hero-actions .btn-secondary::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+}
+
+.hero .hero-actions .hero-btn svg,
+.hero .hero-actions .hero-btn i,
+.hero .hero-actions .hero-btn .btn-arrow-char,
+.hero .hero-actions .hero-btn .btn-arrow,
+.hero .hero-actions .hero-btn .cta-label {
+    display: none !important;
+}
+
+/* Keep the real label span visible */
+.hero .hero-actions .hero-btn > span[data-i18n] {
+    display: inline !important;
+    color: inherit !important;
+}
+
+/* Primary: solid near-white, dark text — quiet and legible */
+.hero .hero-actions .hero-btn--primary,
+.hero .hero-actions a.hero-btn--primary {
+    background: #f8fafc !important;
+    background-image: none !important;
+    color: #0b1220 !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+}
+
+.hero .hero-actions .hero-btn--primary:hover,
+.hero .hero-actions a.hero-btn--primary:hover {
+    background: #ffffff !important;
+    background-image: none !important;
+    color: #0b1220 !important;
+    transform: translateY(-1px);
+    filter: none !important;
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Ghost: thin light border, light text */
+.hero .hero-actions .hero-btn--ghost,
+.hero .hero-actions a.hero-btn--ghost {
+    background: transparent !important;
+    background-image: none !important;
+    color: #f1f5f9 !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+}
+
+.hero .hero-actions .hero-btn--ghost:hover,
+.hero .hero-actions a.hero-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.45) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    filter: none !important;
+}
+
+/* --- Stats: horizontal, quiet, readable --- */
+.hero .hero-stats {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    margin: 0.25rem auto 0 !important;
+    padding-top: 1.5rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 28rem;
+}
+
+.hero .hero-stat {
+    flex: 1 1 0;
+    min-width: 5.5rem;
+    padding: 0 0.85rem;
+    text-align: center;
+}
+
+.hero .hero-stat strong {
+    display: block;
+    font-family: Inter, system-ui, sans-serif !important;
+    font-size: 1.35rem !important;
+    font-weight: 650 !important;
+    letter-spacing: -0.02em;
+    color: #ffffff !important;
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+}
+
+.hero .hero-stat span {
+    display: block;
+    font-family: Inter, system-ui, sans-serif !important;
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.02em;
+    color: rgba(203, 213, 225, 0.85) !important;
+    line-height: 1.3;
+}
+
+.hero .hero-stat-divider {
+    width: 1px;
+    align-self: stretch;
+    background: rgba(255, 255, 255, 0.12);
+    flex: 0 0 1px;
+}
+
+/* --- Light theme (if toggled while on hero) --- */
+body.light-theme .hero .hero-video,
+body.light-theme .hero video.hero-video {
+    filter: brightness(0.72) saturate(0.55) contrast(1.05);
+}
+
+body.light-theme .hero::before {
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 42%,
+            rgba(248, 250, 252, 0.35) 0%,
+            rgba(248, 250, 252, 0.72) 100%),
+        linear-gradient(180deg, rgba(248, 250, 252, 0.55), rgba(248, 250, 252, 0.75)) !important;
+}
+
+body.light-theme .hero h1,
+body.light-theme section.hero h1 {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    text-shadow: none;
+}
+
+body.light-theme .hero .hero-role {
+    color: #0f766e !important;
+}
+
+body.light-theme .hero .hero-subtitle {
+    color: #334155 !important;
+    text-shadow: none;
+}
+
+body.light-theme .hero .hero-eyebrow {
+    background: rgba(15, 23, 42, 0.05) !important;
+    border-color: rgba(15, 23, 42, 0.1) !important;
+    color: #334155 !important;
+}
+
+body.light-theme .hero .hero-actions .hero-btn--primary {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+    border-color: #0f172a !important;
+}
+
+body.light-theme .hero .hero-actions .hero-btn--ghost {
+    color: #0f172a !important;
+    border-color: rgba(15, 23, 42, 0.2) !important;
+}
+
+body.light-theme .hero .hero-stat strong {
+    color: #0f172a !important;
+}
+
+body.light-theme .hero .hero-stat span {
+    color: #64748b !important;
+}
+
+body.light-theme .hero .hero-stats {
+    border-top-color: rgba(15, 23, 42, 0.1);
+}
+
+body.light-theme .hero .hero-stat-divider {
+    background: rgba(15, 23, 42, 0.12);
+}
+
+/* --- Mobile --- */
+@media (max-width: 640px) {
+    .hero {
+        padding: 5rem 1.15rem 2.25rem !important;
+        min-height: 100svh;
+        min-height: 100dvh;
+    }
+
+    .hero h1,
+    section.hero h1 {
+        font-size: clamp(2.25rem, 10.5vw, 2.85rem) !important;
+        margin-bottom: 0.55rem !important;
+    }
+
+    .hero .hero-subtitle {
+        margin-bottom: 1.35rem !important;
+        font-size: 0.95rem !important;
+    }
+
+    .hero .hero-actions {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.55rem !important;
+        margin-bottom: 1.35rem !important;
+    }
+
+    .hero .hero-actions .hero-btn,
+    .hero .hero-actions a.hero-btn {
+        width: 100% !important;
+        max-width: 22rem !important;
+        margin-inline: auto;
+        border-radius: 12px !important;
+        min-height: 46px !important;
+    }
+
+    .hero .hero-stat-divider {
+        display: none !important;
+    }
+
+    .hero .hero-stats {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        max-width: 100% !important;
+        padding-top: 1.1rem !important;
+        margin-top: 0 !important;
+        gap: 0.35rem !important;
+    }
+
+    .hero .hero-stat {
+        min-width: 0 !important;
+        padding: 0 0.25rem !important;
+    }
+
+    .hero .hero-stat strong {
+        font-size: 1.2rem !important;
+    }
+
+    .hero .hero-stat span {
+        font-size: 0.65rem !important;
+    }
+
+    .hero .hero-eyebrow {
+        margin-bottom: 1rem !important;
+    }
+
+    .hero .hero-role {
+        margin-bottom: 0.85rem !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 0.12em !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero .hero-actions .hero-btn {
+        transition: none !important;
+    }
+}
