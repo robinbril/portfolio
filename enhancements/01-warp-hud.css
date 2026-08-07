@@ -1,4 +1,4 @@
-/* WARP HUD — clean, prominent destination popup + pitstop dots
+/* WARP HUD - clean, prominent destination popup + pitstop dots
    Vervangt eerdere cockpit-frame poging die niet zichtbaar was (z-index conflict
    met #warp-canvas op 9998). Deze versie: simpel, leesbaar, altijd zichtbaar
    tijdens warp.
@@ -10,7 +10,7 @@
 */
 
 /* ============================================================
-   ROOT — full-viewport overlay, BOVEN canvas (z-index > 9998)
+   ROOT - full-viewport overlay, BOVEN canvas (z-index > 9998)
    ============================================================ */
 
 .warp-hud {
@@ -43,7 +43,7 @@ body.xray .warp-hud {
 }
 
 /* ============================================================
-   BIG DESTINATION — prominent popup centered, telt sectie-naam
+   BIG DESTINATION - prominent popup centered, telt sectie-naam
    ============================================================ */
 
 /* Bovenste destination popup verwijderd op Robin's verzoek - pitstop pill onderaan
@@ -73,7 +73,7 @@ body.xray .warp-hud {
 }
 
 /* ============================================================
-   PITSTOP DOTS — onderaan center, 5 dots horizontaal
+   PITSTOP DOTS - onderaan center, 5 dots horizontaal
    ============================================================ */
 
 #warp-route {
@@ -192,7 +192,7 @@ body.xray .warp-hud {
    herontworpen vanaf scratch met echte UI/UX skill. */
 
 /* ============================================================
-   VELOCITY readout — rechtsonder discreet
+   VELOCITY readout - rechtsonder discreet
    ============================================================ */
 
 /* Velocity + status readout weggehaald op Robin's verzoek */
@@ -208,7 +208,7 @@ body.xray .warp-hud {
 }
 
 /* ============================================================
-   MOBILE — smaller everything, pitstops geen text-labels meer
+   MOBILE - smaller everything, pitstops geen text-labels meer
    ============================================================ */
 
 @media (max-width: 768px) {

@@ -1,4 +1,4 @@
-# 01 - Warp HUD polish — handoff
+# 01 - Warp HUD polish - handoff
 
 ## How to load
 
@@ -37,9 +37,9 @@ These selectors in `style.css` (lines 5979-6232) are now fully overridden by `en
 - The empty `@media (prefers-reduced-motion: reduce) { }` stub (6230-6231)
 
 Keep:
-- `.warp-hud` (5981-5992) — overlay container, layout primitive. Not redeclared.
-- `body.xray .warp-hud` (5994-5996) — visibility toggle. Not redeclared.
-- The comment header at 5978-5980 — if you delete the rest, drop this too.
+- `.warp-hud` (5981-5992) - overlay container, layout primitive. Not redeclared.
+- `body.xray .warp-hud` (5994-5996) - visibility toggle. Not redeclared.
+- The comment header at 5978-5980 - if you delete the rest, drop this too.
 
 ## HTML and JS changes
 

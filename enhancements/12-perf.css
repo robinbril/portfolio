@@ -1,5 +1,5 @@
 /* ============================================================================
-   12-perf.css — performance layer
+   12-perf.css - performance layer
    Drop-in, additive only. No selector overrides beyond perf hints.
    Load LAST so contain/content-visibility apply after layout rules.
 ============================================================================ */

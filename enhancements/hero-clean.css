@@ -1,5 +1,5 @@
 /* =========================================================
-   HERO CLEAN — last-wins override
+   HERO CLEAN - last-wins override
    Readable type, solid buttons, one arrow max, real contrast
    ========================================================= */
 
@@ -225,7 +225,7 @@ section.hero h1,
     color: inherit !important;
 }
 
-/* Primary: solid near-white, dark text — quiet and legible */
+/* Primary: solid near-white, dark text - quiet and legible */
 .hero .hero-actions .hero-btn--primary,
 .hero .hero-actions a.hero-btn--primary {
     background: #f8fafc !important;

@@ -1,6 +1,6 @@
 /* =========================================================================
    10-projects.script-additions.js
-   Filter UX enhancement — smooth collapse via class, no display:none flash.
+   Filter UX enhancement - smooth collapse via class, no display:none flash.
    Load AFTER script.js. Self-contained IIFE. Bewerkt geen bestaande code.
    ========================================================================= */
 (function () {
@@ -61,7 +61,7 @@
         if (!initialActive) initialActive = buttons[0];
         setActive(initialActive);
 
-        // Click handler — runs AFTER the legacy handler in script.js (event
+        // Click handler - runs AFTER the legacy handler in script.js (event
         // listeners fire in registration order). Defer one frame so the
         // legacy handler's inline styles land first, then override them with
         // class-based transitions.
@@ -78,7 +78,7 @@
             });
         }
 
-        // First paint — apply initial filter so card states match the active
+        // First paint - apply initial filter so card states match the active
         // button without waiting for a click.
         requestAnimationFrame(function () {
             clearInlineDisplay();

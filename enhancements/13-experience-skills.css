@@ -1,5 +1,5 @@
 /* =====================================================================
-   13 — EXPERIENCE TIMELINE + SKILLS POLISH
+   13 - EXPERIENCE TIMELINE + SKILLS POLISH
    ---------------------------------------------------------------------
    Werkt bovenop bestaande regels in style.css. Geen file edits in style.css.
    Verwacht include na style.css zodat cascade voorrang geeft.
@@ -16,7 +16,7 @@
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   0. Tokens — scoped, geen :root pollution
+   0. Tokens - scoped, geen :root pollution
    ───────────────────────────────────────────────────────────────────── */
 #experience,
 #skills {
@@ -37,7 +37,7 @@ body.light-theme #skills {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   1. Timeline rail — fading vertical guideline
+   1. Timeline rail - fading vertical guideline
    ───────────────────────────────────────────────────────────────────── */
 #experience .timeline {
     position: relative;
@@ -64,7 +64,7 @@ body.light-theme #skills {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   2. Dots — hollow ring base, filled mint, pulse op current
+   2. Dots - hollow ring base, filled mint, pulse op current
    ───────────────────────────────────────────────────────────────────── */
 #experience .timeline-item::before {
     /* override van bestaande regel (style.css regel 810) */
@@ -107,7 +107,7 @@ body.light-theme #skills {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   3. Date pills — mono badge bovenop card
+   3. Date pills - mono badge bovenop card
    ───────────────────────────────────────────────────────────────────── */
 #experience .timeline-date {
     display: inline-block;
@@ -133,7 +133,7 @@ body.light-theme #experience .timeline-date {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   4. Cards — glass dark, hover shift + right-edge mint glow
+   4. Cards - glass dark, hover shift + right-edge mint glow
    ───────────────────────────────────────────────────────────────────── */
 #experience .timeline-content.glow-card {
     background: var(--tl-glass-bg);
@@ -151,7 +151,7 @@ body.light-theme #experience .timeline-date {
         background 0.3s ease;
 }
 
-/* Right-edge mint glow on hover — overschrijft bestaande ::before (links) */
+/* Right-edge mint glow on hover - overschrijft bestaande ::before (links) */
 #experience .timeline-content.glow-card::before {
     content: '';
     position: absolute;
@@ -192,7 +192,7 @@ body.light-theme #experience .timeline-content.glow-card:hover {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   5. Company — subtle external arrow ↗ (alleen op <a class="company">)
+   5. Company - subtle external arrow ↗ (alleen op <a class="company">)
    ───────────────────────────────────────────────────────────────────── */
 #experience .company {
     transition: color 0.2s ease;
@@ -225,7 +225,7 @@ body.light-theme #experience .timeline-content.glow-card:hover {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   6. Card tags — mono mini-chips met dot delimiter
+   6. Card tags - mono mini-chips met dot delimiter
    ───────────────────────────────────────────────────────────────────── */
 #experience .timeline-content .tags {
     gap: 0;
@@ -276,7 +276,7 @@ body.light-theme #experience .timeline-content.glow-card:hover {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   7. In-view fade cascade — werkt met JS observer of staat altijd aan
+   7. In-view fade cascade - werkt met JS observer of staat altijd aan
    Hookable via observer die [data-in-view] op .timeline-item zet.
    ───────────────────────────────────────────────────────────────────── */
 #experience .timeline-item {
@@ -338,7 +338,7 @@ body.light-theme #experience .timeline-content.glow-card:hover {
    ===================================================================== */
 
 /* ─────────────────────────────────────────────────────────────────────
-   8. Grid — auto-fit responsive, 240px min
+   8. Grid - auto-fit responsive, 240px min
    ───────────────────────────────────────────────────────────────────── */
 #skills .skills-container {
     display: grid;
@@ -380,7 +380,7 @@ body.light-theme #experience .timeline-content.glow-card:hover {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   9. Category cards — glass + per-category accent
+   9. Category cards - glass + per-category accent
    ───────────────────────────────────────────────────────────────────── */
 #skills .skill-category {
     background: var(--tl-glass-bg);
@@ -404,17 +404,17 @@ body.light-theme #experience .timeline-content.glow-card:hover {
         0 0 28px rgba(var(--cat-rgb, var(--tl-mint-rgb)), 0.10);
 }
 
-/* Per-category tints — gebruik volgorde uit index.html */
-#skills .skill-category:nth-child(1) { --cat-rgb: 46, 242, 160; }   /* Agentic — mint */
-#skills .skill-category:nth-child(2) { --cat-rgb: 130, 180, 255; }  /* AI Eng — soft blue */
-#skills .skill-category:nth-child(3) { --cat-rgb: 255, 184, 108; }  /* Dev — amber */
-#skills .skill-category:nth-child(4) { --cat-rgb: 188, 140, 255; }  /* Cloud — violet */
-#skills .skill-category:nth-child(5) { --cat-rgb: 255, 138, 196; }  /* Tools — pink */
-#skills .skill-category:nth-child(6) { --cat-rgb: 120, 220, 220; }  /* spare — teal */
+/* Per-category tints - gebruik volgorde uit index.html */
+#skills .skill-category:nth-child(1) { --cat-rgb: 46, 242, 160; }   /* Agentic - mint */
+#skills .skill-category:nth-child(2) { --cat-rgb: 130, 180, 255; }  /* AI Eng - soft blue */
+#skills .skill-category:nth-child(3) { --cat-rgb: 255, 184, 108; }  /* Dev - amber */
+#skills .skill-category:nth-child(4) { --cat-rgb: 188, 140, 255; }  /* Cloud - violet */
+#skills .skill-category:nth-child(5) { --cat-rgb: 255, 138, 196; }  /* Tools - pink */
+#skills .skill-category:nth-child(6) { --cat-rgb: 120, 220, 220; }  /* spare - teal */
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   10. Section header — icon-box per category, getint
+   10. Section header - icon-box per category, getint
    ───────────────────────────────────────────────────────────────────── */
 #skills .skill-category h3 {
     display: flex;
@@ -453,7 +453,7 @@ body.light-theme #experience .timeline-content.glow-card:hover {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   11. Chips — dark glass, mono, hover scale + glow
+   11. Chips - dark glass, mono, hover scale + glow
    ───────────────────────────────────────────────────────────────────── */
 #skills .skill-tags {
     gap: 0.45rem;
@@ -500,7 +500,7 @@ body.light-theme #skills .skill-tags span {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   12. Optionele data-level — mini progress dots (1-3)
+   12. Optionele data-level - mini progress dots (1-3)
    Usage in HTML: <span data-level="3">RAG Pipelines</span>
    ───────────────────────────────────────────────────────────────────── */
 #skills .skill-tags span[data-level]::after {
@@ -537,7 +537,7 @@ body.light-theme #skills .skill-tags span {
 
 
 /* ─────────────────────────────────────────────────────────────────────
-   13. Mobile — minder shift, dot blijft zichtbaar
+   13. Mobile - minder shift, dot blijft zichtbaar
    ───────────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
     #experience .timeline {

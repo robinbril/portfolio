@@ -1,5 +1,5 @@
 /* =============================================================
-   15 — Footer / CTA script additions
+   15 - Footer / CTA script additions
    - Scroll-to-top toggle + smooth scroll
    - Optional GitHub repos rendering when [data-github-repos] exists
    IIFE, idempotent, no-throw.

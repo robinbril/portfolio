@@ -1,5 +1,5 @@
 /* =============================================================================
- * 08 — Animations script additions
+ * 08 - Animations script additions
  * Self-contained IIFE. No globals. No dependencies.
  *
  * Responsibilities:
@@ -22,18 +22,18 @@
  *     <link rel="stylesheet" href="enhancements/08-animations.css">
  *   Add before </body> after existing script.js:
  *     <script src="enhancements/08-animations.script-additions.js" defer></script>
- *   No other HTML changes required — this script auto-tags
+ *   No other HTML changes required - this script auto-tags
  *   <section class="section"> and .hero with data-reveal.
  *
  * Existing HTML hooks the CSS already targets
- *   .section, .hero                              — scroll reveal
- *   .ai-project-card, .featured-project          — tilt + lift on hover
- *   .skill-chip                                  — mint ripple
- *   .filter-btn (+ .active)                      — animated underline
+ *   .section, .hero                              - scroll reveal
+ *   .ai-project-card, .featured-project          - tilt + lift on hover
+ *   .skill-chip                                  - mint ripple
+ *   .filter-btn (+ .active)                      - animated underline
  *   .hero-content .hero-eyebrow / h1 /
  *     .hero-subtitle / .hero-actions /
- *     .hero-stats                                — page-load cascade
- *   #experience .timeline-item:first-child       — pulse on current-role dot
+ *     .hero-stats                                - page-load cascade
+ *   #experience .timeline-item:first-child       - pulse on current-role dot
  *
  * Optional HTML hooks (no markup change required if absent)
  *   - Add class "counter-animate" inside .hero-stat numbers for scale-in
@@ -45,9 +45,9 @@
  * Performance
  *   - Animates transform + opacity only. No layout/paint thrash. 60fps.
  *   - will-change set only where animation actually runs.
- *   - IntersectionObserver unobserves after first reveal — zero idle cost.
+ *   - IntersectionObserver unobserves after first reveal - zero idle cost.
  *   - mousemove throttled to one rAF per frame; listeners are passive.
- *   - Tilt gated to (hover: hover) and (pointer: fine) — off on touch.
+ *   - Tilt gated to (hover: hover) and (pointer: fine) - off on touch.
  *
  * Accessibility / reduced motion
  *   - prefers-reduced-motion: reduce cancels all animations and reveals
@@ -95,7 +95,7 @@
     }
 
     /* ---------------------------------------------------------------------
-       1. Scroll reveal — auto-tag every <section> + .hero with data-reveal
+       1. Scroll reveal - auto-tag every <section> + .hero with data-reveal
        --------------------------------------------------------------------- */
 
     function tagRevealTargets() {
@@ -138,7 +138,7 @@
     }
 
     /* ---------------------------------------------------------------------
-       2. Card tilt — mousemove sets --mx / --my (range -1..1)
+       2. Card tilt - mousemove sets --mx / --my (range -1..1)
        --------------------------------------------------------------------- */
 
     function initCardTilt() {

@@ -1,15 +1,15 @@
 /* ==========================================
-   04 — LIGHT THEME CONTRAST + READABILITY (WCAG AA)
+   04 - LIGHT THEME CONTRAST + READABILITY (WCAG AA)
    Loaded after all other CSS. Only touches `body.light-theme`.
    Dark theme: untouched.
    ========================================== */
 
 /* ------------------------------------------------------------------
-   1. CORE TOKENS — baby blue palette
+   1. CORE TOKENS - baby blue palette
    Dark theme keeps mint (#00ff9d). Light theme uses soft blue.
    ------------------------------------------------------------------ */
 body.light-theme {
-    /* Warm paper + deep teal — calmer than baby-blue */
+    /* Warm paper + deep teal - calmer than baby-blue */
     --bg-color: #f4f1eb;
     --card-bg: #fffcf7;
     --text-primary: #1a1714;
@@ -46,7 +46,7 @@ body.light-theme h6 {
     color: #14110e;
 }
 
-/* Secondary text floor — keep ~7:1 ratio with white */
+/* Secondary text floor - keep ~7:1 ratio with white */
 body.light-theme .text-secondary,
 body.light-theme .company,
 body.light-theme .role-description,
@@ -59,7 +59,7 @@ body.light-theme .timeline-content p {
 }
 
 /* ------------------------------------------------------------------
-   2. SURFACES — kill glassmorphism, give cards real depth
+   2. SURFACES - kill glassmorphism, give cards real depth
    ------------------------------------------------------------------ */
 body.light-theme .ai-project-card {
     background: #fffcf7;
@@ -98,7 +98,7 @@ body.light-theme .ai-project-card h3 {
     color: #14110e;
 }
 
-/* Featured project — solid surface */
+/* Featured project - solid surface */
 body.light-theme .featured-project {
     background:
         radial-gradient(circle at 18% 0%, rgba(59, 130, 246, 0.06), transparent 38%),
@@ -165,7 +165,7 @@ body.light-theme .card-metric-value {
     color: #14110e;
 }
 
-/* Contact card — solid */
+/* Contact card - solid */
 body.light-theme .contact-card {
     background: #fffcf7;
     border: 1px solid #e5dfd4;
@@ -177,7 +177,7 @@ body.light-theme .contact-card .secondary-options {
     border-top: 1px solid #e5dfd4;
 }
 
-/* Cert badges — readable */
+/* Cert badges - readable */
 body.light-theme .cert-badge {
     background: #f8fafc;
     border: 1px solid #e5dfd4;
@@ -191,7 +191,7 @@ body.light-theme .cert-item h4 {
 }
 
 /* ------------------------------------------------------------------
-   3. STATUS DOTS / BADGES — emerald, not neon mint
+   3. STATUS DOTS / BADGES - emerald, not neon mint
    ------------------------------------------------------------------ */
 body.light-theme .status-dot {
     background: #3b82f6;
@@ -271,7 +271,7 @@ body.light-theme .timeline-content.glow-card:hover {
 }
 
 /* ------------------------------------------------------------------
-   5. BUTTONS — primary teal solid, secondary outline
+   5. BUTTONS - primary teal solid, secondary outline
    ------------------------------------------------------------------ */
 body.light-theme .btn-primary,
 body.light-theme .cta-primary-btn {
@@ -301,7 +301,7 @@ body.light-theme .nav-links .btn-primary:hover {
     background: linear-gradient(135deg, #1e40af, #1d4ed8);
 }
 
-/* Calendar/CTA button — same teal gradient */
+/* Calendar/CTA button - same teal gradient */
 body.light-theme .calendar-btn {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: #ffffff;
@@ -325,7 +325,7 @@ body.light-theme .cv-download-btn:hover {
     color: #2563eb;
 }
 
-/* WhatsApp CTA — keep brand green but readable */
+/* WhatsApp CTA - keep brand green but readable */
 body.light-theme .whatsapp-cta {
     background: #fffcf7;
     border: 1px solid #d4cdc0;
@@ -343,7 +343,7 @@ body.light-theme .whatsapp-cta i {
 }
 
 /* ------------------------------------------------------------------
-   6. PROJECT FILTER BUTTONS — fix unreadable pastel-active state
+   6. PROJECT FILTER BUTTONS - fix unreadable pastel-active state
    ------------------------------------------------------------------ */
 body.light-theme .filter-btn {
     border: 1px solid #d4cdc0;
@@ -364,7 +364,7 @@ body.light-theme .filter-btn.active {
 }
 
 /* ------------------------------------------------------------------
-   7. TAGS / CHIPS / BADGES — readable, no rgba(0,0,0,0.5) ghosts
+   7. TAGS / CHIPS / BADGES - readable, no rgba(0,0,0,0.5) ghosts
    ------------------------------------------------------------------ */
 body.light-theme .tags span {
     background: rgba(59, 130, 246, 0.08);
@@ -457,7 +457,7 @@ body.light-theme .form-group label {
 }
 
 /* ------------------------------------------------------------------
-   9. TERMINAL CONTACT — readable teal/emerald instead of mint
+   9. TERMINAL CONTACT - readable teal/emerald instead of mint
    Monospace font stays per terminal CSS; we only lift contrast.
    ------------------------------------------------------------------ */
 body.light-theme .terminal-window {
@@ -573,7 +573,7 @@ body.light-theme .nav-links a.is-active:not(.btn-primary)::after {
 }
 
 /* ------------------------------------------------------------------
-   11. PROGRESS BAR — pull saturation down on light bg
+   11. PROGRESS BAR - pull saturation down on light bg
    ------------------------------------------------------------------ */
 body.light-theme .progress-bar {
     background: linear-gradient(90deg, #3b82f6, #2563eb);
@@ -589,7 +589,7 @@ body.light-theme .progress-bar::after {
 }
 
 /* ------------------------------------------------------------------
-   12. PROJECT ICONS — neutral surface, teal icon
+   12. PROJECT ICONS - neutral surface, teal icon
    ------------------------------------------------------------------ */
 body.light-theme .project-icon-wrapper,
 body.light-theme .icon-violet,
@@ -616,7 +616,7 @@ body.light-theme .project-icon-wrapper i {
 }
 
 /* ------------------------------------------------------------------
-   13. CARD DIAGRAM (SVG) — readable on white
+   13. CARD DIAGRAM (SVG) - readable on white
    ------------------------------------------------------------------ */
 body.light-theme .card-diagram {
     background: #f8fafc;

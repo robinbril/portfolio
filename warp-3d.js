@@ -367,7 +367,7 @@ export class WormholeEngine {
         const norm = (this.speed - SPEED_MIN) / (SPEED_MAX - SPEED_MIN);
         this.bloom.strength = 1.0 + norm * 1.6;
 
-        // Galaxy + stars permanent zichtbaar — fadelt extra in als tunnel weg is
+        // Galaxy + stars permanent zichtbaar - fadelt extra in als tunnel weg is
         const galaxyReveal = (1 - tunnelFade) * (1 - maxRingGlow);
         this.galaxy.material.opacity = 0.45 + galaxyReveal * 0.4;
         this.farStars.material.opacity = 0.55 + galaxyReveal * 0.35;

@@ -212,7 +212,7 @@ sections.forEach(section => {
     observer.observe(section);
 });
 
-// Scroll fade-in animation disabled — caused text to appear to jump on scroll/filter.
+// Scroll fade-in animation disabled - caused text to appear to jump on scroll/filter.
 
 // ==========================================
 // SMOOTH SCROLL WITH OFFSET FOR NAV
@@ -558,7 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Show-more toggle is now handled inside the filter block above.
 
 // ==========================================
-// WARP MODE — hold SPACE to engage hyperspace
+// WARP MODE - hold SPACE to engage hyperspace
 // ==========================================
 (() => {
     const container = document.getElementById('warp-canvas');
@@ -593,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (speedNorm < 0.15) hudStatus.textContent = 'SPOOLING DRIVE...';
             else if (speedNorm < 0.4) hudStatus.textContent = 'ACCELERATION NOMINAL';
             else if (speedNorm < 0.7) hudStatus.textContent = 'BREAKING ATMOSPHERE';
-            else hudStatus.textContent = 'WARP STABLE — TRAJECTORY LOCKED';
+            else hudStatus.textContent = 'WARP STABLE - TRAJECTORY LOCKED';
         }
     };
 
@@ -948,7 +948,7 @@ document.addEventListener('DOMContentLoaded', () => {
             print('link', '→ mailto:robin.bril@gmail.com', 'mailto:robin.bril@gmail.com');
         },
         about: () => {
-            print('system', 'Robin Bril — AI Engineer, Amsterdam.');
+            print('system', 'Robin Bril - AI Engineer, Amsterdam.');
             print('system', 'Bouwt AI-systemen die zelfstandig taken uitvoeren binnen bedrijven.');
             print('system', '7+ productie-agents, 14+ MCP-servers, open-source claude-harness.');
         },
@@ -1051,7 +1051,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // ==========================================
-// SCROLL REVEAL — premium fade-in on scroll
+// SCROLL REVEAL - premium fade-in on scroll
 // Respects prefers-reduced-motion
 // ==========================================
 (() => {
@@ -1104,7 +1104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // ==========================================
-// STAT COUNTER ANIMATION — count up on first view
+// STAT COUNTER ANIMATION - count up on first view
 // ==========================================
 (() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1145,7 +1145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ==========================================
-// TERMINAL AUTOPROMPT — types example commands in the placeholder
+// TERMINAL AUTOPROMPT - types example commands in the placeholder
 // to teach discoverability. Stops once user interacts.
 // ==========================================
 (() => {
@@ -1587,7 +1587,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })();
 /* =============================================================================
- * 08 — Animations script additions
+ * 08 - Animations script additions
  * Self-contained IIFE. No globals. No dependencies.
  *
  * Responsibilities:
@@ -1610,18 +1610,18 @@ document.addEventListener('DOMContentLoaded', () => {
  *     <link rel="stylesheet" href="enhancements/08-animations.css">
  *   Add before </body> after existing script.js:
  *     <script src="enhancements/08-animations.script-additions.js" defer></script>
- *   No other HTML changes required — this script auto-tags
+ *   No other HTML changes required - this script auto-tags
  *   <section class="section"> and .hero with data-reveal.
  *
  * Existing HTML hooks the CSS already targets
- *   .section, .hero                              — scroll reveal
- *   .ai-project-card, .featured-project          — tilt + lift on hover
- *   .skill-chip                                  — mint ripple
- *   .filter-btn (+ .active)                      — animated underline
+ *   .section, .hero                              - scroll reveal
+ *   .ai-project-card, .featured-project          - tilt + lift on hover
+ *   .skill-chip                                  - mint ripple
+ *   .filter-btn (+ .active)                      - animated underline
  *   .hero-content .hero-eyebrow / h1 /
  *     .hero-subtitle / .hero-actions /
- *     .hero-stats                                — page-load cascade
- *   #experience .timeline-item:first-child       — pulse on current-role dot
+ *     .hero-stats                                - page-load cascade
+ *   #experience .timeline-item:first-child       - pulse on current-role dot
  *
  * Optional HTML hooks (no markup change required if absent)
  *   - Add class "counter-animate" inside .hero-stat numbers for scale-in
@@ -1633,9 +1633,9 @@ document.addEventListener('DOMContentLoaded', () => {
  * Performance
  *   - Animates transform + opacity only. No layout/paint thrash. 60fps.
  *   - will-change set only where animation actually runs.
- *   - IntersectionObserver unobserves after first reveal — zero idle cost.
+ *   - IntersectionObserver unobserves after first reveal - zero idle cost.
  *   - mousemove throttled to one rAF per frame; listeners are passive.
- *   - Tilt gated to (hover: hover) and (pointer: fine) — off on touch.
+ *   - Tilt gated to (hover: hover) and (pointer: fine) - off on touch.
  *
  * Accessibility / reduced motion
  *   - prefers-reduced-motion: reduce cancels all animations and reveals
@@ -1683,7 +1683,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ---------------------------------------------------------------------
-       1. Scroll reveal — auto-tag every <section> + .hero with data-reveal
+       1. Scroll reveal - auto-tag every <section> + .hero with data-reveal
        --------------------------------------------------------------------- */
 
     function tagRevealTargets() {
@@ -1726,7 +1726,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ---------------------------------------------------------------------
-       2. Card tilt — mousemove sets --mx / --my (range -1..1)
+       2. Card tilt - mousemove sets --mx / --my (range -1..1)
        --------------------------------------------------------------------- */
 
     function initCardTilt() {
@@ -1869,7 +1869,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!initialActive) initialActive = buttons[0];
         setActive(initialActive);
 
-        // Click handler — runs AFTER the legacy handler in script.js (event
+        // Click handler - runs AFTER the legacy handler in script.js (event
         // listeners fire in registration order). Defer one frame so the
         // legacy handler's inline styles land first, then override them with
         // class-based transitions.
@@ -1886,7 +1886,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // First paint — apply initial filter so card states match the active
+        // First paint - apply initial filter so card states match the active
         // button without waiting for a click.
         requestAnimationFrame(function () {
             clearInlineDisplay();
@@ -1901,7 +1901,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })();
 /* =============================================================
-   15 — Footer / CTA script additions
+   15 - Footer / CTA script additions
    - Scroll-to-top toggle + smooth scroll
    - Optional GitHub repos rendering when [data-github-repos] exists
    IIFE, idempotent, no-throw.

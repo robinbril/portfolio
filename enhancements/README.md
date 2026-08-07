@@ -1,10 +1,10 @@
-# Enhancements — integratie-instructies
+# Enhancements - integratie-instructies
 
 > Hook blokkeert `.NOTES.md`-naam; deze README bevat de integratie-instructies voor alle enhancement-files in deze map.
 
 ---
 
-## 02-hero.css — focus + WOW hero
+## 02-hero.css - focus + WOW hero
 
 ### Wire-up
 
@@ -16,7 +16,7 @@ Voeg toe in `index.html`, direct na regel 60 (`apple-premium.css`):
 
 Load-volgorde: na `style.css`, `ai-styles.css`, `apple-premium.css`.
 
-### HTML — status chip (NIEUW element)
+### HTML - status chip (NIEUW element)
 
 De status chip bestaat nog niet in de DOM. Insert location: `index.html`, **binnen `.hero-content`**, direct voor regel 246 (`<h1>AI Engineer</h1>`).
 
@@ -49,7 +49,7 @@ De volgende regels in `style.css` worden volledig overschreven door `02-hero.css
 | `style.css` | 372–397 | `.btn-primary` (global) | hero-scoped override vervangt background, padding, radius, shadow, hover scale |
 | `style.css` | 399–425 | `.btn-secondary` (global) | hero-scoped override = mint ghost |
 
-De globale `.btn-primary` / `.btn-secondary` regels zijn nog in gebruik buiten de hero (nav, contact, etc.) — niet globaal verwijderen. Alleen de hero-scoped duplicatie is redundant.
+De globale `.btn-primary` / `.btn-secondary` regels zijn nog in gebruik buiten de hero (nav, contact, etc.) - niet globaal verwijderen. Alleen de hero-scoped duplicatie is redundant.
 
 Lucide icons in de CTAs (`<i data-lucide="arrow-right">`, `<i data-lucide="mail">`) worden verborgen via `i[data-lucide] { display: none }`. De pijl komt nu uit een `::after` pseudo. Wil je de lucide-icon terug: verwijder de `display: none` en de `::after`. Kies één, niet beide.
 
@@ -72,7 +72,7 @@ Lucide icons in de CTAs (`<i data-lucide="arrow-right">`, `<i data-lucide="mail"
 
 ---
 
-# 03 — Sticky nav + scrollspy: integratie
+# 03 - Sticky nav + scrollspy: integratie
 
 ## CSS
 
@@ -88,7 +88,7 @@ Volgorde is belangrijk: deze file moet *na* `style.css`, `ai-styles.css` en `app
 
 Twee opties, kies één:
 
-**Optie A — los script-tag (aanbevolen, raakt `script.js` niet):**
+**Optie A - los script-tag (aanbevolen, raakt `script.js` niet):**
 
 Voor `</body>` in `index.html`, na de bestaande `<script src="script.js">` tag:
 
@@ -96,7 +96,7 @@ Voor `</body>` in `index.html`, na de bestaande `<script src="script.js">` tag:
 <script src="enhancements/03-nav-scrollspy.script-additions.js" defer></script>
 ```
 
-**Optie B — appenden aan `script.js`:**
+**Optie B - appenden aan `script.js`:**
 
 Plak de volledige inhoud van `03-nav-scrollspy.script-additions.js` aan het eind van `script.js` (na regel 1187, als nieuwe IIFE). De IIFE is zelfstandig en interfereert niet met bestaande code.
 
@@ -108,13 +108,13 @@ Geen verplichte wijzigingen. De huidige markup (`index.html` regels 204–225) h
 - Section IDs `about`, `projects`, `experience`, `skills`, `contact` bestaan al (regels 284, 348, 943, 1097, 1370).
 - `.mobile-menu-btn` aanwezig (regel 220).
 
-Geen data-attributes nodig — selectors mappen via `a[href="#<id>"]` naar de section ids.
+Geen data-attributes nodig - selectors mappen via `a[href="#<id>"]` naar de section ids.
 
 ## Conflicten met bestaande code
 
 - `style.css` regels 5456–5478 zetten `.nav-links a.is-active::after` op een 4px streep onder de link. De nieuwe CSS gebruikt `.is-current` (andere klasse), dus geen botsing. Als je de oude `.is-active` scrollspy wil opruimen: `script.js` regel 200–202 (let op: de timeline observer gebruikt `.is-active` ook, niet aanraken zonder check) en CSS regels 5456–5478.
 - `script.js` regel 761 (`scrollToSection`) is voor het HUD-component, niet de hoofd-navbar. Geen conflict.
-- `style.css` regel 242 zet `.navbar { position: fixed }`. Override naar `position: sticky` is bewust — sticky werkt natuurlijker binnen de `<header>` wrapper (regel 203).
+- `style.css` regel 242 zet `.navbar { position: fixed }`. Override naar `position: sticky` is bewust - sticky werkt natuurlijker binnen de `<header>` wrapper (regel 203).
 
 ## Testen
 
@@ -126,7 +126,7 @@ Geen data-attributes nodig — selectors mappen via `a[href="#<id>"]` naar de se
 
 ---
 
-# 10 — Project filters + AI project cards: integratie
+# 10 - Project filters + AI project cards: integratie
 
 ## CSS
 
@@ -164,11 +164,11 @@ Legacy filter-logica zit in `script.js:246–315`. Vier interacties:
 
 2. **`.hidden` class** (script.js:266, 274). Bestaande regel `.ai-project-card.hidden` op style.css:2429 zet `display:none`. De IIFE verwijdert `.hidden` elke pass. `.is-filtered-out` is de single source of truth in de overlay.
 
-3. **"Show more / show less" pagination** (script.js:252, 270–292, 307–312). Beperkt zichtbare matches tot 6 met toggle. Met de overlay geladen wist `clearInlineDisplay` ook de cap-styling — **de 6-cap is effectief disabled**, alle matches blijven zichtbaar.
+3. **"Show more / show less" pagination** (script.js:252, 270–292, 307–312). Beperkt zichtbare matches tot 6 met toggle. Met de overlay geladen wist `clearInlineDisplay` ook de cap-styling - **de 6-cap is effectief disabled**, alle matches blijven zichtbaar.
 
-   Wil je de cap terug: óf verplaats `VISIBLE_LIMIT`-logic naar de overlay (met `.is-filtered-out` als hide-mechanisme), óf laat de overlay `clearInlineDisplay` skippen voor cards voorbij index 6 als niet-expanded. Cleanste pad is de hele legacy `applyFilter` slopen en de overlay de filter-state laten ownen — maar dat is een edit op bestaande code, out of scope.
+   Wil je de cap terug: óf verplaats `VISIBLE_LIMIT`-logic naar de overlay (met `.is-filtered-out` als hide-mechanisme), óf laat de overlay `clearInlineDisplay` skippen voor cards voorbij index 6 als niet-expanded. Cleanste pad is de hele legacy `applyFilter` slopen en de overlay de filter-state laten ownen - maar dat is een edit op bestaande code, out of scope.
 
-4. **Active class is `.active`** (script.js:298–299). De CSS target beide `.active` en `.is-active`, dus styling is OK. De IIFE schrijft `.is-active` (per spec). Beide klassen landen op dezelfde button na klik. Geen visueel conflict, wel redundant — accepteer of strip `classList.add('active')` op script.js:299 later.
+4. **Active class is `.active`** (script.js:298–299). De CSS target beide `.active` en `.is-active`, dus styling is OK. De IIFE schrijft `.is-active` (per spec). Beide klassen landen op dezelfde button na klik. Geen visueel conflict, wel redundant - accepteer of strip `classList.add('active')` op script.js:299 later.
 
 5. **`playHoverSound()` op klik** (script.js:303). Unaffected. Vuurt vóór de gedeferrede frame.
 
@@ -184,7 +184,7 @@ Legacy filter-logica zit in `script.js:246–315`. Vier interacties:
 
 ---
 
-# 14 — Education, Certs & Testimonials polish
+# 14 - Education, Certs & Testimonials polish
 
 Premium polish-laag voor drie aansluitende secties: `#education` (opleiding-timeline), `#certifications` (certs-grid) en `.testimonials-compact` (quote-boxen binnen `#contact`).
 
@@ -196,17 +196,17 @@ Voeg toe in `<head>` van `index.html`, NA `style.css` / `apple-premium.css` en N
 <link rel="stylesheet" href="enhancements/14-education-certs.css">
 ```
 
-Geen JS. Geen HTML wijzigingen verplicht — alles werkt op de huidige markup.
+Geen JS. Geen HTML wijzigingen verplicht - alles werkt op de huidige markup.
 
 ## Aanwezige testimonial-avatars
 
 Alle drie zijn al in de repo-root aanwezig (`/Users/robinbril/Projects/portfolio/`):
 
-- `mark-vervuurt.webp` — Mark Vervuurt, Lead AI Engineer Capgemini
-- `giulio-piccolo.webp` — Giulio Piccolo, Lead Data Engineer Capgemini
-- `rob-kemperman.webp` — Rob Kemperman, Head of Data & Analytics, Road.io
+- `mark-vervuurt.webp` - Mark Vervuurt, Lead AI Engineer Capgemini
+- `giulio-piccolo.webp` - Giulio Piccolo, Lead Data Engineer Capgemini
+- `rob-kemperman.webp` - Rob Kemperman, Head of Data & Analytics, Road.io
 
-`<img>` tags in `index.html` (regels 1443, 1461, 1480) hebben `loading="lazy"`, `decoding="async"` en `width/height="56"`. De enhancement schaalt visueel naar 48px, maar laat de intrinsieke attributen staan — geen CLS.
+`<img>` tags in `index.html` (regels 1443, 1461, 1480) hebben `loading="lazy"`, `decoding="async"` en `width/height="56"`. De enhancement schaalt visueel naar 48px, maar laat de intrinsieke attributen staan - geen CLS.
 
 Source-link (LinkedIn) zit al als `<a class="source-link"><i data-lucide="info">` per quote-box. De enhancement positioneert die rechts-onder. Wil je een echte LinkedIn glyph: `data-lucide="linkedin"` werkt direct, geen CSS-edit nodig.
 
@@ -232,7 +232,7 @@ Voor de minor-card bijvoorbeeld `<span class="grade-chip">Head of R&amp;D</span>
 ## Heading hierarchy check
 
 - `<h2>Opleiding</h2>` → `<h3>` per timeline-card (regels 1191, 1203). OK.
-- `<h2>Top Certificeringen</h2>` → `<h4>` per cert-item (regels 1232, 1252, 1283, 1303, 1321, 1340, 1363). **Skipt `<h3>`** — kleine a11y-warning.
+- `<h2>Top Certificeringen</h2>` → `<h4>` per cert-item (regels 1232, 1252, 1283, 1303, 1321, 1340, 1363). **Skipt `<h3>`** - kleine a11y-warning.
 - `<h2>Neem contact op</h2>` → testimonials gebruiken `<strong>` voor naam. Terecht: testimonials zijn geen eigen sectie.
 
 Aanpak voor cert-hierarchy (out of scope, vermeld voor follow-up):
@@ -276,7 +276,7 @@ Bestaande CSS-variabelen uit `style.css` regels 3865–3871 worden hergebruikt d
 
 ---
 
-# 15 — Footer, CTA banner, scroll-to-top: integratie
+# 15 - Footer, CTA banner, scroll-to-top: integratie
 
 De huidige `index.html` heeft een lege `<!-- Footer -->` comment op regel 1501.
 Alles hieronder is nieuw in te voegen.
@@ -297,7 +297,7 @@ Vóór de bestaande `<script src="script.js"></script>` regel:
 <script src="enhancements/15-footer-cta.script-additions.js" defer></script>
 ```
 
-## HTML — finale CTA banner
+## HTML - finale CTA banner
 
 Direct ná de testimonials-sectie (na regel 1499 `</section>`), vóór de
 `<!-- Footer -->` comment:
@@ -333,7 +333,7 @@ Direct ná de testimonials-sectie (na regel 1499 `</section>`), vóór de
 > Pas de Cal.com-URL aan zodra Robin's eigen booking-link bekend is. Anders
 > vervang `href` met `#contact` om het bestaande modal te triggeren.
 
-## HTML — footer (3-koloms desktop, 1-kolom mobile)
+## HTML - footer (3-koloms desktop, 1-kolom mobile)
 
 Direct ná de finale CTA, ter vervanging van de lege `<!-- Footer -->` comment:
 
@@ -424,7 +424,7 @@ Optioneel dynamisch jaartal, vlak voor de bestaande `lucide.createIcons()`-tag:
 </script>
 ```
 
-## HTML — scroll-to-top button
+## HTML - scroll-to-top button
 
 Direct vóór `</body>`, na de bestaande `<script>` tags:
 
@@ -467,7 +467,7 @@ Toggle vanaf `scrollY > 600`, smooth scroll naar top. Respecteert
 
 ---
 
-# 04 — Light theme contrast + leesbaarheid (WCAG AA)
+# 04 - Light theme contrast + leesbaarheid (WCAG AA)
 
 ## Wire-up
 
@@ -489,15 +489,15 @@ Berekend tegen `#f6f8fb` (of `#ffffff` waar van toepassing).
 | Headings | `#0c1422` | `#f6f8fb` | 18.2:1 | AAA |
 | Secondary tekst (`#334155`) | `#334155` | `#f6f8fb` | 10.3:1 | AAA |
 | Muted (`#475569`) | `#475569` | `#f6f8fb` | 7.5:1 | AAA |
-| Body op card (`#1a2332`) | — | `#ffffff` | 15.1:1 | AAA |
-| Secondary op card (`#334155`) | — | `#ffffff` | 10.5:1 | AAA |
-| Accent teal `#0d9488` | — | `#ffffff` | 3.8:1 | AA (non-text) |
-| Forest `#047857` (tekst) | — | `#ffffff` | 5.6:1 | AA |
-| Emerald `#059669` (status dot) | — | `#ffffff` | 4.0:1 | AA (non-text) |
+| Body op card (`#1a2332`) | - | `#ffffff` | 15.1:1 | AAA |
+| Secondary op card (`#334155`) | - | `#ffffff` | 10.5:1 | AAA |
+| Accent teal `#0d9488` | - | `#ffffff` | 3.8:1 | AA (non-text) |
+| Forest `#047857` (tekst) | - | `#ffffff` | 5.6:1 | AA |
+| Emerald `#059669` (status dot) | - | `#ffffff` | 4.0:1 | AA (non-text) |
 | White button op `#0d9488` | `#ffffff` | `#0d9488` | 3.8:1 | AA Large (16px+ bold) |
 | Filter btn active white op teal | `#ffffff` | `#0d9488` | 3.8:1 | AA Large |
-| Border `#e2e8f0` decoratief | — | `#ffffff` | 1.3:1 | non-text |
-| Border `#cbd5e1` interactief | — | `#ffffff` | 1.6:1 | non-text |
+| Border `#e2e8f0` decoratief | - | `#ffffff` | 1.3:1 | non-text |
+| Border `#cbd5e1` interactief | - | `#ffffff` | 1.6:1 | non-text |
 
 **Nuance:** voor accent-teksten >= 18.66px bold of >= 24px regular voldoet 3:1 al aan AA. Body en kleine UI-tekst die accent-kleur erft wordt expliciet overschreven naar `#047857` (forest, 5.6:1), niet `#0d9488`. `--accent-strong` is gemapt op `#0d9488` puur voor decoratieve doeleinden (dots, glows, borders).
 
@@ -553,26 +553,26 @@ Worden volledig overschreven door `04-light-theme.css`. Niet aangeraakt in deze 
 
 ## Open punten / follow-ups
 
-1. **`style.css` regels 5208–5212** — hero-grid blauwe lijnen meenemen in cleanup pass (token-driven of expliciet `rgba(13,148,136,0.05)`). Niet kritiek maar visueel inconsistent.
-2. **Cleanup pass** — alle bovenstaande "conflicterende regels" tabel kan in één destructive PR weg.
-3. **Filter-btn AA contrast** — primary button tekst op `#0d9488` haalt 3.8:1; AA voor body-text is 4.5:1. Maak knop-tekst `font-weight: 700` (dan 3:1 voldoende per AA Large) of donker de teal naar `#0f766e` (4.5:1). Aanbevolen: bold.
-4. **Focus rings** — geen expliciete `:focus-visible` outline in deze file. A11y follow-up: `outline: 2px solid #0d9488; outline-offset: 2px;` op interactieve elementen.
-5. **Tag colors** — alle 17 `.tag-*` klassen kregen dezelfde neutrale stijl. Semantische kleuring (bv. `tag-emerald` echt groen) is een aparte enhancement.
+1. **`style.css` regels 5208–5212** - hero-grid blauwe lijnen meenemen in cleanup pass (token-driven of expliciet `rgba(13,148,136,0.05)`). Niet kritiek maar visueel inconsistent.
+2. **Cleanup pass** - alle bovenstaande "conflicterende regels" tabel kan in één destructive PR weg.
+3. **Filter-btn AA contrast** - primary button tekst op `#0d9488` haalt 3.8:1; AA voor body-text is 4.5:1. Maak knop-tekst `font-weight: 700` (dan 3:1 voldoende per AA Large) of donker de teal naar `#0f766e` (4.5:1). Aanbevolen: bold.
+4. **Focus rings** - geen expliciete `:focus-visible` outline in deze file. A11y follow-up: `outline: 2px solid #0d9488; outline-offset: 2px;` op interactieve elementen.
+5. **Tag colors** - alle 17 `.tag-*` klassen kregen dezelfde neutrale stijl. Semantische kleuring (bv. `tag-emerald` echt groen) is een aparte enhancement.
 
 ---
 
-## 01-cockpit (UPDATED) — full-viewport cockpit frame
+## 01-cockpit (UPDATED) - full-viewport cockpit frame
 
 Vervangt de twee zwevende glasspanelen (`.warp-stage` top, `.warp-bottom` bottom) door een complete cockpit: vaste side-struts links + rechts, een geïntegreerde top-HUD strip, een dashboard onderaan en een pilot-silhouet in 3D-vibe (achteraanzicht, helm + schouders, subtle head-bob).
 
 Files:
 
-- `enhancements/01-warp-hud.css` — herschreven (overschrijft de oude floating-panel CSS).
-- `cockpit-pilot.svg` — pilot silhouet, gerenderd als `background-image` op `.warp-hud`. Path is relatief vanaf de CSS: `url("../cockpit-pilot.svg")`.
+- `enhancements/01-warp-hud.css` - herschreven (overschrijft de oude floating-panel CSS).
+- `cockpit-pilot.svg` - pilot silhouet, gerenderd als `background-image` op `.warp-hud`. Path is relatief vanaf de CSS: `url("../cockpit-pilot.svg")`.
 
 ### Wire-up
 
-Geen CSS-link toevoegen — `01-warp-hud.css` zit al in `<head>`. Verifieer load-volgorde:
+Geen CSS-link toevoegen - `01-warp-hud.css` zit al in `<head>`. Verifieer load-volgorde:
 
 ```html
 <link rel="stylesheet" href="style.css">
@@ -582,12 +582,12 @@ Geen CSS-link toevoegen — `01-warp-hud.css` zit al in `<head>`. Verifieer load
 <link rel="stylesheet" href="enhancements/01-warp-hud.css">
 ```
 
-### HTML changes — vervang `index.html` regels 149–198
+### HTML changes - vervang `index.html` regels 149–198
 
 De huidige markup heeft losse `.warp-stage` + `.warp-bottom` panels en een onbruikte `.rocket-cockpit` sub-tree. Vervang het hele blok (vanaf het commentaar `<!-- Warp HUD overlay ... -->` t/m de sluitende `</div>` van `#warp-hud` en de hidden `<span id="hud-destination">`) door:
 
 ```html
-<!-- Warp HUD overlay — cockpit frame (struts + canopy via CSS background) -->
+<!-- Warp HUD overlay - cockpit frame (struts + canopy via CSS background) -->
 <div class="warp-hud" id="warp-hud" aria-hidden="true">
 
     <!-- Top HUD strip: NEXT STOP + destination text + RELEASE prompt -->
@@ -628,13 +628,13 @@ De huidige markup heeft losse `.warp-stage` + `.warp-bottom` panels en een onbru
 
 Aandachtspunten:
 
-- `<h2 id="hud-big-destination">` vervangt de oude `<div class="warp-big">`. Het id is wat de cycler in `script.js` regel 747 update via `document.getElementById('hud-big-destination')`. Klassen `.warp-stage`, `.warp-eyebrow`, `.warp-big`, `.warp-hint` zijn weg — geen `script.js` referentie ernaar.
+- `<h2 id="hud-big-destination">` vervangt de oude `<div class="warp-big">`. Het id is wat de cycler in `script.js` regel 747 update via `document.getElementById('hud-big-destination')`. Klassen `.warp-stage`, `.warp-eyebrow`, `.warp-big`, `.warp-hint` zijn weg - geen `script.js` referentie ernaar.
 - `#hud-velocity` en `#hud-status` zijn nu directe `<div>` kinderen i.p.v. nested onder `.warp-bottom > .warp-velocity`. JS leest ze via `getElementById` (regels 567–568), dus de nesting is irrelevant voor de logica.
-- `#hud-destination` is GEEN tekstdoel meer voor JS — wordt nooit door `script.js` aangeraakt. Wij gebruiken het als visueel anchor voor de pilot-card (linker dashboard kolom). De `aria-hidden="true"` is nieuw; het oude `hidden` attribuut wordt door de CSS overruled.
-- `.warp-route` blijft `<ol>` met 5 `<li class="warp-stop">` — exact wat de cycler `renderStop()` (regels 740–759) verwacht: `document.querySelectorAll('.warp-stop')`, toggle van `is-active` + `is-past`.
+- `#hud-destination` is GEEN tekstdoel meer voor JS - wordt nooit door `script.js` aangeraakt. Wij gebruiken het als visueel anchor voor de pilot-card (linker dashboard kolom). De `aria-hidden="true"` is nieuw; het oude `hidden` attribuut wordt door de CSS overruled.
+- `.warp-route` blijft `<ol>` met 5 `<li class="warp-stop">` - exact wat de cycler `renderStop()` (regels 740–759) verwacht: `document.querySelectorAll('.warp-stop')`, toggle van `is-active` + `is-past`.
 - De oude `.rocket-cockpit` decoratieve struts (regels 152–161) zijn verwijderd. De nieuwe CSS tekent de struts zelf via `background-image` op `.warp-hud`. Mocht je de oude markup laten staan: de nieuwe CSS heeft `display: none !important` voor `.rocket-cockpit`, dus geen visuele botsing.
 
-### JS hooks — wat blijft contract
+### JS hooks - wat blijft contract
 
 De volgende selectors mogen NIET veranderen in `script.js`:
 
@@ -675,4 +675,4 @@ header / navbar               z-index: 100             (site nav blijft altijd b
 
 - Alleen `transform`, `opacity`, `filter`, `background-position-y` en `box-shadow` worden geanimeerd.
 - `prefers-reduced-motion: reduce` cancelt: pilot-bob, LED-breathe, stop-pulse, status-blink, blinker-fade, en de progress-rail transition.
-- Niets met `backdrop-filter` op `.warp-hud` zelf (dat zou de canvas-render vertragen tijdens warp). De oude panels hadden wel `backdrop-filter: blur(24px)` — die zijn nu weg.
+- Niets met `backdrop-filter` op `.warp-hud` zelf (dat zou de canvas-render vertragen tijdens warp). De oude panels hadden wel `backdrop-filter: blur(24px)` - die zijn nu weg.

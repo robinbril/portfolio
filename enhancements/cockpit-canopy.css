@@ -197,7 +197,7 @@ body.xray .cockpit-canopy {
     box-shadow: var(--canopy-glow);
 }
 
-/* Cardinal tick marks (N/E/S/W) — four tiny mint dashes pinned
+/* Cardinal tick marks (N/E/S/W) - four tiny mint dashes pinned
    just outside the circle. */
 .cockpit-canopy__reticle::after {
     content: "";

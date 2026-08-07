@@ -151,7 +151,7 @@
 }
 
 /* -----------------------------------------------------------------------------
-   ENTRY HOOKS — body.xray
+   ENTRY HOOKS - body.xray
    ----------------------------------------------------------------------------- */
 
 /* Promote relevant elements to their own compositor layer. */
@@ -169,7 +169,7 @@ body.xray .warp-hud::before {
   animation: cockpitCanopyEnter 150ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* CRT boot flicker overlay — rides on ::after as a scanline blink.
+/* CRT boot flicker overlay - rides on ::after as a scanline blink.
    Canopy agent owns ::before for the vignette. */
 body.xray .warp-hud::after {
   animation: cockpitCRTFlicker 200ms steps(8, end) both;
@@ -177,7 +177,7 @@ body.xray .warp-hud::after {
   pointer-events: none;
 }
 
-/* Corner brackets — staggered slide from each respective edge.
+/* Corner brackets - staggered slide from each respective edge.
    Other agents define `.cockpit-bracket` with positional modifier classes:
    .cockpit-bracket--tl, --tr, --bl, --br */
 body.xray .cockpit-bracket {
@@ -190,20 +190,20 @@ body.xray .cockpit-bracket--tr { --bracket-from-x:  20px; --bracket-from-y: -20p
 body.xray .cockpit-bracket--bl { --bracket-from-x: -20px; --bracket-from-y:  20px; }
 body.xray .cockpit-bracket--br { --bracket-from-x:  20px; --bracket-from-y:  20px; }
 
-/* Side struts — vertical scale from center. */
+/* Side struts - vertical scale from center. */
 body.xray .cockpit-strut {
   transform-origin: center center;
   animation: cockpitStrutsEnter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: 200ms;
 }
 
-/* Destination announcement — fade + rise. */
+/* Destination announcement - fade + rise. */
 body.xray #hud-big-destination {
   animation: cockpitDestEnter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: 300ms;
 }
 
-/* Pitstop pill — fade + subtle scale. */
+/* Pitstop pill - fade + subtle scale. */
 body.xray #warp-route {
   transform-origin: center center;
   animation: cockpitPillEnter 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -222,10 +222,10 @@ body.xray canvas.warp-canvas {
 }
 
 /* -----------------------------------------------------------------------------
-   EXIT HOOKS — body.xray-exit (mirror, faster ~200ms)
+   EXIT HOOKS - body.xray-exit (mirror, faster ~200ms)
    Other agents toggle .xray-exit during the unwind, then remove both classes.
    If only .xray is removed without .xray-exit, elements snap back via default
-   styling — keep that path silent to avoid jank.
+   styling - keep that path silent to avoid jank.
    ----------------------------------------------------------------------------- */
 
 body.xray-exit .warp-hud::before {
@@ -261,7 +261,7 @@ body.xray-exit #warp-route {
 }
 
 /* -----------------------------------------------------------------------------
-   CLEANUP — release will-change once the cockpit is fully retracted
+   CLEANUP - release will-change once the cockpit is fully retracted
    ----------------------------------------------------------------------------- */
 body:not(.xray):not(.xray-exit) .warp-hud::before,
 body:not(.xray):not(.xray-exit) .cockpit-bracket,
@@ -272,7 +272,7 @@ body:not(.xray):not(.xray-exit) #warp-route {
 }
 
 /* -----------------------------------------------------------------------------
-   REDUCED MOTION — kill everything, leave final state visible
+   REDUCED MOTION - kill everything, leave final state visible
    ----------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   body.xray,

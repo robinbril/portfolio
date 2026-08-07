@@ -1,4 +1,4 @@
-/* Hero mobile — full height without clipping the name */
+/* Hero mobile - full height without clipping the name */
 
 @media (max-width: 768px) {
     .hero,
@@ -86,7 +86,7 @@
     }
 }
 
-/* Hero stat labels — readable, not washed out */
+/* Hero stat labels - readable, not washed out */
 .hero-stat span {
     color: rgba(226, 232, 240, 0.78);
 }

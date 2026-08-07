@@ -1,5 +1,5 @@
 /**
- * Portfolio i18n — NL (default) ↔ EN
+ * Portfolio i18n - NL (default) ↔ EN
  * Toggle: #lang-toggle. Persists in localStorage (portfolio-lang).
  */
 (function () {

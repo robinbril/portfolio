@@ -1,5 +1,5 @@
 /* ==========================================
-   HERO — refined cover (typography + CTAs)
+   HERO - refined cover (typography + CTAs)
    ========================================== */
 
 .hero {
@@ -101,7 +101,7 @@ body.light-theme .hero .hero-status-chip__dot {
     padding-bottom: 0 !important;
     white-space: normal;
     text-wrap: balance;
-    /* Soft solid gradient — no animation */
+    /* Soft solid gradient - no animation */
     background-image: linear-gradient(
         180deg,
         #f8fffb 0%,
@@ -244,7 +244,7 @@ body.light-theme .hero .hero-subtitle {
         0 16px 36px -12px rgba(45, 212, 191, 0.65);
 }
 
-/* Single text arrow — never doubles with lucide/::after */
+/* Single text arrow - never doubles with lucide/::after */
 .hero .hero-actions .btn-primary .btn-arrow {
     display: inline !important;
     font-size: 1.05em;
@@ -455,7 +455,7 @@ body.light-theme .hero .hero-actions .btn-secondary:hover {
     display: none !important;
 }
 
-/* Arrow via mask — never depends on font glyph support */
+/* Arrow via mask - never depends on font glyph support */
 .hero .hero-actions a.btn-primary::after {
     content: "" !important;
     display: inline-block !important;
@@ -592,7 +592,7 @@ body.light-theme .hero .hero-actions a.btn-primary .btn-arrow-char {
     gap: 0.4rem !important;
 }
 
-/* Final solid mint CTA — no purple wash */
+/* Final solid mint CTA - no purple wash */
 body:not(.light-theme) .hero .hero-actions a.btn-primary,
 body.dark-theme .hero .hero-actions a.btn-primary,
 .hero .hero-actions a.btn-primary {

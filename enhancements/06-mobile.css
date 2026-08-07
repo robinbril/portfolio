@@ -1,6 +1,6 @@
-/* 06 — Mobile polish: 360–768px tap targets, typography, spacing, drawer
+/* 06 - Mobile polish: 360–768px tap targets, typography, spacing, drawer
    ================================================================
-   NOTES (companion to NOTES.md — inlined because md write was blocked)
+   NOTES (companion to NOTES.md - inlined because md write was blocked)
    ================================================================
 
    WIRING
@@ -39,13 +39,13 @@
 
    HTML HOOKS REQUIRED
    -------------------
-   1. index.html L220 — hamburger button needs ARIA state:
+   1. index.html L220 - hamburger button needs ARIA state:
         <button class="mobile-menu-btn" aria-label="Open navigatiemenu"
                 aria-expanded="false" aria-controls="primary-nav">
       Toggle aria-expanded in script.js alongside .is-open. CSS already hooks
       .mobile-menu-btn[aria-expanded="true"] for the active tint.
 
-   2. index.html L207 — drawer needs id:
+   2. index.html L207 - drawer needs id:
         <div class="nav-links" id="primary-nav">
 
    3. Body scroll-lock when drawer open (verify current script first):

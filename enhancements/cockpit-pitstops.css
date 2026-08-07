@@ -1,5 +1,5 @@
 /* =========================================================
-   COCKPIT PITSTOPS — warp route indicator
+   COCKPIT PITSTOPS - warp route indicator
    Premium glass pill HUD shown during body.xray warp phase.
    Hardware-accelerated, pointer-inert overlay.
    ========================================================= */
@@ -142,7 +142,7 @@ body.xray #warp-route {
     transform 420ms var(--pit-ease);
 }
 
-/* Past — solid mint, soft glow */
+/* Past - solid mint, soft glow */
 .warp-stop.is-past .warp-stop-dot {
   width: 10px;
   height: 10px;
@@ -153,7 +153,7 @@ body.xray #warp-route {
     0 0 14px rgba(46, 242, 160, 0.15);
 }
 
-/* Active — 14px filled, triple halo, pulse */
+/* Active - 14px filled, triple halo, pulse */
 .warp-stop.is-active .warp-stop-dot {
   width: 14px;
   height: 14px;
@@ -249,7 +249,7 @@ body.xray #warp-route {
   }
 }
 
-/* ---------- Phone — dots only ----------------------------------------- */
+/* ---------- Phone - dots only ----------------------------------------- */
 @media (max-width: 480px) {
   #warp-route {
     gap: 0.75rem;

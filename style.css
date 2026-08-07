@@ -1222,7 +1222,7 @@ body.light-theme .tags span:hover {
 }
 
 /* ==========================================
-   THICK CARD STYLING — terminal aesthetic
+   THICK CARD STYLING - terminal aesthetic
    ========================================== */
 
 .featured-project {
@@ -1318,7 +1318,7 @@ body.light-theme .card-corner {
     gap: 0.4rem;
 }
 
-/* Company name — clearly separated from the tool title */
+/* Company name - clearly separated from the tool title */
 .card-company {
     display: inline-flex;
     align-items: center;
@@ -1562,7 +1562,7 @@ body.xray .xray-hint {
     transform: translateY(0);
 }
 
-/* xray-scanline retired — warp canvas replaces it */
+/* xray-scanline retired - warp canvas replaces it */
 .xray-scanline { display: none; }
 
 body.xray {
@@ -4038,7 +4038,7 @@ body.light-theme .progress-bar::after {
 /* ==========================================
    ROLE DESCRIPTION LISTS
    ========================================== */
-/* Triangle-bullet rules removed — using single green-dot style in the primary block above. */
+/* Triangle-bullet rules removed - using single green-dot style in the primary block above. */
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -4297,7 +4297,7 @@ body.light-theme .progress-bar::after {
    ACCESSIBILITY
    ========================================== */
 
-/* Keyboard focus rings — only on interactive elements */
+/* Keyboard focus rings - only on interactive elements */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -4332,7 +4332,7 @@ select:focus-visible,
 }
 
 /* ==========================================
-   TERMINAL — EMBEDDED IN CONTACT SECTION
+   TERMINAL - EMBEDDED IN CONTACT SECTION
    ========================================== */
 .contact-terminal-wrap {
     max-width: 720px;
@@ -4662,7 +4662,7 @@ body.light-theme .rocket-pov .cockpit-frame {
    8. Smoother section transitions
    ========================================== */
 
-/* 1. Custom scrollbar — minimal, accent-tinted, animated */
+/* 1. Custom scrollbar - minimal, accent-tinted, animated */
 html {
     scrollbar-width: thin;
     scrollbar-color: rgba(var(--accent-rgb), 0.4) transparent;
@@ -4741,7 +4741,7 @@ body.light-theme ::-webkit-scrollbar-thumb {
     }
 }
 
-/* 3. Project card title alignment — handled in main .ai-project-card flex rules.
+/* 3. Project card title alignment - handled in main .ai-project-card flex rules.
    Intentionally NOT using -webkit-line-clamp here because it forces
    display: -webkit-box and breaks the flex centering. min-height: 2.6em
    on h3 already keeps titles aligned across cards. */
@@ -4914,7 +4914,7 @@ body.light-theme ::-webkit-scrollbar-thumb {
     .terminal-chip { font-size: 0.62rem; padding: 0.25rem 0.45rem; }
 }
 
-/* 5. Touch-friendly tap targets — minimum 44x44 on mobile */
+/* 5. Touch-friendly tap targets - minimum 44x44 on mobile */
 @media (hover: none) and (pointer: coarse) {
     .filter-btn,
     .nav-links a,
@@ -4973,7 +4973,7 @@ body.light-theme ::selection {
             transparent 100%);
 }
 
-/* 10. Image / icon defaults — prevent jank */
+/* 10. Image / icon defaults - prevent jank */
 img, svg, video {
     max-width: 100%;
     height: auto;
@@ -4984,7 +4984,7 @@ i[data-lucide] {
 }
 
 /* ==========================================
-   SCROLL REVEAL — premium fade-in on scroll
+   SCROLL REVEAL - premium fade-in on scroll
    ========================================== */
 .reveal {
     opacity: 0;
@@ -5243,7 +5243,7 @@ body.light-theme .timeline-content.glow-card:hover {
 }
 
 /* ==========================================
-   HERO REDESIGN — premium command center
+   HERO REDESIGN - premium command center
    ========================================== */
 .hero-deco {
     position: absolute;
@@ -5720,7 +5720,7 @@ body.light-theme .card-diagram svg rect[stroke*="46,242,160"] {
 }
 
 /* ==========================================
-   HERO CALM-DOWN — remove busy decoration
+   HERO CALM-DOWN - remove busy decoration
    Replaces hero-rings + 3 orbs + grid + scroll cue
    ========================================== */
 .hero-grid,
@@ -5818,7 +5818,7 @@ body.light-theme .cta-primary-btn i {
     color: #ffffff;
 }
 
-/* Eyebrow chip light theme — refined */
+/* Eyebrow chip light theme - refined */
 body.light-theme .hero-eyebrow {
     background: rgba(255, 255, 255, 0.92);
     border: 1px solid rgba(59, 130, 246, 0.18);
@@ -5866,7 +5866,7 @@ body.light-theme .hero-orb--solo {
 }
 
 /* ==========================================
-   FEATURED CARDS — guaranteed alignment
+   FEATURED CARDS - guaranteed alignment
    Three zones: card-top / featured-content / card-metrics
    All cards equal height via grid stretch + metrics pinned bottom.
    ========================================== */
@@ -5898,7 +5898,7 @@ body.light-theme .hero-orb--solo {
 }
 
 /* ==========================================
-   HERO LESS NEON — softer saturation
+   HERO LESS NEON - softer saturation
    ========================================== */
 
 /* hero CTA/H1 overrides moved to enhancements/02-hero.css */
@@ -6005,7 +6005,7 @@ body.light-theme .hero::before {
 }
 
 /* ==========================================
-   WARP HUD — pure HTML overlay (no SVG, no rectangle artifacts)
+   WARP HUD - pure HTML overlay (no SVG, no rectangle artifacts)
    ========================================== */
 .warp-hud {
     position: fixed;

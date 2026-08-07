@@ -1,5 +1,5 @@
 /* =========================================================
-   11 — Accessibility (WCAG 2.2 AA)
+   11 - Accessibility (WCAG 2.2 AA)
    Layer: enhancement (load LAST, after style.css + ai-styles + apple-premium)
    Scope: focus-visible, sr-only, skip-link, focus-within, contrast,
           forced-colors, reduced-motion guards. No layout changes.
@@ -17,7 +17,7 @@
 }
 
 /* ---------------------------------------------------------
-   1. Focus-visible ring — strong, consistent, 3px mint
+   1. Focus-visible ring - strong, consistent, 3px mint
    Overrides the 2px outline in style.css for all interactive
    elements. Inherits border-radius from the element.
    --------------------------------------------------------- */
@@ -78,7 +78,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   2. .sr-only — visually hidden, available to screenreaders
+   2. .sr-only - visually hidden, available to screenreaders
    Use for icon-only buttons/links: <span class="sr-only">Label</span>
    --------------------------------------------------------- */
 .sr-only,
@@ -112,7 +112,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   3. Skip-link — hidden by default, slides in on focus
+   3. Skip-link - hidden by default, slides in on focus
    HTML: <a href="#home" class="skip-link">Spring naar inhoud</a>
    Must be the first focusable element inside <body>.
    --------------------------------------------------------- */
@@ -146,7 +146,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   4. Focus-within on cards — keyboard nav reveals card affordance
+   4. Focus-within on cards - keyboard nav reveals card affordance
    Mirrors hover state when an interactive descendant has focus.
    --------------------------------------------------------- */
 .ai-project-card:focus-within,
@@ -167,7 +167,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   5. High-contrast preference — increase borders, text contrast
+   5. High-contrast preference - increase borders, text contrast
    --------------------------------------------------------- */
 @media (prefers-contrast: more) {
     :root {
@@ -220,7 +220,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   6. Forced-colors (Windows High Contrast) — use system tokens
+   6. Forced-colors (Windows High Contrast) - use system tokens
    Disables gradients/backgrounds, relies on OS theme.
    --------------------------------------------------------- */
 @media (forced-colors: active) {
@@ -298,7 +298,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   7. Reduced-motion guard — covers enhancement-layer animations
+   7. Reduced-motion guard - covers enhancement-layer animations
    style.css already handles most; this is safety for additions.
    --------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
@@ -320,7 +320,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   8. Color-only state hints — add non-color cues
+   8. Color-only state hints - add non-color cues
    Status dots and active filter rely on color only. Reinforce
    with a ring/underline so colorblind users get the signal too.
    --------------------------------------------------------- */
@@ -337,7 +337,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   9. Minimum target size (WCAG 2.2 — 2.5.8, 24x24 CSS px min)
+   9. Minimum target size (WCAG 2.2 - 2.5.8, 24x24 CSS px min)
    Bring tight icon buttons up to spec without resizing the
    visible glyph.
    --------------------------------------------------------- */
@@ -373,7 +373,7 @@ summary:focus-visible,
 }
 
 /* ---------------------------------------------------------
-   10. Link underline policy — always underline inline links in
+   10. Link underline policy - always underline inline links in
    prose. Nav/CTA/cards opt out via :not() guards.
    --------------------------------------------------------- */
 .about-text a,

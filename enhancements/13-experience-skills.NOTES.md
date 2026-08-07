@@ -1,4 +1,4 @@
-# 13 — Experience timeline + Skills polish
+# 13 - Experience timeline + Skills polish
 
 ## Inclusion
 
@@ -16,7 +16,7 @@ Geen JS verplicht. CSS scoped op `#experience` en `#skills`, dus zero side effec
 
 - **De twee Capgemini-bij-Defensie kaarten blijven gescheiden.** Eén "AI Engineer" (2024–2026), één "Data Consultant" (2024–2026). Niet samenvoegen. Robin heeft dit benoemd.
 - Volgorde van timeline items niet aanpassen.
-- Skill categorieën in hun huidige volgorde laten staan — de per-categorie kleurtints in deze CSS zijn nth-child based.
+- Skill categorieën in hun huidige volgorde laten staan - de per-categorie kleurtints in deze CSS zijn nth-child based.
 
 ---
 
@@ -64,7 +64,7 @@ const tlObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('#experience .timeline-item').forEach((el) => tlObserver.observe(el));
 ```
 
-De CSS herkent zowel `[data-in-view]` als `.in-view` — kies wat past bij bestaande observer-patterns in `script.js`.
+De CSS herkent zowel `[data-in-view]` als `.in-view` - kies wat past bij bestaande observer-patterns in `script.js`.
 
 ---
 

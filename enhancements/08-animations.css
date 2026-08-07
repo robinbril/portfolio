@@ -1,5 +1,5 @@
 /* ==========================================================================
-   08 — Premium micro-interactions & animations
+   08 - Premium micro-interactions & animations
    Scope: scroll reveal, card tilt, magnetic CTAs, ripples, timeline pulse,
    filter underline, hero cascade. Transform + opacity only (60fps).
    ========================================================================== */
@@ -13,10 +13,10 @@
 }
 
 /* ==========================================================================
-   1. Scroll reveal — sections fade up via IntersectionObserver (.in-view)
+   1. Scroll reveal - sections fade up via IntersectionObserver (.in-view)
    ========================================================================== */
 
-/* Scroll-reveal volledig disabled — gaf onverklaarbare gaten + dim content
+/* Scroll-reveal volledig disabled - gaf onverklaarbare gaten + dim content
    wanneer observer niet fired. Cards en secties zijn direct zichtbaar. */
 .section[data-reveal],
 .hero[data-reveal],
@@ -43,7 +43,7 @@
 .section[data-reveal].in-view > *:nth-child(6) { transition-delay: 460ms; }
 
 /* ==========================================================================
-   2. Card tilt — mouse-position driven, CSS-only consumption
+   2. Card tilt - mouse-position driven, CSS-only consumption
    JS writes --mx and --my (range -1 to 1) on hover.
    ========================================================================== */
 
@@ -61,7 +61,7 @@
    Cleaner hover wordt nu door 10-projects.css gehanteerd. */
 
 /* ==========================================================================
-   3. Magnetic CTAs — subtle lift, scale, deeper shadow
+   3. Magnetic CTAs - subtle lift, scale, deeper shadow
    ========================================================================== */
 
 .hero-actions .btn,
@@ -101,7 +101,7 @@ button.btn-secondary {
 }
 
 /* ==========================================================================
-   4. Stat counter — CSS hook (.counter-animate)
+   4. Stat counter - CSS hook (.counter-animate)
    Real numeric counting requires JS; this is a visual emphasis pulse.
    ========================================================================== */
 
@@ -120,7 +120,7 @@ button.btn-secondary {
 }
 
 /* ==========================================================================
-   5. Skill chip ripple — mint glow expanding from center on hover
+   5. Skill chip ripple - mint glow expanding from center on hover
    ========================================================================== */
 
 .skill-chip {
@@ -164,7 +164,7 @@ button.btn-secondary {
 }
 
 /* ==========================================================================
-   6. Timeline current-role pulse — only the first .timeline-item
+   6. Timeline current-role pulse - only the first .timeline-item
    ========================================================================== */
 
 @keyframes timelinePulse {
@@ -192,7 +192,7 @@ button.btn-secondary {
 }
 
 /* ==========================================================================
-   7. Filter buttons — animated mint underline progress bar on .active
+   7. Filter buttons - animated mint underline progress bar on .active
    ========================================================================== */
 
 .filter-btn {
@@ -258,7 +258,7 @@ button.btn-secondary {
 .hero .hero-content .hero-stats     { animation-delay: 600ms; }
 
 /* ==========================================================================
-   9. Reduced motion — cancel everything, keep instant state changes
+   9. Reduced motion - cancel everything, keep instant state changes
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {

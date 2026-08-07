@@ -1,5 +1,5 @@
 /* =========================================================================
-   10-projects.css — Project filter + AI project card UX upgrade
+   10-projects.css - Project filter + AI project card UX upgrade
    Non-destructive overlay. Load AFTER style.css. Bewerkt geen bestaande regels.
    ========================================================================= */
 
@@ -103,7 +103,7 @@ body.light-theme .typing-heading .typing-caret {
     color: rgba(255, 255, 255, 0.7) !important;
 }
 
-/* LIGHT THEME — donkere tekst op cards, anders wit-op-wit onleesbaar */
+/* LIGHT THEME - donkere tekst op cards, anders wit-op-wit onleesbaar */
 body.light-theme .ai-project-card p {
     color: rgba(15, 23, 42, 0.78) !important;
 }
@@ -250,7 +250,7 @@ body.light-theme .project-filters .filter-btn {
     box-shadow: 0 0 0 2px rgba(94, 234, 212, 0.45);
 }
 
-/* Active state — solid mint, dark text, gentle pop */
+/* Active state - solid mint, dark text, gentle pop */
 .project-filters .filter-btn.active,
 .project-filters .filter-btn.is-active {
     color: #021018;

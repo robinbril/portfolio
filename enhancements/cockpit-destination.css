@@ -21,13 +21,13 @@
   max-width: min(680px, 80vw);
   border-radius: 4px;
 
-  /* Subtle frame — top + bottom rails only, mint @ low alpha.
+  /* Subtle frame - top + bottom rails only, mint @ low alpha.
      No full box; reads as an embedded HUD module. */
   border: 0;
   border-top: 1px solid rgba(46, 242, 160, 0.55);
   border-bottom: 1px solid rgba(46, 242, 160, 0.35);
 
-  /* Hairline side accents via inset shadow — keeps the dashboard feel
+  /* Hairline side accents via inset shadow - keeps the dashboard feel
      without a full box outline. */
   box-shadow:
     inset 1px 0 0 0 rgba(46, 242, 160, 0.18),
@@ -50,7 +50,7 @@
 
   text-shadow: 0 0 20px rgba(46, 242, 160, 0.4);
 
-  /* Gating — invisible until xray/warp active. */
+  /* Gating - invisible until xray/warp active. */
   opacity: 0;
   pointer-events: none;
   transition: opacity 220ms ease;
@@ -62,7 +62,7 @@
   will-change: opacity, transform;
 }
 
-/* Eyebrow above the destination name — mono, mint, wide track. */
+/* Eyebrow above the destination name - mono, mint, wide track. */
 #hud-big-destination::before {
   content: "NEXT STOP →";
   display: block;
@@ -79,7 +79,7 @@
 }
 
 /* -----------------------------------------------------------------------------
-   Pulse animation — fires on each cycler text swap.
+   Pulse animation - fires on each cycler text swap.
    Keep amplitude small: this is a breath, not a flash.
    -------------------------------------------------------------------------- */
 @keyframes destinationCycle {
@@ -98,7 +98,7 @@
 }
 
 /* -----------------------------------------------------------------------------
-   Active state — only visible during warp/xray.
+   Active state - only visible during warp/xray.
    -------------------------------------------------------------------------- */
 body.xray #hud-big-destination {
   opacity: 1;
@@ -106,7 +106,7 @@ body.xray #hud-big-destination {
 }
 
 /* -----------------------------------------------------------------------------
-   Mobile — tighter banner, lower in viewport for thumb safety.
+   Mobile - tighter banner, lower in viewport for thumb safety.
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   #hud-big-destination {
@@ -125,7 +125,7 @@ body.xray #hud-big-destination {
 }
 
 /* -----------------------------------------------------------------------------
-   Reduced motion — static banner, no pulse.
+   Reduced motion - static banner, no pulse.
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   #hud-big-destination {

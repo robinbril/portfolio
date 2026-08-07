@@ -1,5 +1,5 @@
 /* =========================================================
-   LIGHT THEME — AAAA editorial quality
+   LIGHT THEME - AAAA editorial quality
    Loaded last. Only body.light-theme. Dark untouched.
    System: warm paper · stone neutrals · single teal accent
    ========================================================= */
@@ -134,7 +134,7 @@ body.light-theme .section-header .line {
   opacity: 0.85;
 }
 
-/* ---------- 3. Nav — frosted paper, not black ---------- */
+/* ---------- 3. Nav - frosted paper, not black ---------- */
 body.light-theme .navbar,
 body.light-theme .navbar.scrolled {
   background: rgba(246, 244, 241, 0.78) !important;
@@ -295,7 +295,7 @@ body.light-theme .info-list li svg {
   stroke: var(--lt-accent) !important;
 }
 
-/* ---------- 5. Stats — one row, no chunky boxes ---------- */
+/* ---------- 5. Stats - one row, no chunky boxes ---------- */
 body.light-theme .stats-grid .stat-item,
 body.light-theme .stat-item {
   background: transparent !important;
@@ -414,7 +414,7 @@ body.light-theme .whatsapp-cta:hover {
   background: rgba(37, 211, 102, 0.06) !important;
 }
 
-/* ---------- 8. Tags / filters / badges — teal only, no baby-blue ---------- */
+/* ---------- 8. Tags / filters / badges - teal only, no baby-blue ---------- */
 body.light-theme .tags span,
 body.light-theme .project-tags span,
 body.light-theme .skill-tags span,
@@ -457,7 +457,7 @@ body.light-theme .filter-btn.active {
   box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2) !important;
 }
 
-/* Featured status / company — teal, not blue */
+/* Featured status / company - teal, not blue */
 body.light-theme .featured-project .card-status,
 body.light-theme .featured-project .card-company,
 body.light-theme .card-status,
@@ -693,7 +693,7 @@ body.light-theme .projects-toggle:hover {
   color: var(--lt-accent-deep) !important;
 }
 
-/* Preloader stays dark for brand continuity — leave alone */
+/* Preloader stays dark for brand continuity - leave alone */
 
 /* Selection */
 body.light-theme ::selection {
@@ -757,7 +757,7 @@ body.light-theme .metric-number {
   }
 }
 
-/* ---------- 11. Hero title — kill white fill / gradient clip ---------- */
+/* ---------- 11. Hero title - kill white fill / gradient clip ---------- */
 body.light-theme .hero h1,
 body.light-theme section.hero h1,
 body.light-theme #home h1,
