@@ -206,8 +206,10 @@
   const phrases = [
     // Experience roles & companies
     ["Ministerie van Defensie (via Capgemini)", "Ministry of Defence (via Capgemini)"],
+    ["AI Specialist", "AI Specialist"],
+    ["Data Consultant & AI Specialist", "Data Consultant & AI Specialist"],
     ["Ministerie van Defensie", "Ministry of Defence"],
-    ["Data Consultant & AI Engineer", "Data Consultant & AI Engineer"],
+    ["Data Consultant & AI Specialist", "Data Consultant & AI Specialist"],
     ["Traineeship Procesmanagement", "Process Management Traineeship"],
     ["Founder & Software Developer", "Founder & Software Developer"],
     // Experience bullets (full NL → EN)
@@ -232,8 +234,8 @@
       'Organised "Advanced AI in Practice" workshops for 450 data scientists on AI in software development, RAG, agentic AI and data governance.',
     ],
     [
-      "Werkte in opdracht bij het Ministerie van Defensie in twee parallelle rollen: AI Engineer en Data Consultant.",
-      "Worked on assignment at the Ministry of Defence in two parallel roles: AI Engineer and Data Consultant.",
+      "Werkte in opdracht bij het Ministerie van Defensie in twee parallelle rollen: AI Specialist en Data Consultant.",
+      "Worked on assignment at the Ministry of Defence in two parallel roles: AI Specialist and Data Consultant.",
     ],
     [
       "Bouwde in een team van drie mee aan DefGPT Pro: een private on-premise AI-assistent voor intern gebruik binnen Defensie.",
