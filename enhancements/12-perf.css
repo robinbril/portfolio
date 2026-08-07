@@ -67,6 +67,17 @@
         -webkit-backdrop-filter: none !important;
         background-color: rgba(11, 13, 17, 0.92) !important;
     }
+
+    /* Light theme: solid paper, never the dark mobile fallback */
+    body.light-theme .glass,
+    body.light-theme .nav,
+    body.light-theme .nav-container,
+    body.light-theme .navbar .nav-container,
+    body.light-theme .modal-content,
+    body.light-theme .quote-source,
+    body.light-theme .ai-portfolio-section .filter-bar {
+        background-color: rgba(255, 255, 255, 0.97) !important;
+    }
 }
 
 /* ---------- 6. Reduced motion: cancel heavy filters and animations ----- */
