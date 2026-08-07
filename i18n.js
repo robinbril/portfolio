@@ -13,9 +13,9 @@
       "nav.skills": "Skills",
       "nav.contact": "Contact",
       "hero.available": "Beschikbaar · Amsterdam",
-      "hero.role": "AI Tech Lead · Agentic systems",
+      "hero.role": "AI Tech Lead · Staffing platforms",
       "hero.subtitle":
-        "Agents, MCP-integraties en AI-platformen die zelfstandig werk uitvoeren in bestaande bedrijfsprocessen. Van DefGPT Pro bij Defensie tot vier productie-agents bij Fellowmind.",
+        "AI Tech Lead bij PolpoHire, The Staffing Society en Reforge Recruitment. Volledige automatisering van administratieve processen in HR, operations en finance, plus AI-, software- en recruiterplatforms voor alle bedrijven.",
       "hero.ctaProjects": "Bekijk Projecten",
       "hero.ctaContact": "Contact",
       "stats.mcp": "MCP-servers",
@@ -35,13 +35,13 @@
       "about.langs": "Nederlands (moedertaal), Engels (vloeiend)",
       "about.degree": "BSc Bedrijfskunde (Cum Laude)",
       "about.p4":
-        "Zijn kracht ligt op het snijvlak van AI, data, procesverbetering en klantcommunicatie.",
+        "Zijn kracht ligt op het snijvlak van AI, data, procesautomatisering en het opschalen van softwareplatforms.",
       "about.p1":
-        "Robin bouwt AI-agents en automatiseringen voor bestaande bedrijfsprocessen. Via <strong>Reforge</strong> werkt hij op opdrachten bij klanten. In een recente opdracht bij Fellowmind werkt hij met <strong>Hive AI</strong>, het interne platform waarmee maatwerk-agents worden gebouwd en uitgerold.",
+        "Robin is AI Tech Lead bij <strong>PolpoHire</strong>, <strong>The Staffing Society</strong> en <strong>Reforge Recruitment</strong>. Hij voorziet deze bedrijven van volledige automatisering van administratieve processen binnen HR, operations, finance en aanverwante domeinen.",
       "about.p2":
-        "In die rol haalt hij requirements op bij klanten, ontwerpt hij agent-workflows en bouwt en levert hij de agents op.",
+        "Daarnaast bouwt hij het gedeelde <strong>AI-platform</strong>, een volledig softwareplatform en een recruiterplatform waarmee de drie organisaties hun operatie, matching en administratie draaien.",
       "about.p3":
-        "Eerder werkte hij mee aan <strong>DefGPT Pro</strong> binnen Defensie en bouwde hij via Virelio AI-tools en automatiseringen voor scale-ups en grotere organisaties.",
+        "Eerder werkte hij via Reforge bij Fellowmind met <strong>Hive AI</strong>, droeg hij bij aan <strong>DefGPT Pro</strong> binnen Defensie en bouwde hij via Virelio AI-tools voor scale-ups en grotere organisaties.",
       "projects.subtitle":
         "Een selectie van agents, automatiseringen en tools, gebouwd voor klanten en eigen gebruik.",
       "projects.showAll": "Toon alle projecten",
@@ -63,8 +63,20 @@
       "contact.copied": "Gekopieerd!",
       "period.2026present": "2026 – heden",
       "period.2024present": "2024 – heden",
+      "exp.polpo.role": "AI Tech Lead",
+      "exp.polpo.company": "PolpoHire · The Staffing Society · Reforge Recruitment",
+      "exp.polpo.b1":
+        "Tech lead voor drie staffing-bedrijven: PolpoHire, The Staffing Society en Reforge Recruitment — één technische koers, gedeelde platformen.",
+      "exp.polpo.b2":
+        "Voorziet alle bedrijven van volledige automatisering van administratieve processen binnen HR, operations, finance en aanverwante domeinen.",
+      "exp.polpo.b3":
+        "Bouwt en beheert het gedeelde AI-platform waarmee agents en automatiseringen processen end-to-end uitvoeren.",
+      "exp.polpo.b4":
+        "Levert een volledig softwareplatform voor de operatie van de drie organisaties — van data en workflows tot interne tools.",
+      "exp.polpo.b5":
+        "Ontwikkelt het recruiterplatform voor matching, pipeline, communicatie en administratie van de recruitment-operatie.",
       "exp.reforge.role": "AI Tech Lead",
-      "exp.reforge.company": "Reforge Consultancy, opdracht bij Fellowmind",
+      "exp.reforge.company": "Reforge Consultancy · opdracht bij Fellowmind",
       "exp.reforge.b1":
         "Werkte bij Fellowmind als AI Tech Lead aan maatwerk-agents voor klanten, gebouwd en uitgerold met Hive AI, het interne platform voor ontwikkeling en deployment.",
       "exp.reforge.b2":
@@ -98,9 +110,9 @@
       "nav.skills": "Skills",
       "nav.contact": "Contact",
       "hero.available": "Available · Amsterdam",
-      "hero.role": "AI Tech Lead · Agentic systems",
+      "hero.role": "AI Tech Lead · Staffing platforms",
       "hero.subtitle":
-        "Agents, MCP integrations and AI platforms that execute work autonomously inside existing business processes. From DefGPT Pro at the Ministry of Defence to four production agents at Fellowmind.",
+        "AI Tech Lead at PolpoHire, The Staffing Society and Reforge Recruitment. Full automation of administrative processes across HR, operations and finance, plus AI, software and recruiter platforms for all three companies.",
       "hero.ctaProjects": "View Projects",
       "hero.ctaContact": "Contact",
       "stats.mcp": "MCP servers",
@@ -120,13 +132,13 @@
       "about.langs": "Dutch (native), English (fluent)",
       "about.degree": "BSc Business Administration (Cum Laude)",
       "about.p4":
-        "His strength sits at the intersection of AI, data, process improvement and client communication.",
+        "His strength sits at the intersection of AI, data, process automation and scaling software platforms.",
       "about.p1":
-        "Robin builds AI agents and automations for existing business processes. Through <strong>Reforge</strong> he works on client assignments. In a recent engagement at Fellowmind he works with <strong>Hive AI</strong>, the internal platform used to build and ship custom agents.",
+        "Robin is AI Tech Lead at <strong>PolpoHire</strong>, <strong>The Staffing Society</strong> and <strong>Reforge Recruitment</strong>. He equips these companies with full automation of administrative processes across HR, operations, finance and related domains.",
       "about.p2":
-        "In that role he gathers requirements with clients, designs agent workflows, and builds and delivers the agents.",
+        "He also builds the shared <strong>AI platform</strong>, a full software platform and a recruiter platform that power operations, matching and administration across all three organisations.",
       "about.p3":
-        "Earlier he contributed to <strong>DefGPT Pro</strong> within Defence and, through Virelio, built AI tools and automations for scale-ups and larger organisations.",
+        "Earlier, through Reforge at Fellowmind he worked with <strong>Hive AI</strong>, contributed to <strong>DefGPT Pro</strong> within Defence, and via Virelio built AI tools for scale-ups and larger organisations.",
       "projects.subtitle":
         "A selection of agents, automations and tools — built for clients and personal use.",
       "projects.showAll": "Show all projects",
@@ -148,8 +160,20 @@
       "contact.copied": "Copied!",
       "period.2026present": "2026 – present",
       "period.2024present": "2024 – present",
+      "exp.polpo.role": "AI Tech Lead",
+      "exp.polpo.company": "PolpoHire · The Staffing Society · Reforge Recruitment",
+      "exp.polpo.b1":
+        "Tech lead for three staffing companies: PolpoHire, The Staffing Society and Reforge Recruitment — one technical direction, shared platforms.",
+      "exp.polpo.b2":
+        "Delivers full automation of administrative processes across HR, operations, finance and related domains for all companies.",
+      "exp.polpo.b3":
+        "Builds and runs the shared AI platform so agents and automations execute processes end-to-end.",
+      "exp.polpo.b4":
+        "Ships a full software platform for the three organisations — from data and workflows to internal tools.",
+      "exp.polpo.b5":
+        "Develops the recruiter platform for matching, pipeline, communication and recruitment administration.",
       "exp.reforge.role": "AI Tech Lead",
-      "exp.reforge.company": "Reforge Consultancy, assignment at Fellowmind",
+      "exp.reforge.company": "Reforge Consultancy · assignment at Fellowmind",
       "exp.reforge.b1":
         "Worked at Fellowmind as AI Tech Lead on custom agents for clients, built and shipped with Hive AI — the internal platform for development and deployment.",
       "exp.reforge.b2":
@@ -429,6 +453,17 @@
     ["Telefoonnummer", "Phone number"],
     ["Bericht (optioneel)", "Message (optional)"],
     ["Hive AI Agents voor productie", "Hive AI Agents in production"],
+    ["Staffing AI & software platform", "Staffing AI & software platform"],
+    ["PolpoHire · Staffing Society · Reforge Recruitment", "PolpoHire · Staffing Society · Reforge Recruitment"],
+    [
+      "Gedeeld AI-platform, softwareplatform en recruiterplatform voor drie staffing-bedrijven. Volledige automatisering van administratieve processen in HR, operations en finance — één technische stack, drie merken.",
+      "Shared AI platform, software platform and recruiter platform for three staffing companies. Full automation of administrative processes across HR, operations and finance — one technical stack, three brands.",
+    ],
+    ["BEDRIJVEN", "COMPANIES"],
+    ["DOMEINEN", "DOMAINS"],
+    ["PLATFORMS", "PLATFORMS"],
+    ["HR · Ops · Finance", "HR · Ops · Finance"],
+    ["AI · Soft · Recruit", "AI · Soft · Recruit"],
     ["Gen-AI Tool met Agents", "Gen-AI tool with agents"],
     ["ROL", "ROLE"],
     ["DEPLOY", "DEPLOY"],
