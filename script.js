@@ -283,9 +283,14 @@ if (filterButtons.length > 0 && projectCards.length > 0) {
                 showMoreBtn.style.display = 'flex';
                 const btnText = showMoreBtn.querySelector('span');
                 if (btnText) {
-                    btnText.textContent = isExpanded
-                        ? 'Toon minder'
-                        : `Toon alle ${matches.length}`;
+                    const lang = (window.portfolioI18n && window.portfolioI18n.getLang()) || 'nl';
+                    if (isExpanded) {
+                        btnText.textContent = lang === 'en' ? 'Show less' : 'Toon minder';
+                    } else {
+                        btnText.textContent = lang === 'en'
+                            ? `Show all ${matches.length}`
+                            : `Toon alle ${matches.length}`;
+                    }
                 }
                 showMoreBtn.classList.toggle('expanded', isExpanded);
             } else {
@@ -547,8 +552,7 @@ function initNeuralNetwork() {
 // Initialize on DOM load
 document.addEventListener('DOMContentLoaded', () => {
     if (window.lucide) lucide.createIcons();
-    initContactModal();
-    initShowMoreToggle();
+    if (typeof initContactModal === 'function') initContactModal();
 });
 
 // Show-more toggle is now handled inside the filter block above.

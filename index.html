@@ -7,11 +7,11 @@
     <meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
     <meta name="robots" content="index, follow">
-    <title>Robin Bril | AI Technology Lead</title>
-    <meta name="description" content="Robin Bril is AI Technology Lead in Amsterdam. Hij bouwt agents, MCP-integraties en AI-platformen die zelfstandig werk uitvoeren in bedrijfsprocessen, van DefGPT Pro bij Defensie tot productie-agents bij Fellowmind.">
+    <title>Robin Bril | AI Tech Lead</title>
+    <meta name="description" content="Robin Bril is AI Tech Lead in Amsterdam. Hij bouwt agents, MCP-integraties en AI-platformen die zelfstandig werk uitvoeren in bedrijfsprocessen, van DefGPT Pro bij Defensie tot productie-agents bij Fellowmind.">
     <link rel="canonical" href="https://robinbril.com/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Robin Bril | AI Technology Lead">
+    <meta property="og:title" content="Robin Bril | AI Tech Lead">
     <meta property="og:description" content="Agents, MCP-integraties en AI-platformen die zelfstandig werk uitvoeren in bedrijfsprocessen.">
     <meta property="og:url" content="https://robinbril.com/">
     <meta property="og:image" content="https://robinbril.com/hero-bg.png">
@@ -53,6 +53,8 @@
 
     <!-- Enhancements (load order = cascade order) -->
     <link rel="stylesheet" href="enhancements/04-light-theme.css">
+    <link rel="stylesheet" href="lang-theme.css">
+
     <link rel="stylesheet" href="enhancements/02-hero.css">
     <link rel="stylesheet" href="enhancements/03-nav-scrollspy.css">
     <link rel="stylesheet" href="enhancements/05-terminal.css">
@@ -234,13 +236,17 @@
         <div class="nav-container">
             <a href="#home" class="logo">RB<span class="dot">.</span></a>
             <div class="nav-links">
-                <a href="#about">Over Mij</a>
-                <a href="#projects">Projecten</a>
-                <a href="#experience">Ervaring</a>
-                <a href="#skills">Skills</a>
-                <a href="#contact" class="btn-primary">Contact</a>
+                <a href="#about" data-i18n="nav.about">Over Mij</a>
+                <a href="#projects" data-i18n="nav.projects">Projecten</a>
+                <a href="#experience" data-i18n="nav.experience">Ervaring</a>
+                <a href="#skills" data-i18n="nav.skills">Skills</a>
+                <a href="#contact" class="btn-primary" data-i18n="nav.contact">Contact</a>
             </div>
             <div class="nav-actions">
+                <button id="lang-toggle" class="lang-toggle-btn" type="button"
+                    aria-label="Switch to English">
+                    <span class="lang-code" id="lang-code-label">EN</span>
+                </button>
                 <button id="theme-toggle" class="theme-toggle-btn"
                     aria-label="Wissel tussen licht en donker thema">
                     <i data-lucide="sun" class="light-icon"></i>
@@ -270,39 +276,39 @@
             <div class="hero-content">
                 <div class="hero-eyebrow">
                     <span class="hero-pulse"></span>
-                    <span>Beschikbaar · Amsterdam</span>
+                    <span data-i18n="hero.available">Beschikbaar · Amsterdam</span>
                 </div>
                 <h1>Robin Bril</h1>
-                <p class="hero-role">AI Technology Lead &middot; Agentic systems</p>
-                <p class="hero-subtitle">
+                <p class="hero-role" data-i18n="hero.role">AI Tech Lead &middot; Agentic systems</p>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">
                     Agents, MCP-integraties en AI-platformen die zelfstandig werk uitvoeren in bestaande bedrijfsprocessen. Van DefGPT Pro bij Defensie tot vier productie-agents bij Fellowmind.
                 </p>
 
                 <div class="hero-actions">
                     <a href="#projects" class="btn-primary">
                         <i data-lucide="arrow-right"></i>
-                        Bekijk Projecten
+                        <span data-i18n="hero.ctaProjects">Bekijk Projecten</span>
                     </a>
                     <a href="#contact" class="btn-secondary">
                         <i data-lucide="mail"></i>
-                        Contact
+                        <span data-i18n="hero.ctaContact">Contact</span>
                     </a>
                 </div>
 
                 <div class="hero-stats" aria-hidden="true">
                     <div class="hero-stat">
                         <strong>14+</strong>
-                        <span>MCP-servers</span>
+                        <span data-i18n="stats.mcp">MCP-servers</span>
                     </div>
                     <div class="hero-stat-divider"></div>
                     <div class="hero-stat">
                         <strong>7+</strong>
-                        <span>Agents in productie</span>
+                        <span data-i18n="stats.agents">Agents in productie</span>
                     </div>
                     <div class="hero-stat-divider"></div>
                     <div class="hero-stat">
                         <strong>450</strong>
-                        <span>Data scientists getraind</span>
+                        <span data-i18n="stats.scientists">Data scientists getraind</span>
                     </div>
                 </div>
             </div>
@@ -312,52 +318,51 @@
         <!-- About Section -->
         <section id="about" class="section">
             <div class="section-header">
-                <h2>Over Mij</h2>
+                <h2 data-i18n="sec.about">Over Mij</h2>
                 <div class="line"></div>
             </div>
             <div class="about-grid">
                 <div class="about-content">
                     <div class="about-text">
                         <p>
-                            Robin bouwt AI-agents en automatiseringen voor bestaande
+                            <span data-i18n-html="about.p1">Robin bouwt AI-agents en automatiseringen voor bestaande
                             bedrijfsprocessen. Via <strong>Reforge</strong> werkt hij op opdrachten
                             bij klanten. In een recente opdracht bij Fellowmind werkt hij met
                             <strong>Hive AI</strong>, het interne platform waarmee maatwerk-agents
-                            worden gebouwd en uitgerold.
+                            worden gebouwd en uitgerold.</span>
                         </p>
                         <p>
-                            In die rol haalt hij requirements op bij klanten, ontwerpt hij
-                            agent-workflows en bouwt en levert hij de agents op. Eerder werkte
+                            <span data-i18n-html="about.p2">In die rol haalt hij requirements op bij klanten, ontwerpt hij
+                            agent-workflows en bouwt en levert hij de agents op.</span> <span data-i18n-html="about.p3">Eerder werkte
                             hij mee aan <strong>DefGPT Pro</strong> binnen Defensie en bouwde
                             hij via Virelio AI-tools en automatiseringen voor scale-ups en
-                            grotere organisaties.
+                            grotere organisaties.</span>
                         </p>
                         <p>
-                            Zijn kracht ligt op het snijvlak van AI, data, procesverbetering
-                            en klantcommunicatie.
+                            <span data-i18n="about.p4">Zijn kracht ligt op het snijvlak van AI, data, procesverbetering en klantcommunicatie.</span>
                         </p>
                     </div>
                     <div class="stats-grid">
                         <div class="stat-item">
                             <span class="stat-number" data-count="14" data-suffix="+">0</span>
-                            <span class="stat-label">MCP-servers</span>
+                            <span class="stat-label" data-i18n="stats.mcp">MCP-servers</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number" data-count="7" data-suffix="+">0</span>
-                            <span class="stat-label">Agents in productie</span>
+                            <span class="stat-label" data-i18n="stats.agents">Agents in productie</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number" data-count="450">0</span>
-                            <span class="stat-label">Data scientists getraind</span>
+                            <span class="stat-label" data-i18n="stats.scientists">Data scientists getraind</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number" data-count="185">0</span>
-                            <span class="stat-label">Betalende SaaS-gebruikers</span>
+                            <span class="stat-label" data-i18n="stats.saas">Betalende SaaS-gebruikers</span>
                         </div>
                     </div>
                 </div>
                 <div class="about-card glow-card">
-                    <h3>Profiel</h3>
+                    <h3 data-i18n="about.profile">Profiel</h3>
                     <ul class="info-list">
                         <li>
                             <i data-lucide="map-pin"></i>
@@ -365,15 +370,15 @@
                         </li>
                         <li>
                             <i data-lucide="calendar-clock"></i>
-                            <span>40 uur per week beschikbaar</span>
+                            <span><span data-i18n="about.hours">40 uur per week beschikbaar</span></span>
                         </li>
                         <li>
                             <i data-lucide="languages"></i>
-                            <span>Nederlands (moedertaal), Engels (vloeiend)</span>
+                            <span><span data-i18n="about.langs">Nederlands (moedertaal), Engels (vloeiend)</span></span>
                         </li>
                         <li>
                             <i data-lucide="graduation-cap"></i>
-                            <span>BSc Bedrijfskunde (Cum Laude)</span>
+                            <span><span data-i18n="about.degree">BSc Bedrijfskunde (Cum Laude)</span></span>
                         </li>
                     </ul>
                 </div>
@@ -383,11 +388,11 @@
         <!-- AI Tools Portfolio Section -->
         <section id="projects" class="section ai-portfolio-section">
             <div class="section-header contact-header">
-                <h2 class="typing-heading" aria-label="Mijn Projecten">
+                <h2 class="typing-heading" aria-label="Mijn Projecten" data-i18n-aria="sec.projects" data-i18n-typing="sec.projects">
                     <span class="typing-text">Mijn Projecten</span><span class="typing-caret" aria-hidden="true"></span>
                 </h2>
             </div>
-            <p class="portfolio-subtitle">Een selectie van agents, automatiseringen en tools, gebouwd voor klanten en eigen gebruik.</p>
+            <p class="portfolio-subtitle"><span data-i18n="projects.subtitle">Een selectie van agents, automatiseringen en tools, gebouwd voor klanten en eigen gebruik.</span></p>
 
             <!-- Featured Projects -->
             <div class="featured-projects-grid">
@@ -397,7 +402,7 @@
                             <i data-lucide="workflow"></i>
                         </div>
                         <span class="card-status card-status--live">
-                            <span class="status-dot"></span>IN PRODUCTIE
+                            <span class="status-dot"></span><span data-i18n="kicker.production">IN PRODUCTIE</span>
                         </span>
                     </div>
                     <div class="featured-content">
@@ -460,11 +465,11 @@
 
             <!-- Filter Bar -->
             <div class="project-filters">
-                <button class="filter-btn active" data-filter="agents">Agents</button>
-                <button class="filter-btn" data-filter="mcp">MCP</button>
-                <button class="filter-btn" data-filter="vision">Vision</button>
-                <button class="filter-btn" data-filter="automation">Automatisering</button>
-                <button class="filter-btn" data-filter="websites">Websites</button>
+                <button class="filter-btn active" data-filter="agents" data-i18n="filter.agents">Agents</button>
+                <button class="filter-btn" data-filter="mcp" data-i18n="filter.mcp">MCP</button>
+                <button class="filter-btn" data-filter="vision" data-i18n="filter.vision">Vision</button>
+                <button class="filter-btn" data-filter="automation" data-i18n="filter.automation">Automatisering</button>
+                <button class="filter-btn" data-filter="websites" data-i18n="filter.websites">Websites</button>
             </div>
 
             <div class="ai-projects-grid">
@@ -475,7 +480,7 @@
                     <div class="project-icon-wrapper icon-violet">
                         <i data-lucide="terminal"></i>
                     </div>
-                    <span class="project-kicker">Open Source</span>
+                    <span class="project-kicker" data-i18n="kicker.opensource">Open Source</span>
                     <h3>AI Engineer Harness</h3>
                     <p>Mijn persoonlijke AI engineer-werkomgeving. Maakt van Claude Code een complete
                         ontwikkeltool die taken onthoudt over sessies heen, gespecialiseerde rollen
@@ -561,7 +566,7 @@
                     <div class="project-icon-wrapper icon-blue">
                         <i data-lucide="receipt-text"></i>
                     </div>
-                    <span class="project-kicker">Industrieel</span>
+                    <span class="project-kicker" data-i18n="kicker.industrial">Industrieel</span>
                     <h3>OrderScribe</h3>
                     <p>Leest binnenkomende order-e-mails en bijgevoegde PDF's, vraagt om bevestiging
                         bij twijfelgevallen en maakt daarna automatisch een verkooporder aan in het
@@ -578,7 +583,7 @@
                     <div class="project-icon-wrapper icon-cyan">
                         <i data-lucide="truck"></i>
                     </div>
-                    <span class="project-kicker">Logistiek</span>
+                    <span class="project-kicker" data-i18n="kicker.logistics">Logistiek</span>
                     <h3>DocketLink</h3>
                     <p>Verwerkt automatisch pakbonnen en logistieke documenten en koppelt ze aan
                         de bijbehorende inkooporders in het ERP-systeem. Naast de agent ook de
@@ -595,7 +600,7 @@
                     <div class="project-icon-wrapper icon-indigo">
                         <i data-lucide="shield-check"></i>
                     </div>
-                    <span class="project-kicker">Zorgverzekeraar</span>
+                    <span class="project-kicker" data-i18n="kicker.insurer">Zorgverzekeraar</span>
                     <h3>ClauseFinder</h3>
                     <p>Doorzoekt contracten voor een Nederlandse zorgverzekeraar. Elke gebruiker
                         (juridisch, sales, finance) ziet alleen contracten waar zij toegang toe hebben,
@@ -612,7 +617,7 @@
                     <div class="project-icon-wrapper icon-cyan">
                         <i data-lucide="mic"></i>
                     </div>
-                    <span class="project-kicker">Meertalig</span>
+                    <span class="project-kicker" data-i18n="kicker.multilingual">Meertalig</span>
                     <h3>VoiceQuery</h3>
                     <p>Meertalige voice-agent voor kennis-zoeken over D365 F&amp;O en
                         bedrijfsdocumenten. Audio/PCM streaming met realtime transcriptie en
@@ -968,7 +973,7 @@
 
             <!-- Show More Button -->
             <button class="show-more-btn" id="showMoreProjects">
-                <span>Toon alle projecten</span>
+                <span><span data-i18n="projects.showAll">Toon alle projecten</span></span>
                 <i data-lucide="chevron-down"></i>
             </button>
 
@@ -978,30 +983,30 @@
                 <!-- Experience Section -->
         <section id="experience" class="section">
             <div class="section-header contact-header">
-                <h2>Werkervaring</h2>
+                <h2 data-i18n="sec.experience">Werkervaring</h2>
             </div>
             <div class="timeline">
                 <!-- Reforge / Fellowmind -->
                 <div class="timeline-item">
-                    <div class="timeline-date">2026 – heden</div>
+                    <div class="timeline-date" data-i18n="period.2026present">2026 – heden</div>
                     <div class="timeline-content glow-card">
                         <div class="role-header">
-                            <h3>Medior AI Engineer</h3>
-                            <span class="company">Reforge Consultancy, opdracht bij Fellowmind</span>
+                            <h3 data-i18n="exp.reforge.role">AI Tech Lead</h3>
+                            <span class="company" data-i18n="exp.reforge.company">Reforge Consultancy, opdracht bij Fellowmind</span>
                         </div>
                         <ul class="role-description">
-                            <li>Werkte bij Fellowmind als AI Engineer aan maatwerk-agents voor klanten,
+                            <li><span data-i18n="exp.reforge.b1">Werkte bij Fellowmind als AI Tech Lead aan maatwerk-agents voor klanten,
                                 gebouwd en uitgerold met Hive AI, het interne platform voor ontwikkeling
-                                en deployment.</li>
-                            <li>Haalde requirements op via klantworkshops en vertaalde klantprocessen
-                                naar agent-workflows, functionele eisen en concrete bouwtaken.</li>
-                            <li>Bouwde vier custom agents voor onder andere verkooporder-automatisering,
+                                en deployment.</span></li>
+                            <li><span data-i18n="exp.reforge.b2">Haalde requirements op via klantworkshops en vertaalde klantprocessen
+                                naar agent-workflows, functionele eisen en concrete bouwtaken.</span></li>
+                            <li><span data-i18n="exp.reforge.b3">Bouwde vier custom agents voor onder andere verkooporder-automatisering,
                                 verwerking van logistieke documenten, een juridische kennisbank en een
-                                meertalige voice-agent voor het doorzoeken van bedrijfskennis.</li>
-                            <li>Ontwikkelde MCP-integraties waarmee agents veilig kunnen werken met
-                                bedrijfssystemen, documenten, PDF's en planningsprocessen.</li>
-                            <li>Bouwde evaluatie- en monitoringframeworks om agents in productie
-                                controleerbaar te houden.</li>
+                                meertalige voice-agent voor het doorzoeken van bedrijfskennis.</span></li>
+                            <li><span data-i18n="exp.reforge.b4">Ontwikkelde MCP-integraties waarmee agents veilig kunnen werken met
+                                bedrijfssystemen, documenten, PDF's en planningsprocessen.</span></li>
+                            <li><span data-i18n="exp.reforge.b5">Bouwde evaluatie- en monitoringframeworks om agents in productie
+                                controleerbaar te houden.</span></li>
                         </ul>
                         <div class="tags">
                             <span>Python</span>
@@ -1017,7 +1022,7 @@
 
                 <!-- Virelio -->
                 <div class="timeline-item">
-                    <div class="timeline-date">2024 – heden</div>
+                    <div class="timeline-date" data-i18n="period.2024present">2024 – heden</div>
                     <div class="timeline-content glow-card">
                         <div class="role-header">
                             <h3>AI Engineer</h3>
@@ -1216,8 +1221,8 @@
         <section id="skills" class="section skills-section">
             <div class="section-header skills-header">
                 <span class="section-eyebrow">Skills</span>
-                <h2>Technische Expertise</h2>
-                <p>Gebundeld rond veelvoorkomend werk: agents, enterprise-integraties en productieklare AI.</p>
+                <h2 data-i18n="sec.skills">Technische Expertise</h2>
+                <p><span data-i18n="skills.intro">Gebundeld rond veelvoorkomend werk: agents, enterprise-integraties en productieklare AI.</span></p>
             </div>
             <div class="skills-container">
                 <div class="skill-category">
@@ -1264,7 +1269,7 @@
         <!-- Education Section -->
         <section id="education" class="section">
             <div class="section-header">
-                <h2>Opleiding</h2>
+                <h2 data-i18n="sec.education">Opleiding</h2>
                 <div class="line"></div>
             </div>
             <div class="timeline">
@@ -1272,11 +1277,11 @@
                     <div class="timeline-date">2018 – 2023</div>
                     <div class="timeline-content glow-card">
                         <div class="role-header">
-                            <h3>BSc Bedrijfskunde (cum laude)</h3>
+                            <h3><span data-i18n="edu.bsc.title">BSc Bedrijfskunde (cum laude)</span></h3>
                             <span class="company">Hogeschool van Amsterdam</span>
                         </div>
                         <p class="role-description">
-                            GPA 8.0 · Propedeuse behaald in eerste jaar
+                            <span data-i18n="edu.bsc.note">GPA 8.0 · Propedeuse behaald in eerste jaar</span>
                         </p>
                     </div>
                 </div>
@@ -1298,7 +1303,7 @@
         <!-- Certifications Section -->
         <section id="certifications" class="section">
             <div class="section-header">
-                <h2>Certificeringen</h2>
+                <h2 data-i18n="sec.certs">Certificeringen</h2>
                 <div class="line"></div>
             </div>
             <div class="certifications-grid">
@@ -1430,7 +1435,7 @@
         <section id="contact" class="section">
             <div class="container">
                 <div class="section-header contact-header">
-                    <h2>Neem contact op</h2>
+                    <h2 data-i18n="sec.contact">Neem contact op</h2>
                 </div>
 
                 <div class="contact-card">
@@ -1445,7 +1450,7 @@
 
                     <a href="/robin-bril-cv.pdf" download class="cv-download-btn">
                         <i data-lucide="download"></i>
-                        <span>Download CV (PDF)</span>
+                        <span><span data-i18n="contact.cv">Download CV (PDF)</span></span>
                     </a>
 
                     <div class="secondary-options">
@@ -1464,7 +1469,7 @@
 
                 <!-- Terminal AI Interface (embedded) -->
                 <div class="contact-terminal-wrap">
-                    <p class="contact-terminal-intro">Of probeer mijn AI interface ↓</p>
+                    <p class="contact-terminal-intro"><span data-i18n="contact.tryAi">Of probeer mijn AI interface ↓</span></p>
                     <div class="terminal-window" id="terminal-embed" role="region"
                         aria-label="Robin AI interface">
                         <div class="terminal-titlebar">
@@ -1574,8 +1579,8 @@
                         <span class="ai-pulse"></span>
                         <span>AI-Powered Response</span>
                     </div>
-                    <h2>Laat je nummer achter</h2>
-                    <p>Robin neemt binnen 24 uur contact op via WhatsApp of telefoon</p>
+                    <h2 data-i18n="sec.leaveNumber">Laat je nummer achter</h2>
+                    <p><span data-i18n="contact.formIntro">Robin neemt binnen 24 uur contact op via WhatsApp of telefoon</span></p>
                 </div>
 
                 <form id="ai-contact-form" class="ai-form">
@@ -1611,7 +1616,7 @@
 
                     <div class="form-actions">
                         <button type="submit" class="submit-btn">
-                            <span class="btn-text">Verstuur Aanvraag</span>
+                            <span class="btn-text"><span data-i18n="contact.submit">Verstuur Aanvraag</span></span>
                             <span class="btn-loader"></span>
                             <i data-lucide="send"></i>
                         </button>
@@ -1619,7 +1624,7 @@
 
                     <div class="form-footer">
                         <i data-lucide="shield-check"></i>
-                        <span>Jouw gegevens worden veilig verwerkt en niet gedeeld</span>
+                        <span><span data-i18n="contact.privacy">Jouw gegevens worden veilig verwerkt en niet gedeeld</span></span>
                     </div>
                 </form>
 
@@ -1627,8 +1632,8 @@
                     <div class="success-icon">
                         <i data-lucide="check-circle"></i>
                     </div>
-                    <h3>Bedankt voor je aanvraag!</h3>
-                    <p>Robin neemt zo snel mogelijk contact met je op.</p>
+                    <h3><span data-i18n="contact.thanks">Bedankt voor je aanvraag!</span></h3>
+                    <p><span data-i18n="contact.thanksSub">Robin neemt zo snel mogelijk contact met je op.</span></p>
                 </div>
 
                 <!-- AI Background Animation -->
@@ -1641,6 +1646,7 @@
         </div>
 
 
+        <script src="i18n.js"></script>
         <script src="script.js"></script>
         <script>
             (function initIcons() {
