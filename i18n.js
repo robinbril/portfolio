@@ -14,7 +14,6 @@
       "nav.contact": "Contact",
       "hero.available": "Beschikbaar · Amsterdam",
       "hero.role": "AI Tech Lead",
-      "hero.punch": "Agents die het werk doen — niet demos.",
       "hero.subtitle":
         "Van DefGPT Pro bij Defensie tot agents in enterprise-productie. MCP, multi-agent, on-prem tot cloud.",
       "hero.ctaProjects": "Bekijk het werk",
@@ -38,7 +37,7 @@
       "about.p4":
         "Zijn kracht ligt op het snijvlak van AI, data en procesverbetering.",
       "about.p1":
-        "Robin bouwt AI-agents en automatiseringen voor bestaande bedrijfsprocessen — van requirements tot productie.",
+        "Robin bouwt AI-agents en automatiseringen voor bestaande bedrijfsprocessen, van requirements tot productie.",
       "about.p2":
         "Eerder werkte hij bij Fellowmind met <strong>Hive AI</strong>, droeg hij bij aan <strong>DefGPT Pro</strong> binnen Defensie en bouwde hij via Virelio AI-tools voor scale-ups en grotere organisaties.",
       "about.p3": "",
@@ -99,7 +98,6 @@
       "nav.contact": "Contact",
       "hero.available": "Available · Amsterdam",
       "hero.role": "AI Tech Lead",
-      "hero.punch": "Agents that do the work — not demos.",
       "hero.subtitle":
         "From DefGPT Pro at Defence to agents in enterprise production. MCP, multi-agent, on-prem to cloud.",
       "hero.ctaProjects": "See the work",
@@ -123,12 +121,12 @@
       "about.p4":
         "His strength sits at the intersection of AI, data and process improvement.",
       "about.p1":
-        "Robin builds AI agents and automations for existing business processes — from requirements to production.",
+        "Robin builds AI agents and automations for existing business processes, from requirements to production.",
       "about.p2":
         "Earlier he worked at Fellowmind with <strong>Hive AI</strong>, contributed to <strong>DefGPT Pro</strong> within Defence, and via Virelio built AI tools for scale-ups and larger organisations.",
       "about.p3": "",
       "projects.subtitle":
-        "A selection of agents, automations and tools — built for clients and personal use.",
+        "A selection of agents, automations and tools, built for clients and personal use.",
       "projects.showAll": "Show all projects",
       "projects.showLess": "Show less",
       "skills.intro":
@@ -151,7 +149,7 @@
       "exp.reforge.role": "AI Tech Lead",
       "exp.reforge.company": "Fellowmind",
       "exp.reforge.b1":
-        "Worked at Fellowmind as AI Tech Lead on custom agents for clients, built and shipped with Hive AI — the internal platform for development and deployment.",
+        "Worked at Fellowmind as AI Tech Lead on custom agents for clients, built and shipped with Hive AI, the internal platform for development and deployment.",
       "exp.reforge.b2":
         "Gathered requirements in client workshops and translated client processes into agent workflows, functional requirements and concrete build tasks.",
       "exp.reforge.b3":
