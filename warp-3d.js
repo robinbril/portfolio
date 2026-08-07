@@ -3,20 +3,26 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 
+/* Tuned for smooth 60fps: lower mesh cost, delta-time motion, lerped camera */
 const RADIUS = 7;
-const SEGMENTS = 400;
-const RADIAL = 24;
-const STARS_FAR = 4000;
-const STARS_GALAXY = 8000;
-const DUST_MOTES = 600;
+const SEGMENTS = 160;
+const RADIAL = 16;
+const STARS_FAR = 2800;
+const STARS_GALAXY = 5500;
+const DUST_MOTES = 400;
 const GALAXY_RADIUS = 250;
 const GALAXY_ARMS = 4;
 const GALAXY_SPIN = 1.5;
-const RING_COUNT = 40;
-const SPEED_MIN = 0.00018;
-const SPEED_MAX = 0.00085;
-const ACCEL = 0.0000045;
-const LOOKAHEAD = 0.012;
+const RING_COUNT = 28;
+
+/* Speeds in curve-units per SECOND (not per frame) */
+const SPEED_MIN = 0.011;   // ~0.00018 * 60
+const SPEED_MAX = 0.052;   // ~0.00085 * 60
+const ACCEL = 0.028;       // approach rate toward SPEED_MAX (1/s)
+const LOOKAHEAD = 6;
+const CAM_SMOOTH = 14;     // higher = snappier follow, still smooth
+const MOUSE_SMOOTH = 10;
+const MAX_DT = 1 / 30;     // clamp spiral after tab-switch
 
 function buildCurve() {
     const pts = [];
@@ -31,6 +37,10 @@ function buildCurve() {
     return new THREE.CatmullRomCurve3(pts, true, 'catmullrom', 0.5);
 }
 
+function damp(current, target, lambda, dt) {
+    return THREE.MathUtils.damp(current, target, lambda, dt);
+}
+
 export class WormholeEngine {
     constructor(container) {
         this.container = container;
@@ -40,8 +50,23 @@ export class WormholeEngine {
         this.speed = SPEED_MIN;
         this.mx = 0;
         this.my = 0;
+        this.smx = 0;
+        this.smy = 0;
         this.raf = null;
         this.onFrame = null;
+        this.lastTs = 0;
+        this.elapsed = 0;
+
+        /* Hot-path reusable vectors (no per-frame alloc) */
+        this._pos = new THREE.Vector3();
+        this._tang = new THREE.Vector3();
+        this._up = new THREE.Vector3(0, 1, 0);
+        this._right = new THREE.Vector3();
+        this._realUp = new THREE.Vector3();
+        this._look = new THREE.Vector3();
+        this._camPos = new THREE.Vector3();
+        this._camLook = new THREE.Vector3();
+        this._camReady = false;
     }
 
     init() {
@@ -57,13 +82,15 @@ export class WormholeEngine {
         this.cam = new THREE.PerspectiveCamera(78, w / h, 0.1, 1200);
 
         this.gl = new THREE.WebGLRenderer({
-            antialias: true,
-            powerPreference: 'high-performance'
+            antialias: false, /* AA + bloom is expensive; bloom softens edges */
+            powerPreference: 'high-performance',
+            stencil: false,
+            depth: true,
         });
-        this.gl.setSize(w, h);
-        this.gl.setPixelRatio(Math.min(devicePixelRatio, 2));
+        this.gl.setSize(w, h, false);
+        this.gl.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
         this.gl.toneMapping = THREE.ACESFilmicToneMapping;
-        this.gl.toneMappingExposure = 1.1;
+        this.gl.toneMappingExposure = 1.05;
         this.gl.domElement.style.cssText =
             'position:absolute;inset:0;width:100%!important;height:100%!important';
         this.container.appendChild(this.gl.domElement);
@@ -75,13 +102,13 @@ export class WormholeEngine {
 
         this.composer = new EffectComposer(this.gl);
         this.composer.addPass(new RenderPass(this.scene, this.cam));
-        this.bloom = new UnrealBloomPass(
-            new THREE.Vector2(w, h), 0.6, 0.4, 0.5
-        );
+        /* Slightly softer bloom; half-res via smaller vector is handled by setSize */
+        this.bloom = new UnrealBloomPass(new THREE.Vector2(w, h), 0.55, 0.45, 0.55);
         this.composer.addPass(this.bloom);
+        this.composer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
 
         this._resize = () => this.resize();
-        window.addEventListener('resize', this._resize);
+        window.addEventListener('resize', this._resize, { passive: true });
 
         this.ready = true;
     }
@@ -89,26 +116,23 @@ export class WormholeEngine {
     buildTunnel() {
         this.tunnelMats = [];
 
-        // Semi-transparante fill tube zodat de galaxy erdoorheen schemert
-        // (atmosferisch dampeffect ipv compleet zwarte tunnel-binnenkant)
         const fillMat = new THREE.MeshBasicMaterial({
             color: 0x041510, side: THREE.BackSide,
-            transparent: true, opacity: 0.55
+            transparent: true, opacity: 0.55,
         });
         const fillGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS * 1.02, RADIAL, true);
         this.scene.add(new THREE.Mesh(fillGeo, fillMat));
         this.tunnelMats.push({ mat: fillMat, baseOpacity: 0.55 });
 
-        // Bright wireframe grid - LineSegments voor crisp visible lines
         const wireMat = new THREE.LineBasicMaterial({
             color: 0x2EF2A0,
-            transparent: true, opacity: 0.85
+            transparent: true, opacity: 0.8,
         });
         const wireGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS, RADIAL, true);
         const wireframeGeo = new THREE.WireframeGeometry(wireGeo);
-        const wireLines = new THREE.LineSegments(wireframeGeo, wireMat);
-        this.scene.add(wireLines);
-        this.tunnelMats.push({ mat: wireMat, baseOpacity: 0.85 });
+        wireGeo.dispose();
+        this.scene.add(new THREE.LineSegments(wireframeGeo, wireMat));
+        this.tunnelMats.push({ mat: wireMat, baseOpacity: 0.8 });
     }
 
     gaussRand() {
@@ -125,7 +149,9 @@ export class WormholeEngine {
         g.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.fillStyle = g;
         ctx.fillRect(0, 0, 32, 32);
-        return new THREE.CanvasTexture(c);
+        const tex = new THREE.CanvasTexture(c);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        return tex;
     }
 
     buildParticles() {
@@ -172,7 +198,6 @@ export class WormholeEngine {
         const armColor = new THREE.Color(0x88bbff);
         const mintColor = new THREE.Color(0x00ff9d);
         const mixed = new THREE.Color();
-
         const bulgeCount = Math.floor(STARS_GALAXY * 0.12);
 
         for (let i = 0; i < STARS_GALAXY; i++) {
@@ -193,7 +218,6 @@ export class WormholeEngine {
                 const spinAngle = r * GALAXY_SPIN / GALAXY_RADIUS;
                 const spread = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 0.4 * r;
                 const angSpread = this.gaussRand() * 0.12;
-
                 const theta = armAngle + spinAngle + angSpread;
                 x = Math.cos(theta) * (r + spread);
                 z = Math.sin(theta) * (r + spread);
@@ -256,7 +280,8 @@ export class WormholeEngine {
 
     buildRings() {
         this.rings = [];
-        const geo = new THREE.TorusGeometry(RADIUS * 1.08, 0.14, 8, 64);
+        const geo = new THREE.TorusGeometry(RADIUS * 1.08, 0.14, 6, 48);
+        const lookTmp = new THREE.Vector3();
 
         for (let i = 0; i < RING_COUNT; i++) {
             const t = i / RING_COUNT;
@@ -270,37 +295,41 @@ export class WormholeEngine {
 
             const mesh = new THREE.Mesh(geo, mat);
             mesh.position.copy(pt);
-            mesh.lookAt(pt.clone().add(tang));
-            mesh.userData = { t, mat };
+            mesh.lookAt(lookTmp.copy(pt).add(tang));
+            mesh.userData = { t, mat, glow: 0 };
             this.scene.add(mesh);
             this.rings.push(mesh);
         }
     }
 
     resize() {
+        if (!this.ready) return;
         const w = window.innerWidth;
         const h = window.innerHeight;
         this.cam.aspect = w / h;
         this.cam.updateProjectionMatrix();
-        this.gl.setSize(w, h);
+        const pr = Math.min(devicePixelRatio || 1, 1.5);
+        this.gl.setPixelRatio(pr);
+        this.gl.setSize(w, h, false);
+        this.composer.setPixelRatio(pr);
         this.composer.setSize(w, h);
     }
 
     activate() {
         if (!this.ready) this.init();
         this.active = true;
-        this.frame = 0;
-        const skipFrames = 120;
-        this.speed = SPEED_MIN + ACCEL * skipFrames;
-        this.t = 0;
-        for (let i = 0; i < skipFrames; i++) {
-            this.t += SPEED_MIN + ACCEL * i;
-        }
-        this.t = this.t % 1;
+        this.elapsed = 0;
+        this.lastTs = 0;
+        this._camReady = false;
+
+        /* Seed a little into the tunnel so first frame isn't static */
+        this.speed = SPEED_MIN;
+        this.t = 0.02;
         for (const t of this.tunnelMats) t.mat.opacity = t.baseOpacity;
         this.gl.domElement.style.opacity = '1';
+
         if (this.raf) cancelAnimationFrame(this.raf);
-        this.tick();
+        this.raf = requestAnimationFrame((ts) => this.tick(ts));
     }
 
     deactivate() {
@@ -309,79 +338,119 @@ export class WormholeEngine {
             cancelAnimationFrame(this.raf);
             this.raf = null;
         }
+        this.lastTs = 0;
     }
 
-    tick() {
+    tick(ts) {
         if (!this.active) return;
 
-        this.frame++;
-        this.speed = Math.min(SPEED_MAX, this.speed + ACCEL);
-        this.t = (this.t + this.speed) % 1;
+        if (!this.lastTs) this.lastTs = ts;
+        let dt = (ts - this.lastTs) / 1000;
+        this.lastTs = ts;
+        if (dt > MAX_DT) dt = MAX_DT;
+        if (dt < 0) dt = 0;
+        this.elapsed += dt;
 
-        const fadeStart = 600;
-        const fadeDur = 180;
-        const tunnelFade = this.frame < fadeStart ? 1
-            : this.frame > fadeStart + fadeDur ? 0
-            : 1 - (this.frame - fadeStart) / fadeDur;
-        for (const t of this.tunnelMats) t.mat.opacity = t.baseOpacity * tunnelFade;
+        /* Exponential accel toward max (frame-rate independent) */
+        this.speed += (SPEED_MAX - this.speed) * (1 - Math.exp(-ACCEL * 4.5 * dt));
+        this.t = (this.t + this.speed * dt) % 1;
 
-        // Camera kijkt EXACT langs de curve-tangent voor consistent
-        // gecentreerde vanishing point (reticle alignment). Vorige
-        // versie gebruikte een toekomstig curve-punt als look-target;
-        // bij hoge curvatuur zorgt dat voor off-center convergence.
-        const pos = this.curve.getPoint(this.t);
-        const tang = this.curve.getTangent(this.t);
-        this.cam.position.copy(pos);
+        /* Smooth mouse parallax */
+        this.smx = damp(this.smx, this.mx, MOUSE_SMOOTH, dt);
+        this.smy = damp(this.smy, this.my, MOUSE_SMOOTH, dt);
 
-        const up = new THREE.Vector3(0, 1, 0);
-        if (Math.abs(tang.dot(up)) > 0.99) up.set(1, 0, 0);
-        const right = new THREE.Vector3().crossVectors(tang, up).normalize();
-        const realUp = new THREE.Vector3().crossVectors(right, tang).normalize();
+        /* Tunnel fade over ~10s then 3s fade (time-based, not frames) */
+        const fadeStart = 10.0;
+        const fadeDur = 3.0;
+        let tunnelFade = 1;
+        if (this.elapsed > fadeStart + fadeDur) tunnelFade = 0;
+        else if (this.elapsed > fadeStart) {
+            const u = (this.elapsed - fadeStart) / fadeDur;
+            /* smoothstep */
+            tunnelFade = 1 - (u * u * (3 - 2 * u));
+        }
+        for (let i = 0; i < this.tunnelMats.length; i++) {
+            const t = this.tunnelMats[i];
+            t.mat.opacity = t.baseOpacity * tunnelFade;
+        }
 
-        // Look point = pos + tangent * lookahead_distance, met subtle
-        // mouse-parallax (was 1.2, nu 0.25 - minimaal zodat reticle
-        // praktisch altijd op het vanishing point zit).
-        const look = pos.clone().addScaledVector(tang, 6);
-        look.addScaledVector(right, this.mx * 0.25);
-        look.addScaledVector(realUp, this.my * 0.25);
-        this.cam.lookAt(look);
+        /* Target camera from curve */
+        this.curve.getPoint(this.t, this._pos);
+        this.curve.getTangent(this.t, this._tang);
 
+        this._up.set(0, 1, 0);
+        if (Math.abs(this._tang.dot(this._up)) > 0.99) this._up.set(1, 0, 0);
+        this._right.crossVectors(this._tang, this._up).normalize();
+        this._realUp.crossVectors(this._right, this._tang).normalize();
+
+        this._look.copy(this._pos).addScaledVector(this._tang, LOOKAHEAD);
+        this._look.addScaledVector(this._right, this.smx * 0.22);
+        this._look.addScaledVector(this._realUp, this.smy * 0.22);
+
+        if (!this._camReady) {
+            this._camPos.copy(this._pos);
+            this._camLook.copy(this._look);
+            this._camReady = true;
+        } else {
+            /* Exponential lerp: frame-rate independent follow */
+            const a = 1 - Math.exp(-CAM_SMOOTH * dt);
+            this._camPos.lerp(this._pos, a);
+            this._camLook.lerp(this._look, a);
+        }
+
+        this.cam.position.copy(this._camPos);
+        this.cam.up.copy(this._realUp);
+        this.cam.lookAt(this._camLook);
+
+        /* Rings - smooth glow with damping */
         let maxRingGlow = 0;
-        if (tunnelFade <= 0) {
-            for (let i = 0; i < this.rings.length; i++) this.rings[i].visible = false;
+        if (tunnelFade <= 0.001) {
+            for (let i = 0; i < this.rings.length; i++) {
+                this.rings[i].visible = false;
+                this.rings[i].userData.glow = 0;
+            }
         } else {
             for (let i = 0; i < this.rings.length; i++) {
                 const ring = this.rings[i];
-                const d = Math.abs(ring.userData.t - this.t);
-                const wd = Math.min(d, 1 - d);
-                const prox = Math.max(0, 1 - wd * 18);
-                const g = prox * prox;
+                let d = Math.abs(ring.userData.t - this.t);
+                if (d > 0.5) d = 1 - d;
+                const prox = Math.max(0, 1 - d * 18);
+                const targetG = prox * prox;
+                ring.userData.glow = damp(ring.userData.glow, targetG, 18, dt);
+                const g = ring.userData.glow;
                 if (g > maxRingGlow) maxRingGlow = g;
-                ring.visible = g > 0.001;
-                ring.userData.mat.opacity = g * 0.75 * tunnelFade;
-                ring.scale.setScalar(1 + g * 0.12);
-                ring.userData.mat.color.setRGB(g, 1.0, 0.62 + g * 0.38);
+                ring.visible = g > 0.004;
+                if (ring.visible) {
+                    ring.userData.mat.opacity = g * 0.75 * tunnelFade;
+                    const s = 1 + g * 0.12;
+                    ring.scale.set(s, s, s);
+                    ring.userData.mat.color.setRGB(g, 1.0, 0.62 + g * 0.38);
+                }
             }
         }
 
         const norm = (this.speed - SPEED_MIN) / (SPEED_MAX - SPEED_MIN);
-        this.bloom.strength = 1.0 + norm * 1.6;
+        /* Bloom follows speed smoothly */
+        const bloomTarget = 0.85 + norm * 1.35;
+        this.bloom.strength += (bloomTarget - this.bloom.strength) * (1 - Math.exp(-8 * dt));
 
-        // Galaxy + stars permanent zichtbaar - fadelt extra in als tunnel weg is
         const galaxyReveal = (1 - tunnelFade) * (1 - maxRingGlow);
         this.galaxy.material.opacity = 0.45 + galaxyReveal * 0.4;
         this.farStars.material.opacity = 0.55 + galaxyReveal * 0.35;
         this.dust.material.opacity = 0.12 + galaxyReveal * 0.18;
 
-        this.galaxy.rotation.y += 0.00012;
-        this.dust.rotation.y -= 0.00008;
+        this.galaxy.rotation.y += 0.007 * dt;
+        this.dust.rotation.y -= 0.005 * dt;
 
         this.composer.render();
         if (this.onFrame) this.onFrame(norm);
-        this.raf = requestAnimationFrame(() => this.tick());
+        this.raf = requestAnimationFrame((t) => this.tick(t));
     }
 
-    setMouse(x, y) { this.mx = x; this.my = y; }
+    setMouse(x, y) {
+        this.mx = x;
+        this.my = y;
+    }
 
     dispose() {
         this.active = false;

@@ -574,7 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let stars = [];
     let speed2d = 8;
     let dpr = Math.max(1, window.devicePixelRatio || 1);
-    const STAR_COUNT = 1250;
+    const STAR_COUNT = 900;
     const Z_FAR = 2000;
     const FOCAL = 340;
     let mouseX = 0;
@@ -654,21 +654,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const tick2d = () => {
+    let last2dTs = 0;
+    let smx2d = 0;
+    let smy2d = 0;
+    const SPEED2D_MIN = 480;   // units/sec
+    const SPEED2D_MAX = 2800;
+    const STAR_COUNT_SMOOTH = 900;
+
+    const tick2d = (ts) => {
         if (!warpActive || !canvas2d) return;
+        if (!last2dTs) last2dTs = ts;
+        let dt = (ts - last2dTs) / 1000;
+        last2dTs = ts;
+        if (dt > 1 / 30) dt = 1 / 30;
+        if (dt < 0) dt = 0;
+
+        /* smooth mouse + exponential accel (frame independent) */
+        const ma = 1 - Math.exp(-12 * dt);
+        smx2d += (mouseX - smx2d) * ma;
+        smy2d += (mouseY - smy2d) * ma;
+        speed2d += (SPEED2D_MAX - speed2d) * (1 - Math.exp(-1.8 * dt));
+
         const w = canvas2d.width;
         const h = canvas2d.height;
         const focal = FOCAL * dpr;
-        const parallaxX = mouseX * 18 * dpr;
-        const parallaxY = mouseY * 14 * dpr;
+        const parallaxX = smx2d * 18 * dpr;
+        const parallaxY = smy2d * 14 * dpr;
         const cx = w / 2 + parallaxX;
         const cy = h * 0.5 + parallaxY;
 
-        ctx.fillStyle = 'rgba(7, 17, 31, 0.14)';
+        /* lighter trail so motion feels continuous, not strobing */
+        ctx.fillStyle = 'rgba(7, 17, 31, 0.22)';
         ctx.fillRect(0, 0, w, h);
 
-        const intensity = Math.min(1, (speed2d - 8) / 34);
-        pulsePhase += 0.018;
+        const intensity = Math.min(1, (speed2d - SPEED2D_MIN) / (SPEED2D_MAX - SPEED2D_MIN));
+        pulsePhase += dt * 1.1;
         const pulse = 0.5 + 0.5 * Math.sin(pulsePhase * 2.1);
         const coreStr = intensity * (0.85 + pulse * 0.15);
         const coreR = Math.hypot(w, h) * 0.72;
@@ -682,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, w, h);
 
-        const burstStr = Math.min(1, (speed2d - 8) / 32);
+        const burstStr = intensity;
         const burstR = (50 + burstStr * 120) * dpr * (0.9 + pulse * 0.15);
         const burst = ctx.createRadialGradient(cx, cy, 0, cx, cy, burstR);
         burst.addColorStop(0, `rgba(255,255,255,${0.3 + burstStr * 0.5})`);
@@ -692,11 +712,12 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = burst;
         ctx.fillRect(0, 0, w, h);
 
+        const step = speed2d * dt;
         ctx.lineCap = 'round';
         for (let i = 0; i < stars.length; i++) {
             const s = stars[i];
             s.pz = s.z;
-            s.z -= speed2d;
+            s.z -= step;
             if (s.z < 1) {
                 s.x = (Math.random() - 0.5) * 2600;
                 s.y = (Math.random() - 0.5) * 2600;
@@ -732,8 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        speed2d = Math.min(56, speed2d + 1.25);
-        updateHud(Math.min(1, (speed2d - 12) / 44));
+        updateHud(Math.min(1, (speed2d - SPEED2D_MIN) / (SPEED2D_MAX - SPEED2D_MIN)));
         raf2d = requestAnimationFrame(tick2d);
     };
 
@@ -810,7 +830,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ensure2d();
         resize2d();
-        speed2d = 12;
+        speed2d = SPEED2D_MIN;
+        last2dTs = 0;
+        smx2d = mouseX;
+        smy2d = mouseY;
         seedStars();
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, canvas2d.width, canvas2d.height);
