@@ -451,3 +451,60 @@ body.light-theme .hero .hero-stat-divider {
         transition: none !important;
     }
 }
+
+/* ---- Punch line under name ---- */
+.hero .hero-role {
+    font-family: Inter, system-ui, sans-serif !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase;
+    color: rgba(167, 243, 208, 0.95) !important;
+    margin: 0 0 0.85rem !important;
+}
+
+.hero .hero-punch {
+    font-family: Inter, system-ui, -apple-system, sans-serif !important;
+    font-size: clamp(1.35rem, 3.2vw, 1.85rem) !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.025em !important;
+    color: #ffffff !important;
+    max-width: 28rem !important;
+    margin: 0 auto 0.85rem !important;
+    text-wrap: balance;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+}
+
+.hero .hero-subtitle {
+    font-size: clamp(0.95rem, 2vw, 1.05rem) !important;
+    font-weight: 400 !important;
+    line-height: 1.55 !important;
+    color: rgba(226, 232, 240, 0.82) !important;
+    max-width: 32rem !important;
+    margin: 0 auto 1.85rem !important;
+}
+
+body.light-theme .hero .hero-punch {
+    color: #141210 !important;
+    text-shadow: none !important;
+}
+
+body.light-theme .hero .hero-role {
+    color: #0f766e !important;
+}
+
+body.light-theme .hero .hero-subtitle {
+    color: #6b6560 !important;
+}
+
+@media (max-width: 640px) {
+    .hero .hero-punch {
+        font-size: clamp(1.2rem, 5.5vw, 1.45rem) !important;
+        margin-bottom: 0.7rem !important;
+    }
+
+    .hero .hero-subtitle {
+        margin-bottom: 1.4rem !important;
+    }
+}
