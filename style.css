@@ -612,12 +612,14 @@ body.dark-theme .hero::after {
 
 /* Improved H1 Typography */
 .hero h1 {
-    font-size: 5rem;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.12em;
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    line-height: 1.08;
+    margin-bottom: 1rem;
+    padding-bottom: 0;
     letter-spacing: -0.03em;
-    font-weight: 800;
+    font-weight: 700;
+    white-space: normal;
+    max-width: 100%;
 }
 
 .hero-subtitle {
@@ -3165,6 +3167,7 @@ footer {
 .preloader.fade-out {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 }
 
 .preloader-content {
@@ -5894,38 +5897,8 @@ body.light-theme .hero-orb--solo {
    HERO LESS NEON — softer saturation
    ========================================== */
 
-/* H1 ends in softer mint instead of full saturation (DARK THEME ONLY) */
-body.dark-theme .hero h1,
-body:not(.light-theme) .hero h1 {
-    background: linear-gradient(
-        180deg,
-        #ffffff 0%,
-        #E8FFF6 55%,
-        #7FEDC3 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-}
+/* hero CTA/H1 overrides moved to enhancements/02-hero.css */
 
-/* CTA primary button: softer mint to muted indigo, less arcade */
-body:not(.light-theme) .hero .btn-primary,
-body.dark-theme .hero .btn-primary {
-    background: linear-gradient(135deg, #4EDDAE 0%, #6E63D6 100%);
-    color: #07111F;
-    box-shadow: 0 6px 22px -8px rgba(78, 221, 174, 0.45);
-}
-
-body:not(.light-theme) .hero .btn-primary:hover,
-body.dark-theme .hero .btn-primary:hover {
-    box-shadow: 0 12px 32px -10px rgba(78, 221, 174, 0.55);
-    filter: brightness(1.06);
-}
-
-body:not(.light-theme) .hero .btn-primary i {
-    color: #07111F;
-}
 
 /* Hero stats: tone down the mint */
 .hero-stat strong {

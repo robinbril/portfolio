@@ -352,3 +352,153 @@ body.light-theme .featured-project {
     font-size: 0.7rem;
   }
 }
+
+/* ========== Featured cards: no leaking content ========== */
+.featured-projects-grid {
+    width: 100%;
+    max-width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: stretch;
+}
+
+.featured-project {
+    overflow: hidden !important;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.featured-project .featured-content {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.featured-project .featured-content h3,
+.featured-project--flagship .featured-content h3,
+.featured-project--secure .featured-content h3 {
+    font-family: "Plus Jakarta Sans", Inter, system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: clamp(1.25rem, 2vw, 1.65rem) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    max-width: 100% !important;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    margin-bottom: 0.65rem !important;
+}
+
+.featured-project .featured-content p {
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+.card-metrics {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.5rem !important;
+    width: 100%;
+    max-width: 100%;
+    margin-top: auto;
+    box-sizing: border-box;
+}
+
+.card-metric {
+    min-width: 0 !important;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0.55rem 0.6rem !important;
+}
+
+.card-metric-label {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.06em !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-metric-value,
+.card-metric-value--wide {
+    font-size: clamp(0.8rem, 1.4vw, 1rem) !important;
+    line-height: 1.2 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.card-company,
+.card-status,
+.card-top {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.card-status {
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 55%;
+}
+
+/* Project grid cards: contain content */
+.ai-projects-grid {
+    align-items: stretch;
+}
+
+.ai-project-card {
+    min-width: 0 !important;
+    max-width: 100%;
+    overflow: hidden !important;
+    box-sizing: border-box;
+}
+
+.ai-project-card h3 {
+    font-family: "Plus Jakarta Sans", Inter, system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    overflow-wrap: anywhere;
+}
+
+.ai-project-card p {
+    overflow-wrap: break-word;
+}
+
+.ai-project-card .project-tags {
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+.ai-project-card .project-icon-wrapper {
+    overflow: hidden !important;
+}
+
+/* Global display font for section headings */
+.section-header h2,
+.typing-heading,
+.typing-text {
+    font-family: "Plus Jakarta Sans", Inter, system-ui, sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.025em;
+}
+
+@media (max-width: 768px) {
+    .card-metrics {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 0.35rem !important;
+    }
+    .card-metric {
+        padding: 0.45rem 0.4rem !important;
+    }
+    .card-metric-value,
+    .card-metric-value--wide {
+        font-size: 0.78rem !important;
+    }
+    .featured-project .featured-content h3 {
+        font-size: 1.2rem !important;
+    }
+}
