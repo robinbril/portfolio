@@ -110,16 +110,30 @@
 </head>
 
 <body class="dark-theme">
-    <!-- Preloader: fast terminal code reveal -->
+    <!-- Preloader: dark code-editor reveal -->
     <div class="preloader" id="preloader">
-        <div class="preloader-brand">
-            <span class="preloader-logo">RB<span class="preloader-dot">.</span></span>
-            <div class="preloader-term">
-                <span class="preloader-prompt">&rsaquo;</span>
-                <span class="preloader-cmd" id="preloader-cmd"></span>
-                <span class="preloader-caret" aria-hidden="true"></span>
+        <div class="preloader-window">
+            <div class="pw-titlebar">
+                <span class="pw-dots"><i></i><i></i><i></i></span>
+                <span class="pw-file">portfolio.init.ts</span>
+                <span class="pw-status"><span class="pw-status-dot"></span>compiling</span>
             </div>
-            <div class="preloader-track"><div class="preloader-bar" id="progress-bar"></div></div>
+            <div class="pw-code">
+                <div class="pw-line"><span class="pw-ln">1</span><span class="c-kw">import</span> <span class="c-pl">{</span> Portfolio <span class="c-pl">}</span> <span class="c-kw">from</span> <span class="c-str">'@robin/core'</span></div>
+                <div class="pw-line"><span class="pw-ln">2</span><span class="c-kw">import</span> <span class="c-pl">{</span> Projects<span class="c-pl">,</span> Experience <span class="c-pl">}</span> <span class="c-kw">from</span> <span class="c-str">'@robin/ui'</span></div>
+                <div class="pw-line"><span class="pw-ln">3</span></div>
+                <div class="pw-line"><span class="pw-ln">4</span><span class="c-cm">// boot the portfolio</span></div>
+                <div class="pw-line"><span class="pw-ln">5</span><span class="c-kw">const</span> <span class="c-var">robin</span> <span class="c-op">=</span> <span class="c-kw">new</span> <span class="c-fn">Portfolio</span><span class="c-pl">({</span></div>
+                <div class="pw-line"><span class="pw-ln">6</span><span class="pw-ind">  </span><span class="c-prop">role</span><span class="c-pl">:</span> <span class="c-str">'AI Tech Lead'</span><span class="c-pl">,</span></div>
+                <div class="pw-line"><span class="pw-ln">7</span><span class="pw-ind">  </span><span class="c-prop">stack</span><span class="c-pl">:</span> <span class="c-pl">[</span><span class="c-str">'agents'</span><span class="c-pl">,</span> <span class="c-str">'mcp'</span><span class="c-pl">,</span> <span class="c-str">'rag'</span><span class="c-pl">]</span><span class="c-pl">,</span></div>
+                <div class="pw-line"><span class="pw-ln">8</span><span class="c-pl">})</span></div>
+                <div class="pw-line"><span class="pw-ln">9</span></div>
+                <div class="pw-line"><span class="pw-ln">10</span><span class="c-kw">await</span> <span class="c-var">robin</span><span class="c-op">.</span><span class="c-fn">render</span><span class="c-pl">()</span><span class="pw-caret"></span></div>
+            </div>
+            <div class="pw-progress">
+                <div class="pw-track"><div class="pw-bar" id="progress-bar"></div></div>
+                <div class="pw-meta"><span>building interface</span><span id="progress-percentage">0%</span></div>
+            </div>
         </div>
     </div>
 
@@ -248,10 +262,7 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="#projects" class="btn hero-btn hero-btn--primary">
-                        <span data-i18n="hero.ctaProjects">Bekijk het werk</span>
-                    </a>
-                    <a href="#contact" class="btn hero-btn hero-btn--ghost">
+                    <a href="#contact" class="btn hero-btn hero-btn--primary">
                         <span data-i18n="hero.ctaContact">Laten we praten</span>
                     </a>
                     <a href="Robin_Bril_CV.pdf" download="Robin_Bril_CV.pdf"
