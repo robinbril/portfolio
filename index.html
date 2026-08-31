@@ -68,6 +68,7 @@
     <link rel="stylesheet" href="enhancements/06-mobile.css">
     <link rel="stylesheet" href="enhancements/16-hero-mobile-presence.css">
     <link rel="stylesheet" href="enhancements/hero-clean.css">
+    <link rel="stylesheet" href="enhancements/17-hero-ascii.css">
     <link rel="stylesheet" href="enhancements/01-warp-hud.css">
 
     <!-- Cockpit redesign (5 design-agent files, loaded last so they win) -->
@@ -269,6 +270,7 @@
                 poster="hero-bg.webp">
                 <source src="hero-bg.mp4" type="video/mp4">
             </video>
+            <canvas class="hero-ascii" id="hero-ascii" aria-hidden="true"></canvas>
 
             <!-- Subtle decorative layer: one soft orb only -->
             <div class="hero-deco" aria-hidden="true">
@@ -1644,6 +1646,7 @@
 
         <script src="i18n.js"></script>
         <script src="script.js"></script>
+        <script defer src="hero-ascii.js"></script>
         <script>
             (function initIcons() {
                 try {
