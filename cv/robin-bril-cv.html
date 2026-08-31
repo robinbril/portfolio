@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Robin Bril — CV</title>
+<style>
+  :root{
+    --ink:#14181f;
+    --muted:#4a5462;
+    --faint:#7b8697;
+    --rule:#e2e6ec;
+    --accent:#0f766e;      /* calm teal, not neon */
+    --bg:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:10.2px;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .page{width:210mm;min-height:297mm;margin:0 auto;padding:16mm 15mm 14mm;}
+
+  /* header */
+  .name{font-size:27px;font-weight:800;letter-spacing:-0.02em;line-height:1.05;color:var(--ink);}
+  .role{font-size:12.5px;font-weight:600;color:var(--accent);margin-top:2px;letter-spacing:0.01em;}
+  .meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px;font-size:9.6px;color:var(--muted);}
+  .meta b{color:var(--ink);font-weight:700;}
+  .header{padding-bottom:11px;border-bottom:2px solid var(--ink);}
+
+  /* sections */
+  section{margin-top:14px;}
+  h2{break-after:avoid;}
+  h2{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;
+     color:var(--accent);padding-bottom:4px;margin-bottom:8px;border-bottom:1px solid var(--rule);}
+
+  p.profile{color:#2b323c;font-size:10.3px;line-height:1.62;}
+
+  /* experience entry */
+  .entry{margin-bottom:11px;break-inside:avoid;}
+  .entry:last-child{margin-bottom:0;}
+  .entry-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;}
+  .entry-org{font-size:11px;font-weight:700;color:var(--ink);}
+  .entry-org .sep{color:var(--faint);font-weight:500;}
+  .entry-period{font-size:9.3px;font-weight:600;color:var(--faint);white-space:nowrap;
+    font-variant-numeric:tabular-nums;}
+  .entry-title{font-size:10px;font-style:italic;color:var(--muted);margin-top:1px;}
+
+  /* bullets — proper hanging indent so wrapped lines align with the text */
+  ul{list-style:none;margin:5px 0 0;}
+  ul li{position:relative;padding-left:13px;margin-bottom:2.5px;color:#2f3742;font-size:10px;line-height:1.5;}
+  ul li::before{content:"";position:absolute;left:2px;top:0.62em;width:3px;height:3px;
+    border-radius:50%;background:var(--accent);}
+  .stack-line{margin-top:4px;font-size:9.5px;color:var(--muted);}
+  .stack-line b{color:var(--ink);font-weight:700;font-style:normal;}
+
+  /* two-column tech + edu grids */
+  .stack li b{color:var(--ink);font-weight:700;}
+
+  /* rows with a right label (education, certs) */
+  .rowline{display:flex;justify-content:space-between;gap:12px;align-items:baseline;}
+  .rowline .r{color:var(--faint);font-size:9.3px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .cert{margin-bottom:2.5px;}
+  .edu-org{font-size:10px;color:var(--muted);font-style:italic;margin-top:1px;}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:2px 26px;}
+  .interests{color:#2f3742;font-size:10px;}
+
+  @media print{ .page{margin:0;} }
+  @page{size:A4;margin:0;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="name">Robin Bril</div>
+    <div class="role">AI Tech Lead · Data &amp; AI Engineer</div>
+    <div class="meta">
+      <span><b>Locatie</b> Amsterdam, Nederland</span>
+      <span><b>Talen</b> Nederlands, Engels</span>
+      <span><b>Web</b> robinbril.com</span>
+    </div>
+  </div>
+
+  <section>
+    <h2>Profiel</h2>
+    <p class="profile">Robin is een Senior AI Engineer die grootschalige AI-oplossingen van concept naar productie brengt: DefGPT Pro voor 80.000+ gebruikers, 200+ productie-automatiseringen voor scale-ups en datapijplijnen voor blockchain-platformen — steeds met privacy en datakwaliteit voorop. Zijn achtergrond als Lean Six Sigma Master Black Belt en ondernemer maakt dat hij AI inzet waar het processen verbetert, niet als technisch doel op zich. Hij specialiseert zich in multi-agent systemen, RAG-architecturen en veilige enterprise-integraties, werkt snel in bij nieuwe klanten en combineert hands-on development met strategisch advies. Sinds 2026 is hij als AI Tech Lead binnen Reforge verantwoordelijk voor de volledige software-, product- en AI-ontwikkeling van Reforge, PolpoHire en The Staffing Society.</p>
+  </section>
+
+  <section>
+    <h2>Werkervaring</h2>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">Reforge <span class="sep">· Nederland</span></span>
+        <span class="entry-period">2026 – heden</span>
+      </div>
+      <div class="entry-title">AI Tech Lead</div>
+      <ul>
+        <li>Eindverantwoordelijk voor de volledige software-, product- en AI-ontwikkeling van Reforge, PolpoHire en The Staffing Society.</li>
+        <li>Ontwikkelt en beheert de gedeelde software-, AI- en recruiterplatformen waarmee de drie bedrijven hun operatie, matching en administratie draaien.</li>
+        <li>Automatiseert administratieve processen binnen HR, operations, finance en recruitment, van ontwerp tot productie.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Python, TypeScript, C#/.NET, multi-agent AI, MCP-servers, softwarearchitectuur, productontwikkeling, recruitmentplatformen, leiderschap</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">Fellowmind <span class="sep">· via Reforge</span></span>
+        <span class="entry-period">2026 – heden</span>
+      </div>
+      <div class="entry-title">Artificial Intelligence Developer</div>
+      <ul>
+        <li>Hielp vier klanten van Fellowmind bij het ontwerpen, bouwen en in productie brengen van maatwerk-agents binnen Hive AI.</li>
+        <li>Haalde requirements op via klantworkshops en vertaalde klantprocessen naar agent-workflows, functionele eisen en concrete bouwtaken.</li>
+        <li>Bouwde oplossingen voor verkooporder-automatisering, logistieke documentverwerking, een juridische kennisbank en meertalig zoeken via spraak.</li>
+        <li>Ontwikkelde 14+ MCP-integraties zodat agents veilig kunnen werken met Outlook, SharePoint, ERP-systemen, PDF's, planning en rapportages.</li>
+        <li>Bouwde evaluatie- en monitoringframeworks om agents in productie controleerbaar te houden.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Python, C#/.NET, TypeScript, Azure, AKS, Hive AI, MCP-servers, Dynamics 365, Microsoft Graph, SharePoint, RAG, HITL</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">Capgemini <span class="sep">· Amsterdam</span></span>
+        <span class="entry-period">2024 – heden</span>
+      </div>
+      <div class="entry-title">Data-consultant &amp; Artificial Intelligence Developer</div>
+      <ul>
+        <li>Organiseerde "Advanced AI in Practice"-workshops voor 450 data scientists over AI in software development, RAG, Agentic AI en Data Governance.</li>
+        <li>Momenteel in opdracht bij het Ministerie van Defensie in twee rollen: AI Developer en Data Consultant.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Python, AI-frameworks, RAG, multi-agent AI-systemen, data governance, workshops organiseren, leiderschap</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">Ministerie van Defensie <span class="sep">· via Capgemini</span></span>
+        <span class="entry-period">2024 – heden</span>
+      </div>
+      <div class="entry-title">Artificial Intelligence Developer</div>
+      <ul>
+        <li>Leidde de ontwikkeling van DefGPT Pro: een privacy-conforme AI-assistent voor 80.000+ medewerkers, met succesvolle organisatiebrede uitrol.</li>
+        <li>Verbeterde de LLM-mogelijkheden met multi-agent frameworks, MCP-servers en kennisbankintegratie.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Python, multi-agent AI-systemen, RAG, MCP-servers, privacy-conforme AI, leiderschap, data governance</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">Ministerie van Defensie <span class="sep">· via Capgemini</span></span>
+        <span class="entry-period">2024</span>
+      </div>
+      <div class="entry-title">Technisch Informatie-analist</div>
+      <ul>
+        <li>Faciliteerde requirements-workshops met C-level stakeholders voor de strategische BI-roadmap.</li>
+        <li>Bouwde data-integraties tussen SAP, interne databases en rapportagelagen voor geconsolideerde managementrapportages.</li>
+        <li>Ontwikkelde operationele dashboards in Power BI en SAP voor inzicht op militair niveau, inclusief gegevensopschoning en kwaliteitscontrole.</li>
+        <li>Organiseerde AI-workshops voor het analytics-team over integratie van AI in de bestaande data-infrastructuur.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Power BI, SAP, SQL, dashboards, gegevensvalidatie, data storytelling, stakeholdermanagement, requirements engineering</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">Virelio <span class="sep">· Amsterdam</span></span>
+        <span class="entry-period">2024 – 2025</span>
+      </div>
+      <div class="entry-title">Artificial Intelligence Developer</div>
+      <ul>
+        <li>Ontwikkelde 17 AI-applicaties en 200+ geautomatiseerde processen voor scale-ups en grote bedrijven, en converteerde klanten via AI-gedreven marketingcampagnes.</li>
+        <li>Lanceerde een privacyvriendelijke AI-assistent die duizenden documenten doorzoekt en direct antwoord geeft via Slack, Teams en telefoon.</li>
+        <li>Bouwde maatwerk multi-agent AI-systemen die lokaal draaien, waardoor administratieve functies vervielen en aanzienlijk tijd en kosten werden bespaard.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Python, multi-agent AI, RAG/kennisbank, workflowautomatisering, API-integratie, privacygerichte AI, leiderschap</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">ROAD <span class="sep">· Nederland</span></span>
+        <span class="entry-period">2022 – 2024</span>
+      </div>
+      <div class="entry-title">Data-analist</div>
+      <ul>
+        <li>Ontwikkelde en onderhield geautomatiseerde datapipelines in BigQuery met geplande queries, incrementele loads en foutafhandeling.</li>
+        <li>Ontwierp datamodellen en bouwde een schaalbare dashboardarchitectuur in Looker Studio voor organisatiebrede rapportage.</li>
+        <li>Optimaliseerde datastromen tussen bronsystemen en het datawarehouse, met focus op datakwaliteit en verwerkingssnelheid.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Python, SQL, BigQuery, Looker, GCP, ETL-pipelines, datawarehouse-architectuur</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">Quotum Consultancy <span class="sep">· Nederland</span></span>
+        <span class="entry-period">2021 – 2024</span>
+      </div>
+      <div class="entry-title">Oprichter</div>
+      <ul>
+        <li>Ontwikkelde een full-stack dataplatform dat on-chain-, derivaten- en macrodata aggregeert via geautomatiseerde ETL-pipelines.</li>
+        <li>Integreerde meerdere externe databronnen en API's in een centrale datawarehouse-architectuur voor 185 betalende gebruikers.</li>
+        <li>Bouwde en onderhield schaalbare data-infrastructuur voor real-time financiële analyses en rapportages.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Python, SQL, API-integraties, ETL-pipelines, data-architectuur, cloud-infrastructuur, workflowoptimalisatie, stakeholdermanagement</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-org">SBB <span class="sep">· Beverwijk</span></span>
+        <span class="entry-period">2020 – 2021</span>
+      </div>
+      <div class="entry-title">Traineeship Procesmanagement</div>
+      <ul>
+        <li>Optimaliseerde workflows voor bouwprojecten en bespaarde projectkosten door standaardisatie van documentatie en minder herbewerking.</li>
+        <li>Interviewde belanghebbenden en implementeerde een gestandaardiseerd documentatiesysteem voor betere samenwerking tussen teams.</li>
+      </ul>
+      <div class="stack-line"><b>Stack:</b> Lean Six Sigma, procesmanagement, workflowoptimalisatie, stakeholdermanagement, documentatiesystemen</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Technische stack</h2>
+    <ul class="stack">
+      <li><b>AI &amp; Machine Learning:</b> Python, multi-agent AI-systemen, RAG-architecturen, MCP-servers, LLM-integratie, human-in-the-loop, lokale AI-implementaties</li>
+      <li><b>Development:</b> TypeScript, JavaScript, C#/.NET, Rust, SQL, HTML/CSS, API-integratie, CI/CD, GitHub</li>
+      <li><b>Data Engineering:</b> ETL-pipelines, data-architectuur, data-integratie, datakwaliteit, scheduled queries, incrementele dataverwerking</li>
+      <li><b>Datamodellering:</b> Kimball-sterschema, dimensioneel modelleren, datamarts, datawarehouse-ontwerp</li>
+      <li><b>BI &amp; Visualisatie:</b> Dashboards, gegevensopschoning en -validatie, data-storytelling, KPI-analyse, RAG/agents in dashboards</li>
+      <li><b>Cloud &amp; Platformen:</b> Azure (AI-102), AKS &amp; Docker, GCP (BigQuery, Looker), Microsoft Graph, SAP, Power BI, Tableau</li>
+      <li><b>Proces &amp; Project:</b> Agile/Scrum, Lean Six Sigma Master Black Belt, stakeholdermanagement, requirements engineering</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Opleiding</h2>
+    <div class="entry">
+      <div class="rowline">
+        <span class="entry-org">BSc Bedrijfskunde</span>
+        <span class="r">2018 – 2023</span>
+      </div>
+      <div class="edu-org">Hogeschool van Amsterdam — minor Business Process Analytics Management</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Certificeringen</h2>
+    <div class="cert rowline"><span>Deep Learning Specialization — Stanford / DeepLearning.AI</span><span class="r">2025</span></div>
+    <div class="cert rowline"><span>Power BI Data Analyst (PL-300) — Microsoft</span><span class="r">2025</span></div>
+    <div class="cert rowline"><span>Business Requirements Analysis — Capgemini</span><span class="r">2025</span></div>
+    <div class="cert rowline"><span>Advanced Data Modeling — Capgemini</span><span class="r">2024</span></div>
+    <div class="cert rowline"><span>Dimensional Data Modeling (Advanced) — Capgemini</span><span class="r">2024</span></div>
+    <div class="cert rowline"><span>SQL (Advanced) — DataCamp</span><span class="r">2024</span></div>
+    <div class="cert rowline"><span>Lean Six Sigma Master Black Belt — LinkedIn</span><span class="r">2022</span></div>
+  </section>
+
+  <section>
+    <h2>Persoonlijk</h2>
+    <div class="interests"><b>Sport:</b> tennis, fitness, fietsen, zwemmen, padel &nbsp;·&nbsp; <b>Cultuur:</b> reizen, lezen, schaken, theater</div>
+  </section>
+
+</div>
+</body>
+</html>

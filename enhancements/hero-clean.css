@@ -253,6 +253,29 @@ section.hero h1,
     border: 1px solid rgba(255, 255, 255, 0.28) !important;
 }
 
+/* CV download: quiet ghost with a subtle mint edge as the one accent */
+.hero .hero-actions .hero-btn--cv,
+.hero .hero-actions a.hero-btn--cv {
+    background: rgba(46, 242, 160, 0.06) !important;
+    background-image: none !important;
+    color: #eafff6 !important;
+    border: 1px solid rgba(46, 242, 160, 0.32) !important;
+}
+
+.hero .hero-actions .hero-btn--cv:hover,
+.hero .hero-actions a.hero-btn--cv:hover {
+    background: rgba(46, 242, 160, 0.12) !important;
+    border-color: rgba(46, 242, 160, 0.5) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+body.light-theme .hero .hero-actions .hero-btn--cv {
+    background: rgba(15, 118, 110, 0.06) !important;
+    color: #0f766e !important;
+    border-color: rgba(15, 118, 110, 0.32) !important;
+}
+
 .hero .hero-actions .hero-btn--ghost:hover,
 .hero .hero-actions a.hero-btn--ghost:hover {
     background: rgba(255, 255, 255, 0.08) !important;
