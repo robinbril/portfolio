@@ -110,10 +110,15 @@
 </head>
 
 <body class="dark-theme">
-    <!-- Preloader: minimal brand reveal -->
+    <!-- Preloader: fast terminal code reveal -->
     <div class="preloader" id="preloader">
         <div class="preloader-brand">
             <span class="preloader-logo">RB<span class="preloader-dot">.</span></span>
+            <div class="preloader-term">
+                <span class="preloader-prompt">&rsaquo;</span>
+                <span class="preloader-cmd" id="preloader-cmd"></span>
+                <span class="preloader-caret" aria-hidden="true"></span>
+            </div>
             <div class="preloader-track"><div class="preloader-bar" id="progress-bar"></div></div>
         </div>
     </div>

@@ -5,6 +5,8 @@ function startPreloader() {
     const preloader = document.getElementById('preloader');
     const progressBar = document.getElementById('progress-bar');
     const progressPercentage = document.getElementById('progress-percentage');
+    const cmdEl = document.getElementById('preloader-cmd');
+    const CMD = 'portfolio.render()';
 
     if (!preloader) return;
 
@@ -12,7 +14,7 @@ function startPreloader() {
     if (preloader.classList.contains('fade-out')) return;
 
     let progress = 0;
-    const duration = 520; // quick brand reveal, not a fake compile screen
+    const duration = 720; // quick terminal reveal, legible typing
     const intervalTime = 16;
     const steps = duration / intervalTime;
     const increment = 100 / steps;
@@ -38,6 +40,10 @@ function startPreloader() {
         } else {
             if (progressBar) progressBar.style.width = `${progress}%`;
             if (progressPercentage) progressPercentage.textContent = `${Math.floor(progress)}%`;
+        }
+        if (cmdEl) {
+            const chars = Math.ceil((progress / 100) * CMD.length);
+            cmdEl.textContent = CMD.slice(0, chars);
         }
     }, intervalTime);
 
