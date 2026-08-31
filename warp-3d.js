@@ -15,12 +15,12 @@ const GALAXY_ARMS = 4;
 const GALAXY_SPIN = 1.5;
 const RING_COUNT = 28;
 
-/* Speeds in curve-units per SECOND (not per frame) — punchier warp */
-const SPEED_MIN = 0.020;
-const SPEED_MAX = 0.092;
-const ACCEL = 0.055;       // quicker spool toward SPEED_MAX (1/s)
+/* Speeds in curve-units per SECOND (not per frame) — fast, immediate warp */
+const SPEED_MIN = 0.050;
+const SPEED_MAX = 0.170;
+const ACCEL = 0.095;       // near-instant spool toward SPEED_MAX (1/s)
 const LOOKAHEAD = 6;
-const CAM_SMOOTH = 18;     // tighter follow = sleeker, faster read
+const CAM_SMOOTH = 20;     // tight follow = sleek, fast read
 const MOUSE_SMOOTH = 11;
 const MAX_DT = 1 / 30;     // clamp spiral after tab-switch
 
@@ -322,8 +322,8 @@ export class WormholeEngine {
         this.lastTs = 0;
         this._camReady = false;
 
-        /* Seed a little into the tunnel so first frame isn't static */
-        this.speed = SPEED_MIN;
+        /* Seed already moving fast so the first frame reads as speed */
+        this.speed = SPEED_MIN * 1.6;
         this.t = 0.02;
         for (const t of this.tunnelMats) t.mat.opacity = t.baseOpacity;
         this.gl.domElement.style.opacity = '1';
@@ -359,9 +359,9 @@ export class WormholeEngine {
         this.smx = damp(this.smx, this.mx, MOUSE_SMOOTH, dt);
         this.smy = damp(this.smy, this.my, MOUSE_SMOOTH, dt);
 
-        /* Punch into the starfield fast: shorter tunnel dwell then quick fade */
-        const fadeStart = 5.0;
-        const fadeDur = 2.0;
+        /* Punch into the starfield almost immediately */
+        const fadeStart = 2.4;
+        const fadeDur = 1.4;
         let tunnelFade = 1;
         if (this.elapsed > fadeStart + fadeDur) tunnelFade = 0;
         else if (this.elapsed > fadeStart) {

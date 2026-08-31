@@ -663,8 +663,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let last2dTs = 0;
     let smx2d = 0;
     let smy2d = 0;
-    const SPEED2D_MIN = 620;   // units/sec
-    const SPEED2D_MAX = 3600;
+    const SPEED2D_MIN = 950;   // units/sec
+    const SPEED2D_MAX = 5400;
     const STAR_COUNT_SMOOTH = 900;
 
     const tick2d = (ts) => {
@@ -679,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ma = 1 - Math.exp(-12 * dt);
         smx2d += (mouseX - smx2d) * ma;
         smy2d += (mouseY - smy2d) * ma;
-        speed2d += (SPEED2D_MAX - speed2d) * (1 - Math.exp(-2.6 * dt));
+        speed2d += (SPEED2D_MAX - speed2d) * (1 - Math.exp(-3.8 * dt));
 
         const w = canvas2d.width;
         const h = canvas2d.height;
