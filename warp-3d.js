@@ -7,21 +7,21 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 const RADIUS = 7;
 const SEGMENTS = 160;
 const RADIAL = 16;
-const STARS_FAR = 2800;
-const STARS_GALAXY = 5500;
-const DUST_MOTES = 400;
+const STARS_FAR = 2200;
+const STARS_GALAXY = 4200;
+const DUST_MOTES = 300;
 const GALAXY_RADIUS = 250;
 const GALAXY_ARMS = 4;
 const GALAXY_SPIN = 1.5;
 const RING_COUNT = 28;
 
-/* Speeds in curve-units per SECOND (not per frame) */
-const SPEED_MIN = 0.011;   // ~0.00018 * 60
-const SPEED_MAX = 0.052;   // ~0.00085 * 60
-const ACCEL = 0.028;       // approach rate toward SPEED_MAX (1/s)
+/* Speeds in curve-units per SECOND (not per frame) — punchier warp */
+const SPEED_MIN = 0.020;
+const SPEED_MAX = 0.092;
+const ACCEL = 0.055;       // quicker spool toward SPEED_MAX (1/s)
 const LOOKAHEAD = 6;
-const CAM_SMOOTH = 14;     // higher = snappier follow, still smooth
-const MOUSE_SMOOTH = 10;
+const CAM_SMOOTH = 18;     // tighter follow = sleeker, faster read
+const MOUSE_SMOOTH = 11;
 const MAX_DT = 1 / 30;     // clamp spiral after tab-switch
 
 function buildCurve() {
@@ -118,21 +118,21 @@ export class WormholeEngine {
 
         const fillMat = new THREE.MeshBasicMaterial({
             color: 0x041510, side: THREE.BackSide,
-            transparent: true, opacity: 0.55,
+            transparent: true, opacity: 0.4,
         });
         const fillGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS * 1.02, RADIAL, true);
         this.scene.add(new THREE.Mesh(fillGeo, fillMat));
-        this.tunnelMats.push({ mat: fillMat, baseOpacity: 0.55 });
+        this.tunnelMats.push({ mat: fillMat, baseOpacity: 0.4 });
 
         const wireMat = new THREE.LineBasicMaterial({
             color: 0x2EF2A0,
-            transparent: true, opacity: 0.8,
+            transparent: true, opacity: 0.6,
         });
         const wireGeo = new THREE.TubeGeometry(this.curve, SEGMENTS, RADIUS, RADIAL, true);
         const wireframeGeo = new THREE.WireframeGeometry(wireGeo);
         wireGeo.dispose();
         this.scene.add(new THREE.LineSegments(wireframeGeo, wireMat));
-        this.tunnelMats.push({ mat: wireMat, baseOpacity: 0.8 });
+        this.tunnelMats.push({ mat: wireMat, baseOpacity: 0.6 });
     }
 
     gaussRand() {
@@ -359,9 +359,9 @@ export class WormholeEngine {
         this.smx = damp(this.smx, this.mx, MOUSE_SMOOTH, dt);
         this.smy = damp(this.smy, this.my, MOUSE_SMOOTH, dt);
 
-        /* Tunnel fade over ~10s then 3s fade (time-based, not frames) */
-        const fadeStart = 10.0;
-        const fadeDur = 3.0;
+        /* Punch into the starfield fast: shorter tunnel dwell then quick fade */
+        const fadeStart = 5.0;
+        const fadeDur = 2.0;
         let tunnelFade = 1;
         if (this.elapsed > fadeStart + fadeDur) tunnelFade = 0;
         else if (this.elapsed > fadeStart) {
