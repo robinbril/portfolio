@@ -44,26 +44,15 @@ body.light-theme .typing-heading .typing-caret {
 
 .typing-heading .typing-text {
     position: relative;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    width: max-content;
-    /* Animation uitgezet - was rommelig met de width:0 -> 14ch transitie.
-       Statisch maar mooi. */
+    display: inline;
+    /* no clip: full glyphs, no cut ascenders/descenders */
+    overflow: visible;
+    white-space: normal;
 }
 
+/* caret retired — the animated typewriter was removed */
 .typing-heading .typing-caret {
-    display: inline-block;
-    width: 2px;
-    height: 0.78em;
-    background: #2ef2a0;
-    box-shadow: 0 0 6px rgba(46, 242, 160, 0.5);
-    animation: typingCaret 1.05s ease-in-out infinite;
-    margin-left: 0.14em;
-    border-radius: 1px;
-    align-self: center;
-    transform: translateY(0.02em);
-    opacity: 1;
+    display: none !important;
 }
 
 /* while typing, hold the caret solid (no blink) for a smooth reveal */

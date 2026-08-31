@@ -11,9 +11,8 @@
     transition: opacity 0.4s ease, visibility 0.4s ease !important;
 }
 
-body.light-theme .preloader {
-    background: radial-gradient(120% 120% at 50% 30%, #f4f6fb 0%, #e9edf4 70%) !important;
-}
+/* the code editor stays dark on both themes — a light-syntax-on-white
+   splash looked garish. It's a brief overlay that fades either way. */
 
 .preloader .preloader-content { display: none !important; }
 
@@ -75,16 +74,16 @@ body.light-theme .preloader {
     transform: translateY(3px);
     animation: pwLine 0.34s ease forwards;
 }
-.pw-line:nth-child(1)  { animation-delay: 0.10s; }
-.pw-line:nth-child(2)  { animation-delay: 0.17s; }
-.pw-line:nth-child(3)  { animation-delay: 0.24s; }
-.pw-line:nth-child(4)  { animation-delay: 0.31s; }
-.pw-line:nth-child(5)  { animation-delay: 0.38s; }
-.pw-line:nth-child(6)  { animation-delay: 0.45s; }
-.pw-line:nth-child(7)  { animation-delay: 0.52s; }
-.pw-line:nth-child(8)  { animation-delay: 0.59s; }
-.pw-line:nth-child(9)  { animation-delay: 0.66s; }
-.pw-line:nth-child(10) { animation-delay: 0.73s; }
+.pw-line:nth-child(1)  { animation-delay: 0.04s; }
+.pw-line:nth-child(2)  { animation-delay: 0.08s; }
+.pw-line:nth-child(3)  { animation-delay: 0.12s; }
+.pw-line:nth-child(4)  { animation-delay: 0.16s; }
+.pw-line:nth-child(5)  { animation-delay: 0.20s; }
+.pw-line:nth-child(6)  { animation-delay: 0.24s; }
+.pw-line:nth-child(7)  { animation-delay: 0.28s; }
+.pw-line:nth-child(8)  { animation-delay: 0.32s; }
+.pw-line:nth-child(9)  { animation-delay: 0.36s; }
+.pw-line:nth-child(10) { animation-delay: 0.40s; }
 @keyframes pwLine { to { opacity: 1; transform: none; } }
 
 .pw-ln {
@@ -109,7 +108,7 @@ body.light-theme .preloader {
     margin-left: 3px;
     vertical-align: text-bottom;
     background: #2ef2a0;
-    animation: pwCaret 0.9s steps(1) 0.8s infinite;
+    animation: pwCaret 0.8s steps(1) 0.42s infinite;
     opacity: 0;
 }
 @keyframes pwCaret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
@@ -135,13 +134,6 @@ body.light-theme .preloader {
     color: #6b7688;
 }
 .pw-meta #progress-percentage { color: #9fb0c3; font-variant-numeric: tabular-nums; }
-
-/* light theme window */
-body.light-theme .preloader-window { background: #ffffff; border-color: rgba(15, 23, 42, 0.1); }
-body.light-theme .pw-titlebar { background: #f3f5f9; border-bottom-color: rgba(15, 23, 42, 0.08); }
-body.light-theme .pw-code { background: #ffffff; }
-body.light-theme .c-var { color: #0f172a; }
-body.light-theme .pw-ln { color: #b3bccb; }
 
 @media (prefers-reduced-motion: reduce) {
     .preloader-window, .pw-line { animation: none !important; opacity: 1 !important; transform: none !important; }

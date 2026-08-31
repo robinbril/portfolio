@@ -15,7 +15,7 @@
       "hero.available": "Beschikbaar · Amsterdam",
       "hero.role": "AI Tech Lead",
       "hero.subtitle":
-        "Van DefGPT Pro bij Defensie tot agents in enterprise-productie. MCP, multi-agent, on-prem tot cloud.",
+        "Ik bouw AI-agents die in productie draaien en echt werk overnemen, van Defensie tot scale-ups.",
       "hero.ctaProjects": "Bekijk het werk",
       "hero.ctaContact": "Laten we praten",
       "stats.mcp": "MCP-servers",
@@ -99,7 +99,7 @@
       "hero.available": "Available · Amsterdam",
       "hero.role": "AI Tech Lead",
       "hero.subtitle":
-        "From DefGPT Pro at Defence to agents in enterprise production. MCP, multi-agent, on-prem to cloud.",
+        "I build AI agents that run in production and take real work off your plate, from Defence to scale-ups.",
       "hero.ctaProjects": "See the work",
       "hero.ctaContact": "Let's talk",
       "stats.mcp": "MCP servers",

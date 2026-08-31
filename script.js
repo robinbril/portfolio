@@ -14,7 +14,7 @@ function startPreloader() {
     if (preloader.classList.contains('fade-out')) return;
 
     let progress = 0;
-    const duration = 1200; // let the code-editor lines reveal, then fade
+    const duration = 700; // quick code-editor reveal, then fade
     const intervalTime = 16;
     const steps = duration / intervalTime;
     const increment = 100 / steps;
