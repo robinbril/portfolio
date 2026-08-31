@@ -1,120 +1,149 @@
 /* =========================================================================
-   18-preloader.css — minimal, fast brand reveal. Replaces the old white
-   fake code-editor splash. Loaded last, so it wins over style.css.
+   18-preloader.css — dark code-editor front-loader. A syntax-highlighted
+   window boots the portfolio, lines reveal top-to-bottom, then it fades.
    ========================================================================= */
 
 .preloader {
-    background: #05070c !important;
-    transition: opacity 0.35s ease, visibility 0.35s ease !important;
+    background: radial-gradient(120% 120% at 50% 30%, #0a0e18 0%, #05070c 70%) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease, visibility 0.4s ease !important;
 }
 
 body.light-theme .preloader {
-    background: #eef1f6 !important;
+    background: radial-gradient(120% 120% at 50% 30%, #f4f6fb 0%, #e9edf4 70%) !important;
 }
 
-/* nuke any lingering old splash markup */
-.preloader .preloader-content {
-    display: none !important;
-}
+.preloader .preloader-content { display: none !important; }
 
-.preloader-brand {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.05rem;
-    animation: preloaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.preloader-logo {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-weight: 700;
-    font-size: 2rem;
-    letter-spacing: -0.02em;
-    color: #f2f2f4;
-    line-height: 1;
-}
-
-body.light-theme .preloader-logo {
-    color: #0f172a;
-}
-
-.preloader-dot {
-    color: #2ef2a0;
-    margin-left: 0.06em;
-}
-
-/* typed terminal line */
-.preloader-term {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 0.82rem;
-    letter-spacing: 0.02em;
-    color: rgba(226, 232, 240, 0.72);
-    min-height: 1.1em;
-}
-
-body.light-theme .preloader-term {
-    color: rgba(15, 23, 42, 0.7);
-}
-
-.preloader-prompt {
-    color: #2ef2a0;
-    font-weight: 700;
-}
-
-.preloader-cmd {
-    white-space: pre;
-}
-
-.preloader-caret {
-    width: 7px;
-    height: 1.05em;
-    margin-left: -0.25rem;
-    background: rgba(226, 232, 240, 0.85);
-    animation: preloaderCaret 0.85s steps(1) infinite;
-}
-
-body.light-theme .preloader-caret {
-    background: rgba(15, 23, 42, 0.8);
-}
-
-@keyframes preloaderCaret {
-    50% { opacity: 0; }
-}
-
-.preloader-track {
-    width: 150px;
-    height: 2px;
-    margin-top: 0.15rem;
-    border-radius: 2px;
-    background: rgba(255, 255, 255, 0.1);
+/* --- window ------------------------------------------------------------- */
+.preloader-window {
+    width: min(92vw, 480px);
+    background: #0d1117;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    animation: pwPop 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-body.light-theme .preloader-track {
-    background: rgba(15, 23, 42, 0.12);
-}
-
-.preloader-bar {
-    height: 100%;
-    width: 0%;
-    border-radius: 2px;
-    background: linear-gradient(90deg, rgba(226, 232, 240, 0.45), #ffffff);
-    transition: width 0.12s linear;
-}
-
-body.light-theme .preloader-bar {
-    background: linear-gradient(90deg, rgba(15, 23, 42, 0.35), #0f172a);
-}
-
-@keyframes preloaderIn {
-    from { opacity: 0; transform: translateY(6px); }
+@keyframes pwPop {
+    from { opacity: 0; transform: translateY(10px) scale(0.985); }
     to   { opacity: 1; transform: none; }
 }
 
+.pw-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.62rem 0.85rem;
+    background: #11161f;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.72rem;
+}
+.pw-dots { display: inline-flex; gap: 6px; }
+.pw-dots i { width: 10px; height: 10px; border-radius: 50%; background: #2b323d; }
+.pw-dots i:nth-child(1) { background: #ff5f57; }
+.pw-dots i:nth-child(2) { background: #febc2e; }
+.pw-dots i:nth-child(3) { background: #28c840; }
+.pw-file { color: #8b95a5; letter-spacing: 0.02em; }
+.pw-status {
+    margin-left: auto; display: inline-flex; align-items: center; gap: 0.4rem;
+    color: #59e0a8; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.12em;
+}
+.pw-status-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #2ef2a0;
+    box-shadow: 0 0 8px rgba(46, 242, 160, 0.7);
+    animation: pwBlink 1s ease-in-out infinite;
+}
+@keyframes pwBlink { 50% { opacity: 0.35; } }
+
+/* --- code --------------------------------------------------------------- */
+.pw-code {
+    padding: 0.9rem 1rem 1rem;
+    font-size: 0.8rem;
+    line-height: 1.62;
+    background:
+        linear-gradient(#0d1117, #0d1117) padding-box;
+}
+.pw-line {
+    white-space: pre;
+    opacity: 0;
+    transform: translateY(3px);
+    animation: pwLine 0.34s ease forwards;
+}
+.pw-line:nth-child(1)  { animation-delay: 0.10s; }
+.pw-line:nth-child(2)  { animation-delay: 0.17s; }
+.pw-line:nth-child(3)  { animation-delay: 0.24s; }
+.pw-line:nth-child(4)  { animation-delay: 0.31s; }
+.pw-line:nth-child(5)  { animation-delay: 0.38s; }
+.pw-line:nth-child(6)  { animation-delay: 0.45s; }
+.pw-line:nth-child(7)  { animation-delay: 0.52s; }
+.pw-line:nth-child(8)  { animation-delay: 0.59s; }
+.pw-line:nth-child(9)  { animation-delay: 0.66s; }
+.pw-line:nth-child(10) { animation-delay: 0.73s; }
+@keyframes pwLine { to { opacity: 1; transform: none; } }
+
+.pw-ln {
+    display: inline-block; width: 1.6em; margin-right: 0.9em;
+    color: #3d4553; text-align: right; user-select: none;
+}
+.pw-ind { white-space: pre; }
+
+/* syntax palette — calm, modern, not neon */
+.c-kw   { color: #c79bff; }   /* keywords: soft violet */
+.c-str  { color: #7ee0a8; }   /* strings: soft green   */
+.c-fn   { color: #6cb6ff; }   /* functions: blue       */
+.c-var  { color: #e6edf3; }   /* identifiers: near-white */
+.c-prop { color: #7fd6e6; }   /* properties: cyan      */
+.c-op   { color: #ff9bb3; }   /* operators: rose       */
+.c-cm   { color: #5b6572; font-style: italic; } /* comments */
+.c-pl   { color: #8b95a5; }   /* punctuation           */
+
+.pw-caret {
+    display: inline-block;
+    width: 7px; height: 1.05em;
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    background: #2ef2a0;
+    animation: pwCaret 0.9s steps(1) 0.8s infinite;
+    opacity: 0;
+}
+@keyframes pwCaret { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* --- progress ----------------------------------------------------------- */
+.pw-progress {
+    padding: 0 1rem 1rem;
+}
+.pw-track {
+    height: 3px; border-radius: 3px; overflow: hidden;
+    background: rgba(255, 255, 255, 0.07);
+}
+.pw-bar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #2ef2a0, #6cb6ff);
+    border-radius: 3px;
+    transition: width 0.12s linear;
+    box-shadow: 0 0 12px rgba(46, 242, 160, 0.4);
+}
+.pw-meta {
+    display: flex; justify-content: space-between; margin-top: 0.55rem;
+    font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: #6b7688;
+}
+.pw-meta #progress-percentage { color: #9fb0c3; font-variant-numeric: tabular-nums; }
+
+/* light theme window */
+body.light-theme .preloader-window { background: #ffffff; border-color: rgba(15, 23, 42, 0.1); }
+body.light-theme .pw-titlebar { background: #f3f5f9; border-bottom-color: rgba(15, 23, 42, 0.08); }
+body.light-theme .pw-code { background: #ffffff; }
+body.light-theme .c-var { color: #0f172a; }
+body.light-theme .pw-ln { color: #b3bccb; }
+
 @media (prefers-reduced-motion: reduce) {
-    .preloader-brand { animation: none; }
-    .preloader-bar { transition: none; }
+    .preloader-window, .pw-line { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .pw-caret, .pw-status-dot { animation: none !important; }
 }

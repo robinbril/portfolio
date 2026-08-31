@@ -14,7 +14,7 @@ function startPreloader() {
     if (preloader.classList.contains('fade-out')) return;
 
     let progress = 0;
-    const duration = 720; // quick terminal reveal, legible typing
+    const duration = 1200; // let the code-editor lines reveal, then fade
     const intervalTime = 16;
     const steps = duration / intervalTime;
     const increment = 100 / steps;
@@ -36,7 +36,7 @@ function startPreloader() {
             if (progressBar) progressBar.style.width = '100%';
             if (progressPercentage) progressPercentage.textContent = '100%';
 
-            setTimeout(removePreloader, 80);
+            setTimeout(removePreloader, 240);
         } else {
             if (progressBar) progressBar.style.width = `${progress}%`;
             if (progressPercentage) progressPercentage.textContent = `${Math.floor(progress)}%`;
