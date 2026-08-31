@@ -106,21 +106,21 @@
                 const dv = Math.hypot(ux - cx, uy - cy);
                 const vig = Math.max(0, 1 - dv * 1.35);
                 lum *= vig * vig;
-                if (lum <= 0.05) continue;
+                if (lum <= 0.07) continue;
                 if (lum > 1) lum = 1;
 
                 const ci = Math.min(CHARS.length - 1, (lum * CHARS.length) | 0);
-                // cool near-white ink, a hint of mint on the brightest glyphs
-                ctx.globalAlpha = Math.min(0.82, 0.1 + lum * 0.8);
+                // cool near-white ink; kept low so text always wins
+                ctx.globalAlpha = Math.min(0.5, 0.05 + lum * 0.46);
                 ctx.drawImage(atlas, glyphW * ci, 0, glyphW, atlas.height,
                     gx * cellPx, gy * cellPx, cellPx, cellPx);
             }
         }
         ctx.globalAlpha = 1;
 
-        // faint mint wash tying it to the site accent
+        // very faint mint wash tying it to the site accent
         ctx.globalCompositeOperation = 'source-atop';
-        ctx.fillStyle = 'rgba(46,242,160,0.06)';
+        ctx.fillStyle = 'rgba(46,242,160,0.035)';
         ctx.fillRect(0, 0, W, H);
         ctx.globalCompositeOperation = 'source-over';
     }

@@ -30,14 +30,27 @@
     background: #05070c;
 }
 
-/* let the spiral breathe: lighter centre, still readable type
-   (headline/subtitle carry their own text-shadow) */
+/* readability first: darkest right behind the text block, mid-ring
+   lets the spiral peek through, dark again at the edges */
 .hero.ascii-on::before {
     background:
-        radial-gradient(ellipse 78% 62% at 50% 45%,
-            rgba(5, 7, 12, 0.06) 0%,
-            rgba(5, 7, 12, 0.44) 56%,
-            rgba(5, 7, 12, 0.74) 100%) !important;
+        radial-gradient(ellipse 62% 52% at 50% 46%,
+            rgba(5, 7, 12, 0.66) 0%,
+            rgba(5, 7, 12, 0.58) 34%,
+            rgba(5, 7, 12, 0.40) 62%,
+            rgba(5, 7, 12, 0.72) 100%) !important;
+}
+
+/* mobile: text spans the full width, so keep the field well back */
+@media (max-width: 640px) {
+    .hero.ascii-on .hero-ascii { opacity: 0.6; }
+    .hero.ascii-on::before {
+        background:
+            linear-gradient(180deg,
+                rgba(5, 7, 12, 0.6) 0%,
+                rgba(5, 7, 12, 0.52) 45%,
+                rgba(5, 7, 12, 0.66) 100%) !important;
+    }
 }
 
 body.light-theme .hero.ascii-on {
