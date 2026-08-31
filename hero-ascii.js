@@ -18,8 +18,8 @@
     const RING_FREQ = 12;
     const SPIRAL = 2.2;
     const WARP = 0.55;
-    const CONTRAST = 1.35;
-    const SHIMMER = 0.34;
+    const CONTRAST = 1.5;
+    const SHIMMER = 0.36;
     const SWIRL_STRENGTH = 0.9;
     const SWIRL_RADIUS = 0.42;
     const SPEED = 0.62;              // slow drift
@@ -104,14 +104,14 @@
                 lum = (lum - 0.5) * CONTRAST + 0.5;
                 // radial vignette so edges melt into the hero ground
                 const dv = Math.hypot(ux - cx, uy - cy);
-                const vig = Math.max(0, 1 - dv * 1.35);
-                lum *= vig * vig;
-                if (lum <= 0.07) continue;
+                const vig = Math.max(0, 1 - dv * 1.12);
+                lum *= vig;
+                if (lum <= 0.06) continue;
                 if (lum > 1) lum = 1;
 
                 const ci = Math.min(CHARS.length - 1, (lum * CHARS.length) | 0);
-                // cool near-white ink; kept low so text always wins
-                ctx.globalAlpha = Math.min(0.5, 0.05 + lum * 0.46);
+                // cool near-white ink; more present now, text kept legible by the scrim
+                ctx.globalAlpha = Math.min(0.78, 0.08 + lum * 0.74);
                 ctx.drawImage(atlas, glyphW * ci, 0, glyphW, atlas.height,
                     gx * cellPx, gy * cellPx, cellPx, cellPx);
             }
