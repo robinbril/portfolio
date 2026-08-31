@@ -12,8 +12,8 @@ function startPreloader() {
     if (preloader.classList.contains('fade-out')) return;
 
     let progress = 0;
-    const duration = 1360; // 1.36 seconds (15% faster)
-    const intervalTime = 20;
+    const duration = 520; // quick brand reveal, not a fake compile screen
+    const intervalTime = 16;
     const steps = duration / intervalTime;
     const increment = 100 / steps;
 
@@ -21,7 +21,7 @@ function startPreloader() {
         preloader.classList.add('fade-out');
         setTimeout(() => {
             preloader.remove();
-        }, 600);
+        }, 350);
     };
 
     const interval = setInterval(() => {
@@ -34,7 +34,7 @@ function startPreloader() {
             if (progressBar) progressBar.style.width = '100%';
             if (progressPercentage) progressPercentage.textContent = '100%';
 
-            setTimeout(removePreloader, 200);
+            setTimeout(removePreloader, 80);
         } else {
             if (progressBar) progressBar.style.width = `${progress}%`;
             if (progressPercentage) progressPercentage.textContent = `${Math.floor(progress)}%`;

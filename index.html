@@ -69,6 +69,7 @@
     <link rel="stylesheet" href="enhancements/16-hero-mobile-presence.css">
     <link rel="stylesheet" href="enhancements/hero-clean.css">
     <link rel="stylesheet" href="enhancements/17-hero-ascii.css">
+    <link rel="stylesheet" href="enhancements/18-preloader.css">
     <link rel="stylesheet" href="enhancements/01-warp-hud.css">
 
     <!-- Cockpit redesign (5 design-agent files, loaded last so they win) -->
@@ -109,58 +110,11 @@
 </head>
 
 <body class="dark-theme">
-    <!-- Preloader -->
+    <!-- Preloader: minimal brand reveal -->
     <div class="preloader" id="preloader">
-        <div class="preloader-content">
-            <div class="code-header">
-                <div class="header-left">
-                    <span class="file-name">portfolio.init</span>
-                </div>
-                <div class="header-right">
-                    <span class="status-dot"></span>
-                    <span class="status-text">Loading</span>
-                </div>
-            </div>
-
-            <div class="code-editor">
-                <div class="code-line">
-                    <span class="line-number">1</span>
-                    <span class="keyword">import</span> <span class="variable">{ Portfolio }</span> <span
-                        class="keyword">from</span> <span class="string">'@robin/core'</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">2</span>
-                    <span class="keyword">import</span> <span class="variable">{ AIProjects, Experience }</span> <span
-                        class="keyword">from</span> <span class="string">'@robin/components'</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">3</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">4</span>
-                    <span class="comment">// Initialize portfolio instance</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">5</span>
-                    <span class="keyword">const</span> <span class="variable">app</span> <span class="operator">=</span>
-                    <span class="keyword">new</span> <span class="class">Portfolio</span><span class="bracket">()</span>
-                </div>
-                <div class="code-line">
-                    <span class="line-number">6</span>
-                    <span class="variable">app</span><span class="operator">.</span><span
-                        class="method">render</span><span class="bracket">()</span>
-                </div>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-bar-wrapper">
-                    <div class="progress-bar" id="progress-bar"></div>
-                </div>
-                <div class="progress-info">
-                    <span class="progress-text">Initializing...</span>
-                    <span class="progress-percentage" id="progress-percentage">0%</span>
-                </div>
-            </div>
+        <div class="preloader-brand">
+            <span class="preloader-logo">RB<span class="preloader-dot">.</span></span>
+            <div class="preloader-track"><div class="preloader-bar" id="progress-bar"></div></div>
         </div>
     </div>
 

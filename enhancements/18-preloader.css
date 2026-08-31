@@ -1,0 +1,78 @@
+/* =========================================================================
+   18-preloader.css — minimal, fast brand reveal. Replaces the old white
+   fake code-editor splash. Loaded last, so it wins over style.css.
+   ========================================================================= */
+
+.preloader {
+    background: #05070c !important;
+    transition: opacity 0.35s ease, visibility 0.35s ease !important;
+}
+
+body.light-theme .preloader {
+    background: #eef1f6 !important;
+}
+
+/* nuke any lingering old splash markup */
+.preloader .preloader-content {
+    display: none !important;
+}
+
+.preloader-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.05rem;
+    animation: preloaderIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.preloader-logo {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    color: #f2f2f4;
+    line-height: 1;
+}
+
+body.light-theme .preloader-logo {
+    color: #0f172a;
+}
+
+.preloader-dot {
+    color: #2ef2a0;
+    margin-left: 0.06em;
+}
+
+.preloader-track {
+    width: 120px;
+    height: 2px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+body.light-theme .preloader-track {
+    background: rgba(15, 23, 42, 0.12);
+}
+
+.preloader-bar {
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(226, 232, 240, 0.45), #ffffff);
+    transition: width 0.12s linear;
+}
+
+body.light-theme .preloader-bar {
+    background: linear-gradient(90deg, rgba(15, 23, 42, 0.35), #0f172a);
+}
+
+@keyframes preloaderIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .preloader-brand { animation: none; }
+    .preloader-bar { transition: none; }
+}
