@@ -503,3 +503,144 @@ a.ai-project-card:hover::before {
         transform: none;
     }
 }
+
+/* =========================================================================
+   CALMER CARDS — dial the neon mint back to muted steel; refined surface.
+   Loaded last, so these win. Brand accent elsewhere stays untouched.
+   ========================================================================= */
+
+/* Surface: deeper, cleaner plate with a whisper of top light */
+.ai-project-card {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 40%),
+        linear-gradient(180deg, rgba(17, 24, 36, 0.72), rgba(9, 14, 24, 0.72)) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.04) inset,
+        0 10px 30px -22px rgba(0, 0, 0, 0.7) !important;
+}
+
+.ai-project-card:hover {
+    transform: translateY(-3px) !important;
+    border-color: rgba(148, 163, 184, 0.26) !important;
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.05) inset,
+        0 20px 44px -24px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Kicker: neutral slate chip, no accent green */
+.ai-project-card .project-kicker {
+    color: rgba(203, 213, 225, 0.78) !important;
+    background: rgba(255, 255, 255, 0.045) !important;
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    opacity: 1 !important;
+}
+
+/* Icon: soft steel, not neon mint */
+.ai-project-card .project-icon-wrapper {
+    background: rgba(255, 255, 255, 0.045) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.ai-project-card .project-icon-wrapper i,
+.ai-project-card .project-icon-wrapper svg {
+    color: #aebfc6 !important;
+    stroke: #aebfc6 !important;
+}
+
+.ai-project-card:hover .project-icon-wrapper {
+    background: rgba(148, 163, 184, 0.1) !important;
+    border-color: rgba(148, 163, 184, 0.24) !important;
+}
+
+.ai-project-card:hover .project-icon-wrapper i,
+.ai-project-card:hover .project-icon-wrapper svg {
+    color: #d4e2de !important;
+    stroke: #d4e2de !important;
+}
+
+/* Link arrow: muted slate */
+a.ai-project-card::before {
+    color: rgba(148, 163, 184, 0.8) !important;
+}
+
+/* Filters: clean, no neon. Active = soft light pill, dark text */
+.project-filters .filter-btn:hover {
+    color: rgba(226, 232, 240, 0.95) !important;
+    border-color: rgba(255, 255, 255, 0.16) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.project-filters .filter-btn:focus-visible {
+    box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.4) !important;
+}
+
+.project-filters .filter-btn.active,
+.project-filters .filter-btn.is-active {
+    color: #0b1220 !important;
+    background: rgba(226, 232, 240, 0.92) !important;
+    border-color: rgba(226, 232, 240, 0.92) !important;
+    box-shadow: 0 6px 18px -12px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Light theme: keep the blue icon, neutral chips (already slate) */
+body.light-theme .ai-project-card:hover {
+    border-color: rgba(15, 23, 42, 0.16) !important;
+}
+
+body.light-theme .project-filters .filter-btn.active,
+body.light-theme .project-filters .filter-btn.is-active {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #0f172a !important;
+}
+
+/* =========================================================================
+   FEATURED CASE CARDS — retint the mint accent to calm, desaturated hues.
+   Everything (icon box, status pill, company chip, dots, brackets, metrics,
+   glow) derives from --case-accent / --accent-rgb, so re-scoping those here
+   recolours the whole card. Two muted hues for a bit of variety.
+   ========================================================================= */
+
+.featured-project--flagship {
+    --case-accent: #9aa8d4;          /* muted indigo */
+    --case-accent-rgb: 154, 168, 212;
+    --accent-primary: #9aa8d4;
+    --accent-rgb: 154, 168, 212;
+}
+
+.featured-project--secure {
+    --case-accent: #8fb4ad;          /* muted teal-slate */
+    --case-accent-rgb: 143, 180, 173;
+    --accent-primary: #8fb4ad;
+    --accent-rgb: 143, 180, 173;
+}
+
+/* soften the leftover neon glows */
+.featured-project .card-status .status-dot,
+.featured-project .card-id-dot {
+    box-shadow: none !important;
+}
+
+.featured-project .card-status {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: rgba(226, 232, 240, 0.8) !important;
+}
+
+.featured-project .card-company {
+    background: rgba(255, 255, 255, 0.045) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(226, 232, 240, 0.82) !important;
+}
+
+.featured-project {
+    border-radius: 16px !important;
+    box-shadow: 0 18px 44px -26px rgba(0, 0, 0, 0.7) !important;
+}
+
+.featured-project:hover {
+    transform: translateY(-3px) !important;
+    border-color: rgba(148, 163, 184, 0.26) !important;
+}
